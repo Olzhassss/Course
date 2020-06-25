@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<body>
+  <head>  	
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  	<!-- Stylesheets import - custom and Bootstrap.min.css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/header.style.css">
+    <title> Website
+    </title>	
+  </head>
+<header>
+	<!-- Header content wrapper div -->
+	<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center p-3 mb-5 border-bottom shadow-sm" >
+		<!-- Logo and title referencing to the main webpage -->
+		<a href="" class="link">
+			<img src="images/logo.PNG" hspace="0" alt="logo">
+		</a>
+		<h4  class=" mr-md-auto font-weight-normal" >
+			<a class="link" href="">
+				<font style="color:lightgreen; font-family:Courier;"> AppleTree English courses!</font>
+			</a>
+		</h4>
+		<!-- End of Logo and title -->
+		<!-- Navigation row -->
+		<nav class="my-2 my-md-0 mr-md-2">
+		    <a class="p-2 text-light" href="">Contacts</a>
+		    <a class="p-2 text-light" href="">Managing</a>
+		    <a class="p-2 text-light" href="">View schedule</a>
+		</nav>
+		<!-- End of navigation -->
+		<a class="btn btn1 ml-3 " href="">Application</a>
+	</div>
+</header>
+<head>
+	<!--importing styles from foreign file-->
+	<link rel="stylesheet" href="stylesheets/application.style.css">
+</head>
+
+<div class="container main" >
+
+	<div class="form-wrapper pl-3 pt-3 pb-3 pr-3">
+		<!-- Creating and filling teacher application form -->
+		<form method="post" action="?" style="height: 200px;">
+			<h2>For new applicants! Please choose your role!</h2> 
+			<input type="submit" name="submit_button_teacher" value="I am a teacher" class="mt-3 ml-1 mr-1" style="width:30%; height: 15%;" disabled="True">
+			<input type="submit" name="submit_button_student" value="I am a student" class="mt-3 ml-1 mr-1" style="width:30%;height: 15%;"  disabled="True">
+			<br>
+ 		</form>
+ 	</div>
+</div>
+<br></br>
+<footer>
+	<head>	
+		<link rel="stylesheet" type="text/css" href="stylesheets/footer.style.css">
+	</head>
+	<hr>
+	<!-- Footer content wrapper div -->
+	<div class="container">
+		<div class="float-right">
+			<!-- Adding referencing to the related page -->
+			<a class= "link" href="">
+				<img src="images/schedule2.jpg" alt="picture" width="200" height="150" class="ml-4">
+			</a>
+		</div>
+		<p>
+			<h2>
+				<i>
+					<font color="#4234eff">Attention!</font>
+				</i>
+			</h2>
+			<p class="px25">
+				В случае если вы не знаете в какой группе обучаетесь, 
+				вы можете обратиться по номеру в 
+				<a href=""><i>приемную</i></a>, 
+				либо написать в What'sApp.
+			</p>
+		</p> 
+	 	<br></br>
+	</div>
+</footer>
+</body>
+</html>

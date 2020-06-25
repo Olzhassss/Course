@@ -1,0 +1,12 @@
+footer p{
+	text-align: justify;
+}
+footer a{
+	color: #55a4a7;
+}
+footer{
+	background-color: rgba(	222,217,216,0.5);
+}
+.px25{
+	font-size: 25px;
+}
