@@ -6,8 +6,8 @@
   	<!-- Stylesheets import - custom and Bootstrap.min.css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/header.style.css">
-    <title> Website
-    </title>	
+    <link rel="stylesheet" href="stylesheets/application.style.css">
+    <title> Website</title>	
   </head>
 <header>
 	<!-- Header content wrapper div -->
@@ -32,103 +32,36 @@
 		<a class="btn btn1 ml-3 " href="">Application</a>
 	</div>
 </header>
-<head>
-	<!--importing styles from foreign file-->
-	<link rel="stylesheet" href="stylesheets/application.style.css">
-</head>
 
-<div class="container main" >
-
-	<div class="form-wrapper pl-3 pt-3 pb-3 pr-3 row">
-		<!-- Creating and filling teacher application form -->
-		<form method="post" action="?" style="height: 200px;">
-			<h2>For new applicants! Please choose your role!</h2> 
-			<input type="submit" name="submit_button_teacher" value="I am a teacher" class="mt-3 ml-1 mr-1" disabled="True">
-			<input type="submit" name="submit_button_student" value="I am a student" class="mt-3 ml-1 mr-1" disabled="True">
-			<br>
- 		</form>
- 	</div>
- 	<div class="row">
- 		<div class="col-2">
- 			<ul>
- 				<li>lor</li>
- 				<li>lorr</li>
- 				<li>lorq</li>
- 				<li>lorw</li>
- 				<li>lord</li>
- 			</ul>
- 		</div>
-		<div class="col container-fluid">
-			<div class="row">
-				<div class="col-12 col-md-6 col-lg-3 mb-2">
-					<img src="images/temp.gif" style="width: 100%" alt="temp">
-				</div>
-				<div class="col-12 col-md-6 col-lg-3 mb-2">
-					<img src="images/temp.gif" style="width: 100%" alt="temp">
-				</div>
-				<div class="col-12 col-md-6 col-lg-3 mb-2">
-					<img src="images/temp.gif" style="width: 100%" alt="temp">
-				</div>
-				<div class="col-12 col-md-6 col-lg-3 mb-2">
-					<img src="images/temp.gif" style="width: 100%" alt="temp">
-				</div>
-			</div>
+<div class="container" >
+	<div class="pl-3 pt-3 pb-3 pr-3 row">
+		<div class="col-3 border border-info d-flex align-items-center rounded">
+			<nav>
+				<ul>
+					<li><a href="sample1.html">Sample1</a></li>
+					<li><a href="sample2.html">Sample2</a></li>
+					<li><a href="sample3.html">Sample3</a></li>
+				</ul>
+			</nav>
 		</div>
- 	</div>
-	<br>
- 	<div class="row">
- 		<div class="col-12 col-md-6 col-lg-3 mb-2">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-12 col-md-6 col-lg-3 mb-2">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-12 col-md-6 col-lg-3 mb-2">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-12 col-md-6 col-lg-3 mb-2">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 	</div>
- 	<br>
- 	<div class="row">
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 		<div class="col-3 col-md-2 col-lg-1 mb-1">
- 			<img src="images/temp.gif" style="width: 100%" alt="temp">
- 		</div>
- 	</div>
+		<div class="col d-flex justify-content-center">
+			<!-- Creating and filling teacher application form -->
+			<form method="post" action="?" style="height: 200px;">
+				<h2 class="alert alert-success">For new applicants! Please choose your role!</h2> 
+				<div class="container d-flex justify-content-center mt-4">
+					<div class="row">
+						<div class="col-6">
+							<a href="app_t.html" class="btn btn-secondary" style="width: 250px;">I am a teacher</a>
+						</div>
+						<div class="col-6">
+							<a href="#" class="btn btn-secondary" style="width: 250px;">I am a student</a>
+						</div>
+					</div>
+				</div>
+				<br>
+			</form>
+		</div>
+	</div>
 
 </div>
 <br></br>
