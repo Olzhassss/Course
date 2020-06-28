@@ -16,7 +16,7 @@
 	</style>
 </head>
 <body>
-	<a class="nav-link" href="index.html" id="back-link"><-Back</a>
+	<a class="nav-link" href="app_s0.html" id="back-link"><-Back</a>
 
 	<br></br>
 	<div class="mt-5">
@@ -24,7 +24,7 @@
 		<form method="post" action="">
 			<div class="container">
 				<div class="row">
-					<h2>For new applicants!</h2>
+					<h2>For new student applicants!</h2>
 				</div>
 				<div class="row">
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
@@ -36,24 +36,20 @@
 					    <input type="text" required="true" class="form-control" id="surname-field"  pattern="[A-Z][a-z]{3,20}" >
 					</div>
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
-					    <label for="email-field">Email address</label>
-					    <input type="text" class="form-control"  id="email-field" aria-describedby="emailHelp" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" required="true">
-					    <small id="emailHelp" class="form-text text-muted">We'll use your email to inform you.</small>
+					    <label for="phone-number-field">Phone number</label>
+					    <input type="text" class="form-control" id="phone-number-field" required="true" pattern="\d{10}">
 					</div>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
-					    <label for="phone-number-field">Phone number</label>
-					    <input type="text" class="form-control" id="phone-number-field" required="true" pattern="\d{10}">
+					    <label for="add-phone-number-field">Parent's phone number (not neccessary)</label>
+					    <input type="text" class="form-control" id="add-phone-number-field" pattern="\d{10}">
 					</div>
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
-					    <label for="experience-field">Working Experience (in years)</label>
-					    <input type="text" class="form-control" id="experience-field" pattern="\d{1,2}" required="true">
-					</div>
-					<div class="form-group col-xs-12 col-sm-8 col-md-4">
-    				    <label for="lvl-of-ed-field">Max level of education</label>
+    				    <label for="lvl-of-ed-field">Your level of education</label>
     				    <select class="form-control" id="lvl-of-ed-field">
+    				    	<option>Undeterminent</option>
     				        <option>Elementary</option>
     				        <option>Pre Intermediate</option>
     				        <option>Upper intermediate</option>
@@ -61,48 +57,18 @@
     				        <option>Advanced</option>
     				    </select>								
 					</div>	
+					<div class="form-group col-xs-12 col-sm-8 col-md-4">
+    				    <label for="gender">Your gender</label>
+    				    <select class="form-control" id="gender">
+    				    	<option>Male</option>
+    				        <option>Female</option>
+    				        <option>Other</option>
+    				    </select>								
+					</div>	
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-xs-12 col-sm-8 col-md-6">
-						<h6>Gender</h6>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-1" value="male" required="true">
-							<label class="form-check-label" for="gender-1">Male</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-2" value="female">
-							<label class="form-check-label" for="gender-2">Female</label>
-						</div>	
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-3" value="other">
-							<label class="form-check-label" for="gender-3">Other</label>
-						</div>	
-					</div>
-					<div class="col-xs-12 col-sm-8 col-md-6">
-						<h6>Do you have own methodic material prepared for teaching?</h6>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-1" value="positive" required="true">
-							<label class="form-check-label" for="methodology-radio-1">Yes</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" >
-							<label class="form-check-label" for="methodology-radio-2">No</label>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="form-group col-12 col-md-5">
-					    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
-						<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 500 symbols" maxlength="500" style="resize: none;" rows="5" ></textarea>
-						<small id="infoHelp" class="form-text text-muted">
-							Here you can include some details about your personality or career achievements
-						</small>
-					</div>
-					<div class="col-1" style="height: inherit; border-right: 1px solid rgba(0,0,0,.1)">
-					</div>
-					<div class="col">
+					<div class="col-xs-12 col-sm-8 col-md-4">
 						<h5>Supplementary information</h5>
 						<br>
 						<div class="form-check">
@@ -113,9 +79,9 @@
 						</div>
 						<br>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="work-on-sunday" id="sunday">
-							<label class="form-check-label" for="sunday">
-								I have an opportunity to work on Sundays
+							<input class="form-check-input" type="checkbox" value="work-on-sunday" id="test">
+							<label class="form-check-label" for="test">
+								I would like to test my English <br>(automatic if "Undeterminent" is selected)
 							</label>
 						</div>
 					</div>
@@ -143,15 +109,12 @@
 					  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">..3.</div>
 					</div>				
 				</div>
-
 			</div>
 			<br></br>
  		</form>
  	</div>
 </div>
 </body>
-<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
-
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
