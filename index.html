@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="stylesheets/header.style.css">
     <link rel="stylesheet" href="stylesheets/application.style.css">
     <title> Website</title>	
+    <style>
+    	@media screen and (max-width: 600px) {
+		  p {
+			    font-size: 16px !important;
+		  }
+		}
+    </style>
   </head>
 <header>
 	<!-- Header content wrapper div -->
@@ -45,20 +52,21 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="col d-flex mt-4 justify-content-center">
+		<div class="col-12 col-md d-flex mt-4 justify-content-center">
 			<!-- Creating and filling teacher application form -->
 			<form method="post" action="?" style="height: 200px;">
-				<h2 class="alert alert-success">For new applicants! Please choose your role!</h2> 
-				<div class="container d-flex justify-content-center mt-4">
-					<div class="row">
-						<div class="col-12 col-md-6 mb-3">
-							<a href="app_t.html" class="btn btn-secondary" style="width: 250px;">I am a teacher</a>
+				<p style="font-size: 3vw; " class="alert alert-success">For new applicants! Please choose your role!</p> 
+					<div class="row mb-3">
+						<div class="col-md"></div>
+						<div class="col-12 col-sm-6 col-md-4 mb-3">
+							<a href="app_t.html" class="btn btn-secondary" style="width: 100%;">I am a teacher</a>
 						</div>
-						<div class="col-12 col-md-6 mb-3">
-							<a href="app_s0.html" class="btn btn-secondary" style="width: 250px;">I am a student</a>
+						<div class="col-12 col-sm-6 col-md-4 mb-3">
+							<a href="app_s0.html" class="btn btn-secondary" style="width: 100%;">I am a student</a>
 						</div>
+						<div class="col-md"></div>	
 					</div>
-				</div>
+				
 				<br>
 			</form>
 		</div>
