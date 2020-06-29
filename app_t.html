@@ -30,11 +30,11 @@
 				<div class="row">
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
 					    <label for="name-field">Name</label>
-					    <input type="text" class="form-control" id="name-field" name="name_field" required="true" pattern="[A-Z][a-z]{3,20}">
+					    <input type="text" class="form-control" id="name-field" name="name_field" required="true" pattern="[A-Z][a-z]{1,}">
 					</div>
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
 					    <label for="surname-field">Surname</label>
-					    <input type="text" required="true" class="form-control" id="surname-field"  pattern="[A-Z][a-z]{3,20}" >
+					    <input type="text" required="true" class="form-control" id="surname-field"  pattern="[A-Z][a-z]{1,}" >
 					</div>
 					<div class="form-group col-xs-12 col-sm-8 col-md-4">
 					    <label for="email-field">Email address</label>
@@ -154,4 +154,30 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script>
+	var s = document.getElementsByClassName("form-control");
+	function modify_background_color(field)
+	{
+		if(/*field.target.getAttribute("type")=="text" &&*/ field.target.checkValidity())
+		{
+			field.target.style.backgroundColor = "#ccf2ff";
+		} else 
+		{
+			field.target.style.backgroundColor = "#ffffff";
+		}
+		return;
+	}
+	var i;
+	for (i = 0; i < s.length; i++)
+	{
+		s[i].addEventListener('change', modify_background_color);
+		/*$("#name-field").on("input", function()
+		{
+			//if(s[i].getAttribute("type")=="text" && s[i].checkValidity())
+			//{
+				$("#name-field").style.backgroundColor = "#ccf2ff";
+			//}
+		});*/
+	}
+</script>
 </html>
