@@ -15,6 +15,16 @@
 			background-color: rgba(1,1,1,0.1);
 		}
 	</style>
+	<style>
+    	@media screen and (max-width: 600px) {
+		  p{
+		  		font-size:22px !important;
+		  }
+		  p.alert {
+			    font-size: 16px !important;
+		  }
+		}
+    </style>
 </head>
 <body>
 	<a class="nav-link" href="index.html" id="back-link"><-Back</a>
@@ -25,19 +35,19 @@
 		<form method="post" action="">
 			<div class="container">
 				<div class="row mb-2">
-					<h2>For new student applicants!</h2>
+					<p style="font-size: 5vw;">For new student applicants!</p>
 				</div>
 				<form method="post" action="?" style="height: 200px;">
-					<h3 class="alert alert-success">Please choose would you like to have group or private lessons</h3> 
-					<div class="container d-flex justify-content-center mt-4 mb-4">
-						<div class="row">
-							<div class="col-12 col-md-6 mb-3">
-								<a href="app_s_gr.html" class="btn btn-secondary" style="width: 250px;">Group lessons</a>
-							</div>
-							<div class="col-12 col-md-6 mb-3">
-								<a href="app_s_pr.html" class="btn btn-secondary" style="width: 250px;">Private lessons</a>
-							</div>
+					<p style="font-size: 3vw;" class="alert alert-success">Please choose would you like to have group or private lessons</p> 
+					<div class="row mb-3">
+						<div class="col-md"></div>
+						<div class="col-12 col-sm-6 col-md-4 mb-3">
+							<a href="app_t.html" class="btn btn-secondary" style="width: 100%;">Group lessons</a>
 						</div>
+						<div class="col-12 col-sm-6 col-md-4 mb-3">
+							<a href="app_s0.html" class="btn btn-secondary" style="width: 100%;">Private lessons</a>
+						</div>
+						<div class="col-md"></div>	
 					</div>
 					<br>
 				</form>
