@@ -1,23 +1,31 @@
 #headerdiv{
-		background-color: #004156;
-	}
-   	.link {
-   	 color: black; text-decoration: none;
-   	}
-   	.link:hover{
-		text-decoration: none;
-   	}
-	.btn1{
-		color: pink;
-		border-width: 2px;
-		border-color: pink;
-	}
-	.btn1:hover {
-	 	color: gold;
-	 	text-decoration: none;
-		border-color: gold;
-	}
-	header img{
-		float: left;
-		height: 150px;
-	}
+	background-color: #004156;
+}
+.main-text a{
+	color: lightgreen;
+	font-family:Courier;
+}
+#header-logo{
+	width: 170px; height: 150px;
+}
+.application-link{
+	color: pink;
+	border-width: 2px;
+	border-color: pink;
+}
+.application-link:hover{
+ 	color: gold;
+ 	text-decoration: none;
+	border-color: gold;
+}
+section {
+	padding-bottom:6rem;
+}
+#header-logo{
+	transition: 0.5s;
+}
+.stuck{
+	position: fixed;
+	width: 100%;
+	z-index: 1030;
+}

@@ -1,62 +1,26 @@
-<!doctype html>
+<!-- NOTES:
+	THE NAME OF VARIABLES USED TO IMPORT
+	> HEADER - $header_uri
+	> FOOTER - $footer_uri
+	> HEAD TAG - $head_uri
+
+
+-->
+
+<?php
+	include_once('./root.php');
+	//session_start();
+	//$username = "";
+	$title = 'AppleTree main page';
+	$custom_stylesheets = array("header.style.css", "footer.style.css", "app_main.style.css");
+	
+?>
+<!DOCTYPE html>
 <html>
+<?php include_once($head_uri); ?>
 <body>
-  <head>  	
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  	<!-- Stylesheets import - custom and Bootstrap.min.css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title> Website</title>	
-    <style>
-    	#headerdiv{
-    		background-color: #004156;
-    	}
-    	.btn1{
-    		color: pink;
-    		border-width: 2px;
-    		border-color: pink;
-    	}
-    	.btn1:hover {
-    	 	color: gold;
-    	 	text-decoration: none;
-    		border-color: gold;
-    	}
-    	section {
-    		padding-bottom:6rem;
-    	}
-    	#header-logo{
-    		transition: 0.5s;
-    	}
-    	.stuck{
-    		position: fixed;
-    		width: 100%;
-    		z-index: 1030;
-    	}
-    </style>
-  </head>
-	<section id="section-header" style="padding: 0px;">
-			<!-- Header content wrapper div -->
-			<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center p-3 shadow" >
-				<!-- Logo and title referencing to the main webpage -->
-				<a href="#section-header" class="text-decoration-none">
-					<img src="images/logo.png" id="header-logo" hspace="0" alt="logo" style="width: 170px; height: 150px;">
-				</a>
-				<h4  class="mr-md-auto ml-md-2" >
-					<a class="text-decoration-none" href="#section-header">
-						<font style="color:lightgreen; font-family:Courier;"> AppleTree English courses!</font>
-					</a>
-				</h4>
-				<!-- End of Logo and title -->
-				<!-- Navigation row -->
-				<nav class="my-2 my-md-0 mr-md-2">
-				    <a class="p-2 text-light text-decoration-none" href="#section-footer">Contacts</a>
-				    <a class="p-2 text-light text-decoration-none" href="#">Managing</a>
-				    <a class="p-2 text-light text-decoration-none" href="#section-FAQ">FAQ</a>
-				</nav>
-				<!-- End of navigation -->
-				<a class="btn btn1 mr-md-2 my-2 my-md-0 ml-md-5" href="app_main.html">Application</a>
-			</div>
-	</section>
+	<!--Including head and header via PHP -->
+	<?php include_once($header_uri); ?>
 
 	<section id="section-home">
 		<div id="carousel-1" class="carousel slide"  data-ride="carousel">
@@ -71,14 +35,6 @@
 		      <img src="images/carousel-image-3.png"  class="d-block w-100" alt="...">
 		    </div>
 		  </div>
-		  <!--<a class="carousel-control-prev" href="#carousel-1" data-slide="prev">
-		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="carousel-control-next" href="#carousel-1" data-slide="next">
-		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
-		  </a>-->
 		</div>
 	</section>
 
@@ -97,9 +53,10 @@
 		<div class="container" >
 			<h3 class="my-4 py-3 display-4 text-center">Related articles</h3>
 			<div class="row">
+
 				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
 					<div class="card shadow-sm">
-					  	<img src="images/1.jpg" class="card-img-top img-thumbnail" alt="...">
+					  	<img src="images/Card_img1.jpg" class="card-img-top img-thumbnail" alt="card-logo">
 					  <div class="card-body">
 					    <h5 class="card-title">Card title</h5>
 					    <p class="card-text"></p>
@@ -108,7 +65,7 @@
 				</a>
 				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
 					<div class="card shadow-sm">
-					  <img src="images/2.jpg" class="card-img-top img-thumbnail" alt="...">
+					  <img src="images/Card_img2.jpg" class="card-img-top img-thumbnail" alt="card-logo">
 					  <div class="card-body">
 					    <h5 class="card-title">Card title</h5>
 					    <p class="card-text"></p>
@@ -117,18 +74,19 @@
 				</a>
 				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
 					<div class="card shadow-sm">
-					  <img src="images/3.jpg" class="card-img-top img-thumbnail" alt="...">
+					  <img src="images/Card_img3.jpg" class="card-img-top img-thumbnail" alt="card-logo">
 					  <div class="card-body">
 					    <h5 class="card-title">Card title</h5>
 					    <p class="card-text"></p>
 					  </div>
 					</div>
 				</a>
+
 			</div>
 		</div>
 	</section>
 
-	<section id="section-FAQ">
+	<section id="section-faq">
 		<div class="container">
 			<h3 class="my-4 py-3 display-4 text-center">Frequently asked questions</h3>
 			<div class="accordion my-5" id="accordion-item">
@@ -274,120 +232,15 @@
 		</div>
 	</section>
 
-	<section id="section-footer" style="padding: 0px;">
-		<footer style="background-color: #004156">
-			<br></br>
-		  <div class="container pt-5 text-light" style="width: 80%; ">
-		  	<div class="row mb-5">
-		  		<div class="col-md-3">
-		  			<p class="p-2"><b>AppleTree</b></p>
-		  			<p class="text-muted small">Nur-Sultan, 2020. Made By Olzhas With Bootstrap 4.5</p>
-		  		</div>
-		  		<div class="col-12 col-md-9">
-		  			<div class="container-fluid">
-		  				<div class="row mb-4">
-		  					<h2><b>Your slogan can be placed here</b></h2>
-		  				</div>
-		  				<div class="row d-flex no-wrap">
-		  					<div class="col">
-		  						<p class="text-muted"><b>Write us to email</b></p>
-		  						<br>
-		  						<p><u>administrator's email</u></p>
-		  					</div>
-		  					<div class="col">
-		  						<p class="text-muted"><b>Or via WhatsApp</b></p>
-		  						<br>
-		  						<p><u>administrator's whatsapp phone number</u></p>
-		  					</div>
-		  					<div class="col">
-		  						<div class=" d-flex justify-content-around mb-4">
-		  							<div>
-		  								<a href="https://twitter.com/"><img style="width: 50%;" src="images/twitter-logo.png" alt="twitter"></a>
-		  							</div>
-		  							<div>
-		  								<a href="https://facebook.com/"><img style="width: 50%;" src="images/facebook-logo.png" alt="facebook"></a>
-		  							</div>
-		  							<div>
-		  								<a href="https://instagram.com/"><img style="width: 50%;" src="images/instagram-logo.png" alt="instagram"></a>
-		  							</div>
-		  							
-		  						</div>
-		  						<div class="row">
-		  							<p class="text-muted mb-1"> ALL RIGHTS RESERVED</p>
-		  							<p class="text-muted mb-1"> DESIGNED SPECIALLY FOR EXAMINATION</p>
-		  						</div>
-		  					</div>
-		  				</div>
-		  				<div class="pt-3" style="color: #BCBEC0;">
-		  					<small>
-		  						<b>Non-commercial project, inspired by school. Work, learn, help other to learn.</b>
-		  					</small>
-		  				</div>
-		  			</div>
-		  		</div>
-		  	</div>
-		  	<br>
-		  </div>
-		</footer>
-	</section>
+	<?php
+	include_once($footer_uri);
+	?>
 
+	<!-- Importing jquery, bootstrap's and custom scripts -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		
-	  // Add smooth scrolling to all links
-	  $("a").click(function(event) {
-	    // Make sure this.hash has a value before overriding default behavior
-	    if (this.hash !== "")
-	    {
-	      // Prevent default anchor click behavior
-	      event.preventDefault();
-		  
-	      // Store hash
-	      var hash = this.hash;
-	      var delay = 1300;
-
-	      // Using jQuery's animate() method to add smooth page scroll
-	      $('html, body').animate({
-	        scrollTop: $(hash).offset().top
-	      }, delay, function(){
-	   		// Add hash (#) to URL when done scrolling (default click behavior)
-	        window.location.hash = hash;
-	      });
-	    } // End if (true) {}
-	  });
-	});
-	</script>
-	<script>
-	// When the user scrolls down 50px from the top of the document, resize the header's logo size
-	window.onscroll = function() {scrollFunction()};
-	var logo = document.getElementById("header-logo");
-	function scrollFunction() {
-		header = document.getElementById("headerdiv");
-		section_home = document.getElementById("section-home");
-		if (window.pageYOffset > header.offsetTop)
-		{
-			header.classList.add("stuck");
-			section_home.style.paddingTop = "182px";
-		} else
-		{
-			header.classList.remove("stuck");
-			section_home.style.paddingTop = "0px";
-		}
-
-		if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400)
-		{
-			logo.style.width = "51px";
-		    logo.style.height = "45px";
-		  
-		} else
-		{
-			logo.style.width = "170px";
-			logo.style.height = "150px";
-		}
-	}
-	</script>
+	<script src="js/smooth_scroll.js"></script>
+	<script src="js/scroll_logo_resize.js"></script>
 </body>
 </html>
