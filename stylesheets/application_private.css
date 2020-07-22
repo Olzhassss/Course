@@ -1,0 +1,22 @@
+ul p {
+	margin-bottom: 0px;
+}
+ul li {
+	width: 8rem;
+	text-align: center;
+}
+div.active{
+	background-color: #007bff;
+	color: white;
+}
+div p{
+	margin-bottom: 0px;
+}
+.hoverable:hover{
+	background-color: rgba(1,1,1,0.1);
+	cursor: default;
+}
+.hoverable.active:hover{
+	background-color: rgba(109, 111, 255, 0.8);
+	cursor: default;
+}

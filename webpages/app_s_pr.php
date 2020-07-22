@@ -2,6 +2,7 @@
 	$temp = "..";
 	include_once('../root.php');
 	$custom_stylesheets = array("back-link.style.css");
+	$custom_scripts = array("custom_validation.js", "clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js");
 ?>
 
 <!-- BEGINNING OF HTML -->
@@ -14,36 +15,7 @@
 	<title>Application</title>
 	<!--importing styles from foreign file-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	<style>
-		#back-link{
-			background-color: rgba(1,1,1,0.05);
-		}
-		#back-link:hover{
-			background-color: rgba(1,1,1,0.1);
-		}
-		ul p {
-			margin-bottom: 0px;
-		}
-		ul li {
-			width: 8rem;
-			text-align: center;
-		}
-		div.active{
-			background-color: #007bff;
-			color: white;
-		}
-		div p{
-			margin-bottom: 0px;
-		}
-		.hoverable:hover{
-			background-color: rgba(1,1,1,0.1);
-			cursor: default;
-		}
-		.hoverable.active:hover{
-			background-color: rgba(109, 111, 255, 0.8);
-			cursor: default;
-		}
-	</style>
+	<link rel="stylesheet" href="../stylesheets/application_private.css">
 </head>
 <body>
 	<section id="section-back-link">
@@ -63,17 +35,17 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
 							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
 						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" class="form-control" required="true" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" class="form-control" required="true" error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -82,7 +54,7 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" class="form-control" required="true"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
+						    <input type="text" class="form-control" required="true" error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
 						    <small id="email_help" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_4" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
@@ -155,7 +127,7 @@
 						</div>
 						<div class="col-xs-12 col-md-6 col-lg py-4">
 						    <label for="birthyear-field">Birth year</label>
-						    <input type="text" class="form-control" id="birthyear-field"  pattern="\d{4}" required="true">
+						    <input type="text" class="form-control" id="birthyear-field"  pattern="\d{4}" required="true" error-field="error_year">
 						    <small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
 						</div>
 					</div>
@@ -270,10 +242,9 @@
 		set_click_listener("li_weekday", "weekday_all");
 		set_click_listener("li_time", "time_any");
 		//set_payment("li_weekday", 1000, "fee-span", "weekday_all");
-		$("#submit").click(submit); 
+		$("#submit").click(submit);
 	})
 	
-
 	function submit()
 	{
 		// Declare variable which reserves short text form elements (array of objects) for further validation
@@ -283,39 +254,12 @@
 		var errors = fields.nextAll("small.text-danger");
 		// Calling functions in order to do validation
 		validate_list($(".li_time"), 1, "error_time", "time_any");
+		validate_birthYear("birthyear-field");
 		validate_list($(".li_weekday"), 2, "error_weekday", "weekday_all");
-		validate_text(fields,errors);
-		custom_validate("birthyear-field");
+		validate_text(fields);
 	}
 </script>
 <script>
-	function custom_validate(id)
-	{
-		var birthyear = document.getElementById(id);
-		var error_field = $("#" + id).nextAll("small.text-danger");
-		if (!birthyear.checkValidity())
-		{
-			$([document.documentElement, document.body]).animate(
-			{
-			scrollTop: error_field.offset().top - 250
-			}, 1000);
-			return false;
-		}
-		else if (parseInt(birthyear.value) > new Date().getFullYear || parseInt(birthyear.value) < 1920)
-		{
-			birthyear.style.backgroundColor = "#ffffff";
-			error_field.removeClass("d-none");
-			$([document.documentElement, document.body]).animate(
-			{
-			scrollTop: error_field.offset().top - 250
-			}, 1000);
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
 	/*function set_payment(list_class, value, text_el_id, sum_el_id)
 	{
 		var list = $("." + list_class);
@@ -368,8 +312,12 @@
 		$("#" + text_el_id).text(payment);
 	}*/
 </script>
-<script src="js/clickable_lists.js"></script>
-<script src="js/validate_list.js"></script>
-<script src="js/validate_text.js"></script>
-<script src="js/input_masking.js"></script>
+<script>
+	<?php
+	foreach ($custom_scripts as $value)
+        {
+            include_once($js.$value);
+        }
+    ?>
+</script>
 </html> 

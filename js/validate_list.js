@@ -26,7 +26,7 @@ function validate_list(list, minimum, error_el_id, exception_el_id)
 		$("#" + error_el_id).removeClass("d-none");
 		$([document.documentElement, document.body]).animate(
 		{
-			scrollTop: list.first().offset().top - 75
+			scrollTop: list.first().offset().top - 110
 		}, 1000);
 		return false;
 	}
