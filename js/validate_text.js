@@ -12,7 +12,8 @@ function validate_text(fields)
 		return false;
 	}
 	// Trying to assemble array of error fields. If at least 1 element of 'fields' does not have
-	// required attribute 'error-field' value or the element is inaccessible, returns false and error text
+	// required attribute 'error-field' value or the element is inaccessible, the function returns
+	// FALSE and error text
 	var errors = [];
 	fields.each(function ()
 	{
@@ -59,6 +60,7 @@ function validate_text(fields)
 		console.error("'validate_text' function: Failed to check elements! Check if input argument is jQuery object.");
 		return false;
 	}
+	
 	if (passed)
 	{
 		return true;

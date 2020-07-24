@@ -3,54 +3,69 @@
 // additionally, the function displays or hides error messages
 // (by adding Bootstrap class 'd-none' {display: none} to the element with id given in 'error_el_id' arg.)
 // and scrolls screen up to regarded list of elements if validation failed.
-function validate_list(list, minimum, error_el_id, exception_el_id)
+// Returns TRUE if every element of the list has been successfully validated, else FALSE.
+function validate_list(list, minimum)
 {
 	// Input arguments validation
-	if(!(list.length > 0)|| !(Number.isInteger(minimum) && minimum > 0))
+	if(list === undefined || list.length < 2)
 	{
-		console.log("The 'check_list_limit' function false arguments!")
+		console.error("'validate_list' function: False input arguments!");
 		return false;
 	}
-	if(typeof error_el_id === undefined)
+	var attr_val = list.first().attr("error-field");
+	if(attr_val === undefined || attr_val === "" )
 	{
-		console.log("The error field id (argument) required!")
+		console.error("'validate_list' function: Wrong 'error-field' attribute value!");
 		return false;
 	}
-	if(check_list_limit(list,  minimum, exception_el_id))
+	var error_field = $("#"+attr_val);
+	if (error_field.val() === undefined)
 	{
-		$("#" + error_el_id).addClass("d-none");
+		console.error("'validate_list' function: Failed to access the corresponding error field! Check the'error-field' attribute value.");
+		return false;
+	}
+	if(isNaN(parseInt(minimum, 10)) || minimum < 0)
+	{
+		console.error("'validate_list' function: Wrong limitation argument!");
+		return false;
+	}
+	// Main if
+	if(check_list_limit(list, minimum))
+	{
+		error_field.addClass("d-none");
 		return true;
 	}
 	else
 	{
-		$("#" + error_el_id).removeClass("d-none");
+		error_field.removeClass("d-none");
 		$([document.documentElement, document.body]).animate(
 		{
 			scrollTop: list.first().offset().top - 110
 		}, 1000);
 		return false;
 	}
+	// endif
 }
 
 // Declare function which returns TRUE if argument 'list' (array of elements) has at least X
-// (where X equals the value of 'min') elements or the exception element (accessed via 'exception_el_id')
-// with class 'active'.
-// The function return false if there were improper arguments 'list' and 'min', or minimum is not succeded.
-// The 'exception_el_id' is optional argument.
-function check_list_limit(list, min, exception_el_id)
+// (where X equals the value of 'min') elements or the exception element
+// (which is determined by attribute 'exclusive' set to 'true') has class 'active'.
+// The function return false if minimum is not reached.
+function check_list_limit(list, min)
 {
 	var count = 0;
-	for (var i = 0; i < list.length; i++)
+	list.map(function()
 	{
-		if(list[i].id == exception_el_id && list[i].classList.contains("active"))
+		if($(this).attr("exclusive") === "true" && $(this).hasClass("active"))
 		{
-			return true;
+			count = min;
+			return;
 		}
-		else if(list[i].classList.contains("active"))
+		else if($(this).hasClass("active"))
 		{
 			count++;
 		}
-	}
+	})
 	if (count >=min)
 	{
 		return true;
@@ -59,4 +74,5 @@ function check_list_limit(list, min, exception_el_id)
 	{
 		return false;
 	}
+	
 }

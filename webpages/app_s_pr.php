@@ -1,7 +1,7 @@
 <?php 
 	$temp = "..";
 	include_once('../root.php');
-	$custom_stylesheets = array("back-link.style.css");
+	$custom_stylesheets = array("back-link.style.css", "application_private.css");
 	$custom_scripts = array("custom_validation.js", "clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js");
 ?>
 
@@ -9,14 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<?php include_once($head_uri); ?>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Application</title>
-	<!--importing styles from foreign file-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../stylesheets/application_private.css">
-</head>
 <body>
 	<section id="section-back-link">
 		<a class="nav-link" href="app_s0.php" id="back-link"><-Back</a>
@@ -86,7 +78,7 @@
 							<!-- The begining of 'lesson day' field div -->
 							<div class="row mt-3">
 								<ul class="d-flex flex-wrap list-group list-group-horizontal-md p-3">
-									<li class="list-group-item li_weekday hoverable active" id="weekday_all">
+									<li class="list-group-item li_weekday hoverable active" id="weekday_all" exclusive= "true" error-field= "error_weekday">
 										<p>Everyday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
@@ -153,7 +145,7 @@
 							<!-- The begining of 'lesson time' field div -->
 	    				    <div class="text-center my-3">
 	    				    	<div class="d-flex flex-wrap justify-content-center">
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_1">
+	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_1" error-field="error_time">
 	    				    	      <p class="card-text"> Morning-1</p>
 	    				    	    </div>
 	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_2">
@@ -168,13 +160,13 @@
 	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_5">
 	    				    	      <p class="card-text"> Evening-2</p>
 	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_6">
+	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable" id="time_6">
 	    				    	      <p class="card-text"> Evening-3</p>
 	    				    	    </div>
 	    				    	</div>
 	    				    </div>
 	    				    <div class="text-center d-flex justify-content-center">
-	    				    	<div class="li_time hoverable card active w-50 p-3" id="time_any">
+	    				    	<div class="li_time hoverable card active w-50 p-3" id="time_any" exclusive="true">
 										<p>Any time</p>
 								</div>
 	    				    </div>
@@ -239,24 +231,20 @@
 <script>
 	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
 	$(document).ready(function(){
-		set_click_listener("li_weekday", "weekday_all");
-		set_click_listener("li_time", "time_any");
+		if(set_click_listener("li_weekday") && set_click_listener("li_time"))
 		//set_payment("li_weekday", 1000, "fee-span", "weekday_all");
-		$("#submit").click(submit);
+			$("#submit").click(submit);
+		else
+			$("#submit").attr("disabled", "true");
 	})
 	
 	function submit()
 	{
-		// Declare variable which reserves short text form elements (array of objects) for further validation
-		var fields = $("input[type='text']");
-		// Declare array which reserves html <small> tags (array of objects) that website will use 
-		// to indicate false input during validation
-		var errors = fields.nextAll("small.text-danger");
 		// Calling functions in order to do validation
-		validate_list($(".li_time"), 1, "error_time", "time_any");
+		validate_list($(".li_time"), 1);
 		validate_birthYear("birthyear-field");
-		validate_list($(".li_weekday"), 2, "error_weekday", "weekday_all");
-		validate_text(fields);
+		validate_list($(".li_weekday"), 2);
+		validate_text($("input[type='text']"));
 	}
 </script>
 <script>
@@ -312,12 +300,11 @@
 		$("#" + text_el_id).text(payment);
 	}*/
 </script>
-<script>
-	<?php
-	foreach ($custom_scripts as $value)
-        {
-            include_once($js.$value);
-        }
-    ?>
-</script>
+<!-- Importing outsource scripts -->
+<?php
+foreach ($custom_scripts as $value)
+    {
+   		echo "<script src='$js$value'></script>".PHP_EOL;
+    }
+?>
 </html> 

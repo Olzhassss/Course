@@ -36,7 +36,7 @@ function validate_birthYear(id)
 		birthyear.style.backgroundColor = "#ffffff";
 		$([document.documentElement, document.body]).animate(
 		{
-			scrollTop: error_field.offset().top - 80
+			scrollTop: error_field.offset().top - 85
 		}, 1000);
 		return false;
 	}

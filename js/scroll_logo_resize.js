@@ -1,4 +1,4 @@
-// When the user scrolls down 50px from the top of the document, the script resizes the logo's size
+// This script resizes the logo size when user scrolls down 50px from the top of the document
 	window.onscroll = function() {scrollFunction()};
 	var logo = document.getElementById("header-logo");
 
