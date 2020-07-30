@@ -1,18 +1,26 @@
 <!-- NOTES:
-	THE NAME OF VARIABLES USED TO IMPORT/REDIRECT
-	> BACK LINK - $back_link
-	> HEAD TAG - $head_uri
-	> ROOT FILE ADDRESS - "../root.php" ($root_uri)
+	THE NAMES OF VARIABLES USED
+	> 'BACK' LINK HREF - $back_link
+	> HEAD TAG FILE ADDRESS - $head_uri
+	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
+	> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
+    > CUSTOM STYLES (CSS) - $custom_styles
+	> PAGE TITLE (string) - $title
+	> CUSTOM SCRIPTS FOLDER ADDRESS - $js
+	> 'ROOT' FILE ADDRESS - "../root.php" ($root_uri)
+	> ROOT DIRECTORY PREFIX - $temp
 -->
+
 <?php 
 	$temp = "..";
 	include_once("../root.php");
 	$custom_stylesheets = array("back-link.style.css");
+	$custom_scripts = array("validate_text.js", "input_masking.js");
 ?>
 
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 	<?php include_once($head_uri); ?>
 <body>
 	<section id="section-back-link">
@@ -20,7 +28,6 @@
 	</section>
 	<br></br>
 	<section id="section-form">
-		<!-- div wrapping the entire form -->
 		<div class="mt-5">
 			<!-- Creating and filling teacher application form -->
 			<form>
@@ -31,33 +38,38 @@
 					</div>
 					<!-- first form sections row (name, surname, email) -->
 					<div class="row">
-						<div class="form-group col-xs-12 col-sm-8 col-md-4">
+						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" id="name-field" name="name_field" required="true" pattern="[A-Z][a-z]{1,}">
+						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
 						</div>
-						<div class="form-group col-xs-12 col-sm-8 col-md-4">
+						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" required="true" class="form-control" id="surname-field"  pattern="[A-Z][a-z]{1,}" >
+						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" class="form-control"  id="email-field" aria-describedby="emailHelp" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" required="true">
+						    <input type="text" class="form-control" required="true" error-field="error_3" id="email-field" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" aria-describedby="emailHelp">
 						    <small id="emailHelp" class="form-text text-muted">We'll use your email to inform you.</small>
+						    <small id="error_3" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
 					</div>
 					<hr>
 					<!-- second form sections row (phone number, working experience, max level of education) -->
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
-						    <label for="phone-number-field">Phone number</label>
-						    <input type="text" class="form-control" id="phone-number-field" required="true" pattern="\d{10}">
+						    <label for="phone-number-field">Contact phone number</label>
+						    <input type="text" class="form-control" required="true" error-field="error_4" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <small id="error_4" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="experience-field">Working Experience (in years)</label>
-						    <input type="text" class="form-control" id="experience-field" pattern="\d{1,2}" required="true">
+						    <input type="text" class="form-control" required="true" error-field="error_5" id="experience-field" pattern="\d{1,2}">
+						    <small id="error_5" class="form-text text-danger d-none">Please write valid working experience</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
-		  					    <label for="lvl-of-ed-field">Max level of education</label>
+		  					    <label for="lvl-of-ed-field">Desired level of education</label>
 		  					    <select class="form-control" id="lvl-of-ed-field">
 		  					        <option>Elementary</option>
 		  					        <option>Pre Intermediate</option>
@@ -69,21 +81,14 @@
 					</div>
 					<hr>
 					<!-- third form sections row (gender and additional question) -->
-					<div class="row">
-					<div class="col-xs-12 col-sm-8 col-md-6 mb-2">
-						<h6>Gender</h6>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-1" value="male" required="true">
-							<label class="form-check-label" for="gender-1">Male</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-2" value="female">
-							<label class="form-check-label" for="gender-2">Female</label>
-						</div>	
-						<div class="form-check">
-							<input class="form-check-input" name="radio-2" type="radio" id="gender-3" value="other">
-							<label class="form-check-label" for="gender-3">Other</label>
-						</div>	
+					<div class="row d-flex justify-content-between">
+					<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
+						<label for="gender-field">Your gender</label>
+	    				<select class="form-control" id="gender-field">
+	    					<option>Male</option>
+	    				    <option>Female</option>
+	    				    <option>Other</option>
+	    				</select>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-6">
 						<h6>Do you have own methodic material prepared for teaching?</h6>
@@ -92,7 +97,7 @@
 							<label class="form-check-label" for="methodology-radio-1">Yes</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" >
+							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" checked="true">
 							<label class="form-check-label" for="methodology-radio-2">No</label>
 						</div>
 					</div>
@@ -104,7 +109,7 @@
 					    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
 						<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 500 symbols" maxlength="500" style="resize: none;" rows="5" ></textarea>
 						<small id="infoHelp" class="form-text text-muted">
-							Here you can include some details about your personality or career achievements
+							Here you can include some details about your personality or career achievements or any other details
 						</small>
 					</div>
 					<div class="col-1 d-none d-lg-block" style="height: inherit; border-right: 1px solid rgba(0,0,0,.1)">
@@ -130,7 +135,7 @@
 					<hr>
 					<!-- div for buttons -->
 					<div class="row d-flex justify-content-center">
-					<button type="button" id="submit_button" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
+					<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
 						Register!
 					</button>
 					<button type="Reset" class="btn btn-secondary">
@@ -158,8 +163,25 @@
 		</div>
 	</section>
 </body>
-	<!-- connecting outsource scripts for Bootstrap and custom scripts -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-	<script src="js/form-validation.js"></script>
+<!-- Importing jQuery and custom outsource scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
+	$(document).ready(function(){
+		$("#submit").click(submit);
+	})
+	
+	function submit()
+	{
+		// Calling functions in order to do validation
+		validate_text($("input[type='text']"))
+	}
+</script>
+<?php
+foreach ($custom_scripts as $value)
+    {
+   		echo "<script src='$js$value'></script>".PHP_EOL;
+    }
+?>
 </html>

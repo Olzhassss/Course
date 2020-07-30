@@ -1,11 +1,15 @@
 <!-- NOTES:
-	THE NAME OF VARIABLES USED TO IMPORT/REDIRECT
-	> HEADER - $header_uri
-	> FOOTER - $footer_uri
-	> HEAD TAG - $head_uri
-	
-
-
+	THE NAMES OF VARIABLES USED
+	> HEADER FILE ADDRESS - $header_uri
+	> FOOTER FILE ADDRESS - $footer_uri
+	> HEAD TAG FILE ADDRESS - $head_uri
+	> STUDENTS APPLICATION PAGE HREF - $app_std0
+	> TEACHERS APPLICATION FORM HREF - $app_tch
+	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
+    > CUSTOM STYLES (CSS) - $custom_styles
+	> PAGE TITLE (string) - $title
+	> 'ROOT' FILE ADDRESS - "../root.php" ($root_uri)
+	> ROOT DIRECTORY PREFIX - $temp
 -->
 
 <?php

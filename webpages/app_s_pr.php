@@ -1,6 +1,19 @@
+<!-- NOTES:
+	THE NAMES OF VARIABLES USED
+	> 'BACK' LINK HREF - $back_link
+	> HEAD TAG FILE ADDRESS - $head_uri
+	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
+	> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
+	> CUSTOM STYLES (CSS) - $custom_styles
+	> PAGE TITLE (string) - $title
+	> CUSTOM SCRIPTS FOLDER ADDRESS - $js
+	> 'ROOT' FILE ADDRESS - "../root.php" ($root_uri)
+	> ROOT DIRECTORY PREFIX - $temp
+-->
+
 <?php 
 	$temp = "..";
-	include_once('../root.php');
+	include_once("../root.php");
 	$custom_stylesheets = array("back-link.style.css", "application_private.css");
 	$custom_scripts = array("custom_validation.js", "clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js");
 ?>
@@ -11,7 +24,7 @@
 	<?php include_once($head_uri); ?>
 <body>
 	<section id="section-back-link">
-		<a class="nav-link" href="app_s0.php" id="back-link"><-Back</a>
+		<a class="nav-link" href="<?=$back_link;?>" id="back-link"><-Back</a>
 	</section>
 	<br></br>
 	<section id="section-form">
@@ -79,7 +92,7 @@
 							<div class="row mt-3">
 								<ul class="d-flex flex-wrap list-group list-group-horizontal-md p-3">
 									<li class="list-group-item li_weekday hoverable active" id="weekday_all" exclusive= "true" error-field= "error_weekday">
-										<p>Everyday</p>
+										<p>Any 2 days</p>
 										<input type="checkbox"  class="d-none">
 									</li>
 									<li class="list-group-item li_weekday hoverable" id="weekday_1">
@@ -141,7 +154,7 @@
 							</table>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-5 mt-4 mt-lg-0">
-							<h5 class="my-3">Please choose convenient time sessions (you can choose many)</h5>
+							<h5 class="my-3">Please choose convenient time sessions <br>(you can choose many)</h5>
 							<!-- The begining of 'lesson time' field div -->
 	    				    <div class="text-center my-3">
 	    				    	<div class="d-flex flex-wrap justify-content-center">
@@ -198,12 +211,14 @@
 								</label>
 							</div>
 						</div>
-						<div class="col-12 col-md-6 py-4">
-							<div class="card float-right">
+						<div class="col-12 col-md-6 col-lg py-4 float-right">
+							<div class="card ">
 								<div class="card-body">
 									<p class="lead" style="font-size: 2rem;">
 										Extra fee for a weekday is <span id="fee_weekday">0</span>tg
-										<br>
+									</p>
+									<br>
+									<p class="lead" style="font-size: 2rem;">
 										And for a weekend is <span id="fee_weekend">0</span>tg
 									</p>
 								</div>
@@ -216,7 +231,7 @@
 						<button type="button" id="submit" class="btn btn-primary my-2" style="margin-right: 5%; min-width: 150px;">
 							Register!
 						</button>
-						<button type="Reset" class="btn btn-secondary my-2">
+						<button type="reset" class="btn btn-secondary my-2">
 							Reset application form
 						</button>
 					</div>
@@ -225,14 +240,13 @@
 	 		</form>
 	 	</div>
 	</section>
-	
 </body>
+<!-- Importing jQuery and custom outsource scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
 	$(document).ready(function(){
 		if(set_click_listener("li_weekday") && set_click_listener("li_time"))
-		//set_payment("li_weekday", 1000, "fee-span", "weekday_all");
 			$("#submit").click(submit);
 		else
 			$("#submit").attr("disabled", "true");
@@ -242,9 +256,9 @@
 	{
 		// Calling functions in order to do validation
 		validate_list($(".li_time"), 1);
-		validate_birthYear("birthyear-field");
 		validate_list($(".li_weekday"), 2);
-		validate_text($("input[type='text']"));
+		if(validate_text($("input[type='text']")))
+			validate_birthYear("birthyear-field");
 	}
 </script>
 <script>

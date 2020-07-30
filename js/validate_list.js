@@ -1,18 +1,19 @@
-// This function validates list via calling function 'check_list_limit'
-// (declared below) and by checking input arguments validity;
+// This function validates list via calling function 'check_list_limit' (declared below) and
+// by checking input arguments validity;
 // additionally, the function displays or hides error messages
-// (by adding Bootstrap class 'd-none' {display: none} to the element with id given in 'error_el_id' arg.)
-// and scrolls screen up to regarded list of elements if validation failed.
-// Returns TRUE if every element of the list has been successfully validated, else FALSE.
+// (by distributing Bootstrap class 'd-none' {display: none} to the 'error_field' element)
+// and scrolls screen up to the corresponding list of elements if validation failed.
+// Returns TRUE only if every element of the list has been successfully validated, else FALSE.
 function validate_list(list, minimum)
 {
+	// This variable reserves the id (by the idea) of html element responsible for error message for further usage.
+	var attr_val = list.first().attr("error-field");
 	// Input arguments validation
 	if(list === undefined || list.length < 2)
 	{
 		console.error("'validate_list' function: False input arguments!");
 		return false;
 	}
-	var attr_val = list.first().attr("error-field");
 	if(attr_val === undefined || attr_val === "" )
 	{
 		console.error("'validate_list' function: Wrong 'error-field' attribute value!");
@@ -29,7 +30,8 @@ function validate_list(list, minimum)
 		console.error("'validate_list' function: Wrong limitation argument!");
 		return false;
 	}
-	// Main if
+	// End of validation
+	// ----------------------------------- Main 'if'. Deals with errors displaying
 	if(check_list_limit(list, minimum))
 	{
 		error_field.addClass("d-none");
@@ -44,15 +46,16 @@ function validate_list(list, minimum)
 		}, 1000);
 		return false;
 	}
-	// endif
+	// ----------------------------------- endif
 }
 
-// Declare function which returns TRUE if argument 'list' (array of elements) has at least X
+// This function returns TRUE if argument 'list' (array of elements) has at least X
 // (where X equals the value of 'min') elements or the exception element
-// (which is determined by attribute 'exclusive' set to 'true') has class 'active'.
-// The function return false if minimum is not reached.
+// (which is determined by attribute 'exclusive' set to 'true') with class 'active'.
+// The function return FALSE if minimum condition not achieved.
 function check_list_limit(list, min)
 {
+	// Temporary variable used to evaluate number of 'active' elements
 	var count = 0;
 	list.map(function()
 	{
@@ -66,6 +69,7 @@ function check_list_limit(list, min)
 			count++;
 		}
 	})
+	// Post-action checking
 	if (count >=min)
 	{
 		return true;

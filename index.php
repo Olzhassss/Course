@@ -1,9 +1,15 @@
 <!-- NOTES:
-	THE NAME OF VARIABLES USED TO IMPORT
-	> HEADER - $header_uri
-	> FOOTER - $footer_uri
-	> HEAD TAG - $head_uri
-
+	THE NAMES OF VARIABLES USED
+	> HEADER FILE ADDRESS - $header_uri
+	> FOOTER FILE ADDRESS - $footer_uri
+	> HEAD TAG FILE ADDRESS - $head_uri
+	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
+	> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
+    > CUSTOM STYLES (CSS) - $custom_styles
+	> PAGE TITLE (string) - $title
+	> CUSTOM SCRIPTS FOLDER ADDRESS - $js
+	> 'ROOT' FILE ADDRESS - "./root.php" ($root_uri)
+	> ROOT DIRECTORY PREFIX - $temp
 
 -->
 
@@ -12,7 +18,8 @@
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
-	$custom_stylesheets = array("header.style.css", "footer.style.css", "app_main.style.css");
+	$custom_stylesheets = array("header.style.css", "footer.style.css");
+	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js");
 	
 ?>
 <!DOCTYPE html>
@@ -235,12 +242,14 @@
 	<?php
 	include_once($footer_uri);
 	?>
-
-	<!-- Importing jquery, bootstrap's and custom scripts -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="js/smooth_scroll.js"></script>
-	<script src="js/scroll_logo_resize.js"></script>
 </body>
+<!-- Importing jQuery, BootStrap's and custom scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<?php
+foreach ($custom_scripts as $value)
+    {
+   		echo "<script src='$js$value'></script>".PHP_EOL;
+    }
+?>
 </html>

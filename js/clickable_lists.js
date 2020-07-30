@@ -3,7 +3,7 @@
 function set_click_listener(list_class)
 {
 	var list = $("." + list_class);
-	// Input arguments validation
+	// Input argument validation
 	if(list === undefined || list.length < 1)
 	{
 		console.error("'set_click_listener' (clickable_lists.js) function: False input argument!")
@@ -19,10 +19,7 @@ function set_click_listener(list_class)
 				{
 					if ($(this).hasClass("active"))
 					{
-						list.each(function(){
-							$(this).removeClass("active");
-						})
-						$(this).addClass("active");
+						$(this).removeClass("active");
 						return true;
 					}
 					list.map(function(){
@@ -46,14 +43,14 @@ function set_click_listener(list_class)
 					}
 				}
 			}
-			catch
+			catch // --------- If error has occured:
 			{
 				return false;
 			}
 		}))
-	{
+	{	// ------------------- If successful:
 		return true;
 	}
-	return false;
 	// endif
+	return false;
 }

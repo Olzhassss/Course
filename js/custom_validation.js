@@ -1,12 +1,15 @@
+// This function is designed to validate Birth Year field. It returns TRUE only if entered year value is between 1920 and current year.
+// If the value does not belong to years period, the error is displayed and screen is moved to the corresponding field.
 function validate_birthYear(id)
 {
-	// Trying to declare variables and assure proper access to html elements.
+	// Declaring variables and assuring proper access to html elements.
 	var birthyear = document.getElementById(id);
 	if(birthyear === null)
 	{
 		console.error("'validate_birthYear' function: Failed to access the element of given id!\nGiven argument value is: " + id);
 		return false;
 	}
+	// This variable reserves the id (by the idea) of html element responsible for error message for further usage.
 	var attr_val = $("#"+id).attr('error-field');
 	if(attr_val === undefined || attr_val === "" )
 	{
@@ -19,7 +22,7 @@ function validate_birthYear(id)
 		console.error("'validate_birthYear' function: Failed to access the corresponding error field! Check the'error-field' attribute value.");
 		return false;
 	}
-
+	// End of access check
 	/*if (!birthyear.checkValidity())
 	{
 		console.log(error_field.offset().top);
@@ -30,6 +33,7 @@ function validate_birthYear(id)
 		return false;
 	}
 	else*/
+	// ----------------------- Main 'if'. Executes logic described above.
 	if (parseInt(birthyear.value) > new Date().getFullYear()|| parseInt(birthyear.value) < 1920)
 	{
 		error_field.removeClass("d-none");
@@ -40,8 +44,9 @@ function validate_birthYear(id)
 		}, 1000);
 		return false;
 	}
-	else
+	else // ------------------ If validation is successful:
 	{
 		return true;
 	}
+	// endif
 }

@@ -1,13 +1,14 @@
 <!-- NOTES:
-	THE NAME OF VARIABLES USED TO REDIRECT
-	> MAIN PAGE - $index 
-	> PRE-APPLICATION - $app0;
-	> CONTACTS - $contacts_href
-	> FAQ - $faq_href
-	> MANAGING - $authorization_href
+	THE NAMES OF VARIABLES USED
+	> MAIN PAGE ADDRESS - $index 
+	> PRE-APPLICATION PAGE ADDRESS - $app0;
+	> CONTACTS SECTION HREF - $contacts_href
+	> FAQ SECTION HREF - $faq_href
+	> ADMINISTRATION PAGE ADDRESS - $authorization_href
+    > CUSTOM STYLES (CSS) - $custom_styles
+    > LOGO IMAGE LOCATION - $logo_src
 -->
 <?php
-	$custom_stylesheets = array("header.style.css");
 	$logo_src = $temp . "/images/logo.png";
 	$contacts_href = $index . "#section-footer";
 	$faq_href = $index . "#section-faq";
@@ -30,7 +31,7 @@
 			<nav class="my-2 my-md-0 mr-md-2">
 			    <a class="p-2 text-light text-decoration-none" href="<?=$contacts_href?>">Contacts</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$faq_href?>">FAQ</a>
-			    <a class="p-2 text-light text-decoration-none" href="<?=$authorization_href?>">Managing</a>
+			    <a class="p-2 text-light text-decoration-none" href="<?=$authorization_href?>">Administration</a>
 			</nav>
 			<!-- End of navigation -->
 			<a class="btn application-link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$app0?>">Application</a>

@@ -1,4 +1,4 @@
-// This function changes the background color of each element of 'fields' (array of elements)
+// This function changes the background color of each element of 'fields' (jQuery array of elements)
 // if it is correctly filled, and if any element does not pass checkValidity(), then scrolls up,
 // as well as shows or hides error messages
 // (by adding Bootstrap class 'd-none' {display: none} to a corresponding 'error' element, id of which
@@ -11,28 +11,38 @@ function validate_text(fields)
 		console.error("'validate_text' function: False input argument!");
 		return false;
 	}
-	// Trying to assemble array of error fields. If at least 1 element of 'fields' does not have
+	// End of validation
+	
+	// Assembling array of error fields. If at least 1 element of 'fields' does not have
 	// required attribute 'error-field' value or the element is inaccessible, the function returns
 	// FALSE and error text
 	var errors = [];
-	fields.each(function ()
-	{
-		if ($(this).attr('error-field') === undefined)
-		{
-			console.error("'validate_text' function: Impossible to access to every error field for given list, check the attributes!0");
-			return false;
-		}
-		errors.push($("#"+$(this).attr('error-field')));
-	});
-
-	// Local variable used to prevent multiple 'animate()' scenarios
-	var foo = true;
-	// Local variable used to check if every field passed validation
-	var passed = true;
-
 	try
 	{
-		// Going through every element passed via 'fields' argument
+		fields.each(function (index)
+		{
+			// This variable reserves the id (by the idea) of html element responsible for error message for further usage.
+			var attr_val = $(this).attr("error-field");
+			if(attr_val === undefined || attr_val === "" )
+			{
+				console.error("'validate_text' function: Impossible to access to every error field for given list, check the attributes!");
+				return false;
+			}
+			// Check if element by given id is inaccessible
+			if ($("#"+attr_val).val() === undefined)
+			{
+				console.error("'validate_text' function: Failed to access the corresponding error field (iteration element is '%d')! Check the'error-field' attribute value.", index+1);
+				return false;
+			}
+			errors.push($("#"+$(this).attr('error-field')));
+		})
+		if (fields.length !== errors.length) { return false; }
+		// Local variable used to prevent multiple 'animate()' scenarios
+		var foo = true;
+		// Local variable used to check if every field passed validation
+		var passed = true;
+
+		// ------------------- Main 'for' loop. Going through every element of 'fields' and adjusting CSS styles
 		for (var i = 0; i<fields.length; i++) 
 		{
 			if (fields[i].checkValidity())
@@ -54,10 +64,11 @@ function validate_text(fields)
 				}
 			}
 		}
+		// ------------------- endfor
 	}
-	catch
+	catch (error)
 	{
-		console.error("'validate_text' function: Failed to check elements! Check if input argument is jQuery object.");
+		console.error("'validate_text' function: Failed to validate! Check if input argument is jQuery object.");
 		return false;
 	}
 	

@@ -4,7 +4,8 @@
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
     $url = "https://";   
 else  
-    $url = "http://";   
+    $url = "http://";
+
 // Append the host(domain name, ip) to the URL.   
 $url.= $_SERVER['HTTP_HOST'];   
 
@@ -17,14 +18,17 @@ if (!isset($temp)) {
 	$temp = ".";
 }
 
-// Location of the scripts (folder name)
-$js = $temp . "/js/";
-
 // The root webpage uri
 $root = $temp . "/root.php";
 
 // The main webpage uri
 $index = $temp . "/index.php";
+
+// Location of the scripts (folder name)
+$js = $temp . "/js" . "/";
+
+// Location of the stylesheets (folder name)
+$stylesheets = $temp . "/stylesheets" . "/";
 
 // The main pre-application webpage uri
 $app0 = $temp ."/webpages/app_main.php";
@@ -41,7 +45,7 @@ $app_std_group = $temp ."/webpages/app_s_gr.php";
 // The application for teachers
 $app_tch = $temp ."/webpages/app_t.php";
 
-// The uri of header and footer, head tag
+// The addresses of header and footer, head tag
 $header_uri = $temp ."/header-footer/header.php";
 $footer_uri = $temp ."/header-footer/footer.php";
 $head_uri = $temp ."/head.php";
