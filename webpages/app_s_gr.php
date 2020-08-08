@@ -169,73 +169,15 @@
 <script>
 	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
 	$(document).ready(function(){
-		if(set_click_listener("li_weekday") && set_click_listener("li_time"))
-			$("#submit").click(submit);
-		else
-			$("#submit").attr("disabled", "true");
+		$("#submit").click(submit);
 	})
 	
 	function submit()
 	{
 		// Calling functions in order to do validation
-		validate_list($(".li_time"), 1);
-		validate_list($(".li_weekday"), 2);
 		if(validate_text($("input[type='text']")))
 			validate_birthYear("birthyear-field");
 	}
-</script>
-<script>
-	/*function set_payment(list_class, value, text_el_id, sum_el_id)
-	{
-		var list = $("." + list_class);
-		// Input arguments validation
-		if(!(list.length > 0)|| !Number.isInteger(value))
-		{
-			console.log("The 'set_payment' function false arguments!")
-			return false;
-		}
-		if (typeof text_el_id === undefined)
-		{
-			console.log("The 'set_payment' function false arguments! Text element id required!")
-			return false;
-		}
-		list.each( function(){
-			this.addEventListener('click', function(){add_payment(list, value, text_el_id, sum_el_id);});
-		})
-	}
-	function add_payment(list, value, text_el_id, special_el_id)
-	{
-		
-		var payment = parseInt($("#" + text_el_id).text(),10);
-		var sum
-		if (!Number.isInteger(payment))
-		{
-			console.log("The'add_payment' function false arguments - text is not an integer!");
-			return false;
-		}
-		if (list[i].id === special_el_id && list[i].classList.contains("active")) {}
-		for(var i=0; i<list.length; i++)
-		{
-			if (list[i].id === special_el_id && list[i].classList.contains("active"))
-			{
-				sum+= value*list.length;
-			}
-
-		}
-		if ($("#" + object_id).hasClass("active"))
-		{
-			if (object_id === special_el_id)
-			{
-				value*= 1;
-			}
-			payment+= value;
-		}
-		else
-		{
-			payment-=value;
-		}
-		$("#" + text_el_id).text(payment);
-	}*/
 </script>
 <!-- Importing outsource scripts -->
 <?php

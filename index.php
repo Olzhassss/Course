@@ -60,16 +60,23 @@
 		<div class="container" >
 			<h3 class="my-4 py-3 display-4 text-center">Related articles</h3>
 			<div class="row">
+				<?php
+				  $i = 0;
+				  //while():
+				?>
 
 				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
 					<div class="card shadow-sm">
-					  	<img src="images/Card_img1.jpg" class="card-img-top img-thumbnail" alt="card-logo">
-					  <div class="card-body">
-					    <h5 class="card-title">Card title</h5>
-					    <p class="card-text"></p>
-					  </div>
+						<img src="images/Card_img<?php echo($i+1)?>.jpg" class="card-img-top img-thumbnail" alt="card-logo">
+						<div class="card-body">
+							<h5 class="card-title"><?php echo "asd"; ?></h5>
+							<p class="card-text"></p>
+						</div>
 					</div>
 				</a>
+
+				<?php //endwhile; ?>
+
 				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
 					<div class="card shadow-sm">
 					  <img src="images/Card_img2.jpg" class="card-img-top img-thumbnail" alt="card-logo">
