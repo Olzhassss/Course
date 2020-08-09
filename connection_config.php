@@ -1,38 +1,44 @@
 <?php
 	//Variables required for mysqli
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "appletree";
-	
-	// Create connection
-	$connection = mysqli_connect($servername, $username, $password, $dbname);
-	
-	// Check connection
-	if (!$connection)
-	{
-	    echo "Ошибка: Невозможно установить соединение с MySQL."  .PHP_EOL;
-	    echo "Код ошибки errno: " . mysqli_connect_errno()  .PHP_EOL;
-	    echo "Текст ошибки error: " . mysqli_connect_error()  . PHP_EOL;
-	    exit;
-	}  
-	echo "Соединение с MySQL установлено!" . PHP_EOL;
-	echo "Информация о сервере: " . mysqli_get_host_info($connection) . PHP_EOL;
+	$driver = 'mysql';
+	$host = 'localhost';
+	$username = 'root';
+	$password = '';
+	$db_name = 'appletree';
+	$charset = 'utf8';
+	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
 
 
-	//Write query
-	$query="SELECT * from articles";
+	try {
+		$pdo = new PDO("$driver:host = $host; dbname = $db_name; charset = $charset", $username, $password, $options);
 
+		
+		
+	} catch (PDOException $e) {
+		exit(" Access to database failed! ");
+	}
+
+	session_start();
+	/*
 	//Fetch results
-	$result=mysqli_query($connection, $query);
+	$result=$pdo->query('SELECT * FROM admins');
 
 	//Display results
-	while($row=mysqli_fetch_array($result))
+	while($row=$result->fetch(PDO::FETCH_ASSOC))
 	{
 		echo $row . PHP_EOL;
 	//use row to fetch the element of each column
 	}
 
-	//close connection
-	mysqli_close($connection);
+	$sql = "SELECT name FROM $db_name . teachers WHERE set_date = :set_date";
+	$stmt = $pdo->prepare($sql);
+
+	$params = [':set_date' => '2020-04-12'];
+	$stmt->execute($params);
+
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	//echo "<pre>";
+	//var_dump($rows);
+	*/
 ?>
