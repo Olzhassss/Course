@@ -1,9 +1,17 @@
 <!-- BEGINNING OF THE FOOTER -->
 <?php 
+	if (!isset($short_texts))
+	{
+		include_once($connection_config);
 
-	$slogan_text = "Slogan placed here!";
-	$email_text = "email";
-	$phone_text = "phone number";
+		$sql = "SELECT `name`,`text` FROM $db_name . short_texts WHERE `used_for` = 'footer'";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+	}
+	$slogan_text = $short_texts['slogan_text'][0];
+	$email_text = $short_texts['email_text'][0];
+	$phone_text = $short_texts['phone_text'][0];
  ?>
 
 <section id="section-footer">
@@ -36,15 +44,16 @@
 	  					<div class="col">
 	  						<!-- Social media section -->
 	  						<div class=" d-flex justify-content-around mb-4 row">
-	  							<div class="col p-0">
-	  								<a href="https://twitter.com/"><img class="social-media-img" src="images/twitter-logo.png" alt="twitter"></a>
-	  							</div>
-	  							<div class="col p-0">
-	  								<a href="https://facebook.com/"><img class="social-media-img" src="images/facebook-logo.png" alt="facebook"></a>
-	  							</div>
-	  							<div class="col p-0">
-	  								<a href="https://instagram.com/"><img class="social-media-img" src="images/instagram-logo.png" alt="instagram"></a>
-	  							</div>
+	  							<?php 	//------------------- Extracting references and image file names from the database table 'social_media'
+	  							//Fetch results
+	  							$result = $pdo->query("SELECT `img_file_name`,`href` FROM $db_name . social_media");
+	  							//Display results
+	  							while($data = $result->fetch(PDO::FETCH_OBJ)):
+	  							?>
+	  								<div class="col p-0">
+	  									<a href="<?= $data->href ?>"><img class="social-media-img" src="<?= $imgs.$data->img_file_name ?>" alt="<?= $data->alt ?>"></a>
+	  								</div>
+	  							<?php endwhile; ?>
 	  						<!-- End of social media references -->
 	  						</div>
 	  						<div>

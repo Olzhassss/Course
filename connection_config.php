@@ -6,19 +6,20 @@
 	$password = '';
 	$db_name = 'appletree';
 	$charset = 'utf8';
-	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
+	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+	 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
 
 
-	try {
+	try
+	{
 		$pdo = new PDO("$driver:host = $host; dbname = $db_name; charset = $charset", $username, $password, $options);
-
-		
-		
-	} catch (PDOException $e) {
+	} 
+	catch (PDOException $e)
+	{
 		exit(" Access to database failed! ");
 	}
 
-	session_start();
+	//session_start();
 	/*
 	//Fetch results
 	$result=$pdo->query('SELECT * FROM admins');

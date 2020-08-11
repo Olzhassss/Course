@@ -24,11 +24,17 @@ $root = $temp . "/root.php";
 // The main webpage uri
 $index = $temp . "/index.php";
 
-// Location of the scripts (folder name)
+// The connection configs file uri
+$connection_config = $temp . "/connection_config.php";
+
+// Location of the scripts (url)
 $js = $temp . "/js" . "/";
 
-// Location of the stylesheets (folder name)
+// Location of the stylesheets (url)
 $stylesheets = $temp . "/stylesheets" . "/";
+
+// Location of the images (url)
+$imgs = $temp . "/images" . "/";
 
 // The main pre-application webpage uri
 $app0 = $temp ."/webpages/app_main.php";

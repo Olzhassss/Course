@@ -9,8 +9,9 @@ This document contains essential custom PHP variables used in this project.
 > ROOT DIRECTORY PREFIX - $temp
 > MAIN PAGE ADDRESS - $index
 
-> CUSTOM SCRIPTS FOLDER ADDRESS - $js
-> CUSTOM STYLESHEETS FOLDER ADDRESS - $stylesheets
+> CUSTOM SCRIPTS FOLDER ADDRESS (url) - $js
+> CUSTOM STYLESHEETS FOLDER ADDRESS (url) - $stylesheets
+> IMAGES FOLDER ADDRESS (url) - $imgs
 
 > HEAD TAG FILE ADDRESS - $head_uri
 > HEADER FILE ADDRESS - $header_uri
@@ -33,6 +34,7 @@ This document contains essential custom PHP variables used in this project.
 > ADMINISTRATOR LOG IN PAGE ADDRESS - $authorization_href
 
 > CONTACTS SECTION HREF - $contacts_href
+> PRICE LIST SECTION HREF - $pricing_href
 > FAQ SECTION HREF - $faq_href
 > 'BACK' LINK HREF - $back_link
 > LOGO IMAGE LOCATION - $logo_src

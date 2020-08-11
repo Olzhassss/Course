@@ -1,5 +1,6 @@
 <?php
 	include_once('./root.php');
+	include_once($connection_config);
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
@@ -7,11 +8,16 @@
 	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js");
 	$custom_styles.= "#section-pricing { padding-bottom: 0px;}";
 
-	$blockquote_citation = "some text";
-	$welcoming_text = "Welcome to AppleTree website!";
-	$blockquote_text = "Lorem ipsum ";
-	$schedule_note = "There may be difference on state holidays and during school holidays (summer and winter seasons)";
-	$pricing_note = " Detailed prices per lesson and per month will be given on application page, since education level tariff tend to change!";
+	$result = $pdo->query("SELECT `name`,`text` FROM $db_name . short_texts");
+	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+
+	$blockquote_citation = $short_texts['blockquote_citation'][0];
+	$welcoming_text = $short_texts['welcoming_text'][0];
+	$blockquote_text = $short_texts['blockquote_text'][0];
+	$schedule_note = $short_texts['schedule_note'][0];
+	$pricing_note = $short_texts['pricing_note'][0];
+
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,15 +29,16 @@
 	<section id="section-home">
 		<div id="carousel-1" class="carousel slide"  data-ride="carousel" title="The slide will not change while your mouse is here :)">
 		  <div class="carousel-inner">
-		    <div data-interval="3000" class="carousel-item active">
-		      <img src="images/carousel_img1.png"  class="d-block w-100" alt="...">
-		    </div>
-		    <div data-interval="3000" class="carousel-item">
-		      <img src="images/carousel_img2.jpg"  class="d-block w-100" alt="...">
-		    </div>
-		    <div data-interval="3000" class="carousel-item">
-		      <img src="images/carousel_img3.png"  class="d-block w-100" alt="...">
-		    </div>
+		  	<?php 	//------------------- Extracting carousel images from the database table 'carousel_imgs'
+		  	//Fetch results
+		  	$result = $pdo->query("SELECT `img_file_name` FROM $db_name . carousel_imgs");
+		  	//Display results
+		  	while($img_urn = $result->fetch()['img_file_name']):
+		 	?>
+		  		<div data-interval="5000" class="carousel-item">
+		  		  <img src="<?= $imgs.$img_urn ?>"  class="d-block w-100" alt="<?= $img_urn ?>">
+		  		</div>
+		  	<?php endwhile; ?>
 		  </div>
 		</div>
 	</section>
@@ -55,41 +62,24 @@
 		<div class="container" >
 			<h3 class="my-4 py-3 display-4 text-center">Related articles</h3>
 			<div class="row">
-				<?php
-				  $i = 0;
-				  //while():
-				?>
 
-				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
-					<div class="card shadow-sm">
-						<img src="images/Card_img<?php echo($i+1)?>.jpg" class="card-img-top img-thumbnail" alt="card-logo">
-						<div class="card-body">
-							<h5 class="card-title"><?php echo "asd"; ?></h5>
-							<p class="card-text"></p>
-						</div>
-					</div>
-				</a>
+				<?php 	//------------------- Extracting card images and titles from the database table 'articles'
+		  		//Fetch results
+		  		$result = $pdo->query("SELECT `title`,`img_file_name` FROM $db_name . articles");
+		  		//Display results
+		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
+		 		?>
 
-				<?php //endwhile; ?>
+		  			<a href="article.php"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
+		  				<div class="card shadow-sm">
+		  					<img src="<?= $imgs.$data->img_file_name ?>" class="card-img-top img-thumbnail" alt="card-logo">
+		  					<div class="card-body">
+		  						<h5 class="card-title"><?= $data->title ?></h5>
+		  					</div>
+		  				</div>
+		  			</a>
 
-				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
-					<div class="card shadow-sm">
-					  <img src="images/Card_img2.jpg" class="card-img-top img-thumbnail" alt="card-logo">
-					  <div class="card-body">
-					    <h5 class="card-title">Card title</h5>
-					    <p class="card-text"></p>
-					  </div>
-					</div>
-				</a>
-				<a href="#"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
-					<div class="card shadow-sm">
-					  <img src="images/Card_img3.jpg" class="card-img-top img-thumbnail" alt="card-logo">
-					  <div class="card-body">
-					    <h5 class="card-title">Card title</h5>
-					    <p class="card-text"></p>
-					  </div>
-					</div>
-				</a>
+		  		<?php endwhile; ?>
 
 			</div>
 		</div>
@@ -99,48 +89,35 @@
 		<div class="container">
 			<h3 class="my-4 py-3 display-4 text-center">Frequently asked questions</h3>
 			<div class="accordion my-5" id="accordion-item">
-			  <div class="card">
-			    <div class="card-header" id="headingOne">
-			      <p class="mb-0">
-			        <button class="btn btn-link btn-block text-left collapsed text-success"  type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-			          question 1
-			        </button>
-			      </p>
-			    </div>
-			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-item">
-			      <div class="card-body">
-			      	answer 1
-			      </div>
-			    </div>
-			  </div>
-			  <div class="card">
-			    <div class="card-header" id="headingTwo">
-			      <p class="mb-0">
-			        <button class="btn btn-link btn-block text-left collapsed text-success" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			          question 2
-			        </button>
-			      </p>
-			    </div>
-			    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion-item">
-			      <div class="card-body">
-					answer 2
-			      </div>
-			    </div>
-			  </div>
-			  <div class="card">
-			    <div class="card-header" id="headingThree">
-			      <p class="mb-0">
-			        <button class="btn btn-link btn-block text-left collapsed text-success" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-			          question 3
-			        </button>
-			      </p>
-			    </div>
-			    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion-item">
-			      <div class="card-body">
-					answer 3
-			      </div>
-			    </div>
-			  </div>
+
+				<?php 	//------------------- Extracting questions and answers from the database table 'faqs'
+		  		//Fetch results
+		  		$result = $pdo->query("SELECT `question`,`answer` FROM $db_name . faqs");
+		  		//Display results
+		  		$temp = 1;
+		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
+		 		?>
+
+		  			<div class="card">
+		  			  <div class="card-header" id="heading<?= $temp ?>">
+		  			    <p class="mb-0">
+		  			      <button class="btn btn-link btn-block text-left collapsed text-success"  type="button" data-toggle="collapse" data-target="#collapse<?= $temp ?>" aria-expanded="false" aria-controls="collapse<?= $temp ?>">
+		  			        <?= $data->question.PHP_EOL ?>
+		  			      </button>
+		  			    </p>
+		  			  </div>
+		  			  <div id="collapse<?= $temp ?>" class="collapse" aria-labelledby="heading<?= $temp ?>" data-parent="#accordion-item">
+		  			    <div class="card-body">
+		  			    	<?= $data->answer.PHP_EOL ?>
+		  			    </div>
+		  			  </div>
+		  			</div>
+
+		  		<?php
+		  		$temp++;
+		  		endwhile;
+		  		?>
+
 			</div>
 		</div>
 	</section>
@@ -159,21 +136,22 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					    <tr>
-					      <td>Weekday</td>
-					      <td>9:00 - 19:00</td>
-					      <td>9:00 - 21:00</td>
-					    </tr>
-					    <tr>
-					      <td>Saturday</td>
-					      <td>10:00 - 16:00</td>
-					      <td>10:00 - 18:00</td>
-					    </tr>
-					    <tr>
-					      <td>Sunday</td>
-					      <td>10:00 - 16:00</td>
-					      <td>10:00 - 16:00</td>
-					    </tr>
+
+						<?php 	//------------------- Extracting schedule information from the database table 'work_schedule'
+				  		//Fetch results
+				  		$result = $pdo->query("SELECT `day_of_week`,`working_time`,`app_time` FROM $db_name . work_schedule");
+				  		//Display results
+				  		while($data = $result->fetch(PDO::FETCH_OBJ)):
+				 		?>
+
+				  			<tr>
+				  				<td><?= $data->day_of_week ?></td>
+				  				<td><?= $data->working_time ?></td>
+				  				<td><?= $data->app_time ?></td>
+				  			</tr>
+
+				  		<?php endwhile; ?>
+
 					  </tbody>
 					</table>
 					<br>
@@ -191,44 +169,31 @@
 	
 	<section id="section-pricing">
 		<div class="container py-3">
-			<h3 class="display-4 text-center">Pricing</h3>
+			<h3 class="display-4 text-center py-2 my-2">Offers</h3>
 			<div class="row d-flex justify-content-center text-center my-5 py-3 ">
-				<div class="my-2 card col-7 col-sm-4 col-md-3 mx-3 px-0 bg-light">
-					<div class="card-header">
-						Group lesson fee
-					</div> 
-					<div class="card-body">
-						<strong>
-							<h2>2000tg/les</h2>
-							<p>During weekday</p>
-						</strong>			  	
-						<p class="text-left my-0"><small><em>Additional price assigned according to education level</em></small></p>
-					</div>	
-				</div>
-				<div class="my-2 card col-7 col-sm-4 col-md-3 mx-3 px-0" style="background-color: rgba(51, 204, 51, 0.4);">
-					<div class="card-header">
-						Private lesson fee
-					</div> 
-					<div class="card-body">
-						<strong>
-							<h2>3200tg/les</h2>
-							<p>Every day</p>
-						</strong>			  	
-						<p class="text-left my-0"><small><em>Additional price assigned according to education level</em></small></p>
-					</div>	
-				</div>
-				<div class="my-2 card col-7 col-sm-4 col-md-3 mx-3 px-0" style="background-color: rgba(255, 204, 0, 0.5);">
-					<div class="card-header">
-						Group lesson fee
-					</div> 
-					<div class="card-body">
-						<strong>
-							<h2>2500tg/les</h2>
-							<p>During weekend</p>
-						</strong>			  	
-						<p class="text-left my-0"><small><em>Additional price assigned according to education level</em></small></p>
-					</div>	
-				</div>
+
+				<?php 	//------------------- Extracting pricing information from the database table 'price_list'
+					//Fetch results
+					$result = $pdo->query("SELECT `card_header`,`price`,`condition`,`note` FROM $db_name . price_list");
+					//Display results
+					while($data = $result->fetch(PDO::FETCH_OBJ)):
+				?>
+
+					<div class="price-card my-2 card col-7 col-sm-4 col-md-3 mx-3 px-0">
+						<div class="card-header">
+							<?= $data->card_header ?>
+						</div> 
+						<div class="card-body">
+							<strong>
+								<h2><?= $data->price ?>tg/les</h2>
+								<p><?= $data->condition ?></p>
+							</strong>			  	
+							<p class="text-left my-0"><small><em><?= $data->note ?></em></small></p>
+						</div>	
+					</div>
+
+				<?php endwhile; ?>
+
 			</div>
 			<div class="row text-center">
 				<div class="col-8 col-lg-6 mx-auto">
@@ -257,4 +222,17 @@ foreach ($custom_scripts as $value)
    		echo "<script src='$js$value'></script>".PHP_EOL;
     }
 ?>
+<script>
+	$(document).ready(function(){
+		// Activating first carousel slide (necessary)
+		$(".carousel-item").first().addClass("active");
+
+		// This array conserves available colors
+		var colors = ['rgba(208, 210, 208, 0.7)', 'rgba(107, 255, 107, 0.7)', 'rgba(255, 231, 81, 0.7)'];
+		// Assigning background colors randomly for price list cards using data from the array above
+		$(".price-card").each(function(index){
+			$(this).css("background-color", colors[Math.floor(Math.random()*colors.length)]);
+		})
+	})
+</script>
 </html>

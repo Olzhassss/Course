@@ -1,7 +1,8 @@
 <!-- BEGINNING OF THE HEADER -->
 <?php
-	$logo_src = $temp . "/images/logo.png";
+	$logo_src = $imgs . "logo.png";
 	$contacts_href = $index . "#section-footer";
+	$pricing_href = $index . "#section-pricing";
 	$faq_href = $index . "#section-faq";
 ?>
 <section id="section-header" style="padding: 0px;">
@@ -21,6 +22,7 @@
 			<nav class="my-2 my-md-0 mr-md-2">
 				<a class="p-2 text-light text-decoration-none" href="../sign_in.html">test</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$contacts_href?>">Contacts</a>
+			    <a class="p-2 text-light text-decoration-none" href="<?=$pricing_href?>">Price list</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$faq_href?>">FAQ</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$authorization_href?>">Administration</a>
 			</nav>

@@ -1,11 +1,11 @@
 <?php
-	//session_start();
 	$temp = "..";
 	include_once('../root.php');
 	$title = 'AppleTree main page';
 	$custom_stylesheets = array("header.style.css", "footer.style.css", "app_main.style.css");
 	$custom_styles = ".choice_button{ width: 100%; padding-top: 20px; padding-bottom: 20px;	font-size: 2rem; } #section-main{ padding-bottom: 0px; }";
 ?>
+
 
 <!DOCTYPE html>
 <html>
