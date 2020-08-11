@@ -1,11 +1,22 @@
-.social-media-img{
+@media (min-width: 10px) {
+  .social-media-img{
+	width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .social-media-img{
 	width: 50%;
+  }
+}
+.social-media-img{
+	height: 100%;
 }
 .color-bcbec0{
 	color: #BCBEC0;
 }
 #section-footer{
-	padding: 0px;
+	padding-bottom: 0px;
+	padding-top: 12rem;
 }
 footer{
 	background-color: #004156;

@@ -1,16 +1,3 @@
-<!-- NOTES:
-	THE NAMES OF VARIABLES USED
-	> 'BACK' LINK HREF - $back_link
-	> HEAD TAG FILE ADDRESS - $head_uri
-	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
-	> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
-	> CUSTOM STYLES (CSS) - $custom_styles
-	> PAGE TITLE (string) - $title
-	> CUSTOM SCRIPTS FOLDER ADDRESS - $js
-	> 'ROOT' FILE ADDRESS - "../root.php" ($root_uri)
-	> ROOT DIRECTORY PREFIX - $temp
--->
-
 <?php 
 	$temp = "..";
 	include_once("../root.php");

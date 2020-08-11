@@ -1,7 +1,7 @@
-This document contains all custom PHP variables used in this project.
+This document contains essential custom PHP variables used in this project.
 
-Notes:
-> PAGE TITLE (string) - $title
+	General. Folders and addresses:
+
 > PAGE URL - $url
 > CURRENT PAGE URI - $thispage
 
@@ -9,26 +9,43 @@ Notes:
 > ROOT DIRECTORY PREFIX - $temp
 > MAIN PAGE ADDRESS - $index
 
-> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
-> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
-> CUSTOM STYLES (CSS) - $custom_styles
-
 > CUSTOM SCRIPTS FOLDER ADDRESS - $js
 > CUSTOM STYLESHEETS FOLDER ADDRESS - $stylesheets
-
 
 > HEAD TAG FILE ADDRESS - $head_uri
 > HEADER FILE ADDRESS - $header_uri
 > FOOTER FILE ADDRESS - $footer_uri
 
+
+	General. Scripts and shylesheets:
+
+> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
+> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
+> CUSTOM STYLES (CSS) - $custom_styles
+
+	Specific. References:
+
 > PRE-APPLICATION PAGE ADDRESS- $app0;
 > TEACHERS APPLICATION FORM HREF - $app_tch
 > STUDENTS APPLICATION PAGE HREF - $app_std0
-> STUDENT'S PRIVATE LESSONS APPLICATION PAGE HREF - $app_std_private
-> STUDENT'S GROUP LESSONS APPLICATION PAGE HREF - $app_std_group
+> STUDENT'S PRIVATE LESSONS APPLICATION FORM HREF - $app_std_private
+> STUDENT'S GROUP LESSONS APPLICATION FORM HREF - $app_std_group
+> ADMINISTRATOR LOG IN PAGE ADDRESS - $authorization_href
 
-> ADMINISTRATION PAGE ADDRESS - $authorization_href
 > CONTACTS SECTION HREF - $contacts_href
 > FAQ SECTION HREF - $faq_href
 > 'BACK' LINK HREF - $back_link
 > LOGO IMAGE LOCATION - $logo_src
+
+
+	Strings:
+
+> PAGE TITLE (string) - $title
+> WELCOMING TEXT - $welcoming_text
+> Quote under welcoming - $blockquote_text
+> Citation of the quote - $blockquote_citation
+> Notes under time schedule - $schedule_note
+> Notes under pricing - $pricing_note
+> Slogan placed at the bottom of the page - $slogan_text
+> Administrator's email address (contacts section) - $email_text
+> Administrator's phone number (contacts section) - $phone_text

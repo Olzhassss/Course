@@ -1,13 +1,4 @@
-<!-- NOTES:
-    THE NAMES OF VARIABLES USED
-    > CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
-    > CUSTOM STYLES (CSS) - $custom_styles
-    > PAGE TITLE (string) - $title
-    > CUSTOM STYLESHEETS FOLDER ADDRESS - $stylesheets
-    > 'ROOT' FILE ADDRESS - "./root.php" ($root_uri)
-    > ROOT DIRECTORY PREFIX - $temp
--->
-
+<!-- BEGINNING OF THE HEAD TAG -->
 <head> 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -1,18 +1,3 @@
-<!-- NOTES:
-	THE NAMES OF VARIABLES USED
-	> HEADER FILE ADDRESS - $header_uri
-	> FOOTER FILE ADDRESS - $footer_uri
-	> HEAD TAG FILE ADDRESS - $head_uri
-	> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
-	> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
-    > CUSTOM STYLES (CSS) - $custom_styles
-	> PAGE TITLE (string) - $title
-	> CUSTOM SCRIPTS FOLDER ADDRESS - $js
-	> 'ROOT' FILE ADDRESS - "./root.php" ($root_uri)
-	> ROOT DIRECTORY PREFIX - $temp
-
--->
-
 <?php
 	include_once('./root.php');
 	//session_start();
@@ -20,7 +5,13 @@
 	$title = 'AppleTree main page';
 	$custom_stylesheets = array("header.style.css", "footer.style.css");
 	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js");
-	
+	$custom_styles.= "#section-pricing { padding-bottom: 0px;}";
+
+	$blockquote_citation = "some text";
+	$welcoming_text = "Welcome to AppleTree website!";
+	$blockquote_text = "Lorem ipsum ";
+	$schedule_note = "There may be difference on state holidays and during school holidays (summer and winter seasons)";
+	$pricing_note = " Detailed prices per lesson and per month will be given on application page, since education level tariff tend to change!";
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,16 +21,16 @@
 	<?php include_once($header_uri); ?>
 
 	<section id="section-home">
-		<div id="carousel-1" class="carousel slide"  data-ride="carousel">
+		<div id="carousel-1" class="carousel slide"  data-ride="carousel" title="The slide will not change while your mouse is here :)">
 		  <div class="carousel-inner">
 		    <div data-interval="3000" class="carousel-item active">
-		      <img src="images/carousel-image-1.png"  class="d-block w-100" alt="...">
-		    </div>
-		    <div data-interval="3000" class="carousel-item" data-interval="2000">
-		      <img src="images/carousel-image-2.jpg"  class="d-block w-100" alt="...">
+		      <img src="images/carousel_img1.png"  class="d-block w-100" alt="...">
 		    </div>
 		    <div data-interval="3000" class="carousel-item">
-		      <img src="images/carousel-image-3.png"  class="d-block w-100" alt="...">
+		      <img src="images/carousel_img2.jpg"  class="d-block w-100" alt="...">
+		    </div>
+		    <div data-interval="3000" class="carousel-item">
+		      <img src="images/carousel_img3.png"  class="d-block w-100" alt="...">
 		    </div>
 		  </div>
 		</div>
@@ -47,10 +38,14 @@
 
 	<section id="section-welcoming">
 		<div class="container">
-			<h2 class="text-center text-success display-3 mb-5">Welcome to AppleTree website!</h2>
+			<h2 id="welcoming_text" class="text-center text-success display-3 mb-5"><?= $welcoming_text ?> </h2>
 			<blockquote class="blockquote text-right">
-			  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-			  <footer class="blockquote-footer bg-white">Creator, <cite title="Source Title">Olzhas</cite></footer>
+			  <p id="blockquote_text" class="mb-0"><?= $blockquote_text ?> </p>
+			  <?php if(isset($blockquote_citation))
+			  	{
+			  		echo "<footer class='blockquote-footer bg-white'> <cite title='Source Title'>$blockquote_citation</cite></footer>";
+			  	}
+			  ?>
 			</blockquote>
 			<br>
 		</div>
@@ -106,22 +101,15 @@
 			<div class="accordion my-5" id="accordion-item">
 			  <div class="card">
 			    <div class="card-header" id="headingOne">
-			      
+			      <p class="mb-0">
 			        <button class="btn btn-link btn-block text-left collapsed text-success"  type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-			          What days of the week AppleTree offer classes?
+			          question 1
 			        </button>
-			     
+			      </p>
 			    </div>
 			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-item">
-			      <div class="card-body container-fluid mb-0">
-			      	<div class="row">
-			      		<div class="col-5 col-md-3">
-			      			<img src="images/1.jpg" alt="..." class="float-left" style="width: 100%;">
-			      		</div>
-			      		<div class="col">
-			      			We offer classes 7 days a week with exceptions on state holidays. 
-			      		</div>			
-			      	</div>	      	
+			      <div class="card-body">
+			      	answer 1
 			      </div>
 			    </div>
 			  </div>
@@ -129,13 +117,13 @@
 			    <div class="card-header" id="headingTwo">
 			      <p class="mb-0">
 			        <button class="btn btn-link btn-block text-left collapsed text-success" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			          What is the maximum size of one group?
+			          question 2
 			        </button>
 			      </p>
 			    </div>
 			    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion-item">
 			      <div class="card-body">
-					Maximum size reaches 6 students, but usually we have 3-4 students in one group.
+					answer 2
 			      </div>
 			    </div>
 			  </div>
@@ -143,13 +131,13 @@
 			    <div class="card-header" id="headingThree">
 			      <p class="mb-0">
 			        <button class="btn btn-link btn-block text-left collapsed text-success" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-			          Do groups are gathered in small age range of students?
+			          question 3
 			        </button>
 			      </p>
 			    </div>
 			    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion-item">
 			      <div class="card-body">
-					No, in AppleTree we see it more beneficial not to divide groups by ages, because primary attribute for entire group is a common language level of learners.
+					answer 3
 			      </div>
 			    </div>
 			  </div>
@@ -189,7 +177,13 @@
 					  </tbody>
 					</table>
 					<br>
-					<p class="alert alert-success small"><strong>Note:</strong> There may be difference on state holidays and during school holidays (summer and winter seasons) </p>
+					<span id="schedule_note">
+						<?php if(isset($schedule_note))
+							{
+								echo "<p class='alert alert-success small'><strong>Note: </strong>$schedule_note</p>";
+							}
+						?>
+					</span>
 				</div>		
 			</div>
 		</div>
@@ -237,10 +231,14 @@
 				</div>
 			</div>
 			<div class="row text-center">
-				<div class="col-8 col-lg-6 mx-auto mb-3">
-					<p class="alert alert-success small">
-						<strong>Note: </strong> Detailed prices per lesson and per month will be given on application page, since education level tariff tend to change!
-					</p>
+				<div class="col-8 col-lg-6 mx-auto">
+					<span id="pricing_note">
+						<?php if(isset($pricing_note))
+							{
+								echo "<p class='alert alert-success small'><strong>Note: </strong>$pricing_note</p>";
+							}
+						?>
+					</span>
 				</div>
 			</div>
 		</div>

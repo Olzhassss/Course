@@ -11,11 +11,11 @@ if (!empty($login) && ! empty($pass)) {
 	$stmt->execute([':login' => $login]);
 
 	$user = $stmt->fetch(PDO::FETCH_OBJ);
-
 	if($user)
 	{
 		if (password_verify($pass, $user->pswd))
 		{
+			$_SESSION['user_login'] = $user->login;
 			header('Location:admin.php');
 		} else
 		{
@@ -23,7 +23,7 @@ if (!empty($login) && ! empty($pass)) {
 		}
 	} else
 	{
-		echo "Wrong login or password";
+		echo "No such user.";
 	}
 
 }
