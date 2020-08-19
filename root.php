@@ -37,19 +37,19 @@ $stylesheets = $temp . "/stylesheets" . "/";
 $imgs = $temp . "/images" . "/";
 
 // The main pre-application webpage uri
-$app0 = $temp ."/webpages/app_main.php";
+$app0 = $temp ."/general/app_main.php";
 
 // The group or private lesson choice (student pre-application) webpage uri
-$app_std0 = $temp ."/webpages/app_s0.php";
+$app_std0 = $temp ."/general/app_s0.php";
 
 // The application for students who chose private lessons
-$app_std_private = $temp ."/webpages/app_s_pr.php";
+$app_std_private = $temp ."/general/app_s_pr.php";
 
 // The application for students who chose private lessons
-$app_std_group = $temp ."/webpages/app_s_gr.php";
+$app_std_group = $temp ."/general/app_s_gr.php";
 
 // The application for teachers
-$app_tch = $temp ."/webpages/app_t.php";
+$app_tch = $temp ."/general/app_t.php";
 
 // The addresses of header and footer, head tag
 $header_uri = $temp ."/header-footer/header.php";

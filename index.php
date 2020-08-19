@@ -4,7 +4,7 @@
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
-	$custom_stylesheets = array("header.style.css", "footer.style.css");
+	$custom_stylesheets = array("header.style.css", "footer.style.css", "loader.style.css");
 	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js");
 	$custom_styles.= "#section-pricing { padding-bottom: 0px;}";
 
@@ -17,14 +17,17 @@
 	$schedule_note = $short_texts['schedule_note'][0];
 	$pricing_note = $short_texts['pricing_note'][0];
 
-	
+	$spinner_src = $imgs . "spinner.gif";
 ?>
 <!DOCTYPE html>
 <html>
 <?php include_once($head_uri); ?>
 <body>
-	<!--Including head and header via PHP -->
-	<?php include_once($header_uri); ?>
+<?php include_once($header_uri); ?>
+
+	<div id="loader_div" class="loader">
+		<img src="<?=$spinner_src?>" alt="spinner">
+	</div>
 
 	<section id="section-home">
 		<div id="carousel-1" class="carousel slide"  data-ride="carousel" title="The slide will not change while your mouse is here :)">
@@ -233,6 +236,9 @@ foreach ($custom_scripts as $value)
 		$(".price-card").each(function(index){
 			$(this).css("background-color", colors[Math.floor(Math.random()*colors.length)]);
 		})
+		$("#loader_div").addClass("hidden").on("animationend", function(){
+			$("body").css("overflow","visible");
+		});
 	})
 </script>
 </html>

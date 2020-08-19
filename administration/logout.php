@@ -1,6 +1,9 @@
 <?php 
-require_once 'connection_config.php';
-
+$temp = "..";
+	include_once('../root.php');
+	
+	require_once $connection_config;
+	session_start();
 $_SESSION = [];
 
 if (isset($_COOKIE[session_name()])) {
@@ -9,5 +12,5 @@ if (isset($_COOKIE[session_name()])) {
 
 session_destroy();
 
-header('Location:sign_in.html');
+header('Location:sign_in.php');
  ?>

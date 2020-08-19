@@ -16,7 +16,7 @@
 	} 
 	catch (PDOException $e)
 	{
-		exit(" Access to database failed! ");
+		exit(" Access to the database failed! ");
 	}
 
 	//session_start();
