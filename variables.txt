@@ -15,8 +15,9 @@ This document contains essential custom PHP variables used in this project.
 
 > HEAD TAG FILE ADDRESS - $head_uri
 > HEADER FILE ADDRESS - $header_uri
+> SPECIAL HEADER FILE ADDRESS - $headerAdmin_uri 
 > FOOTER FILE ADDRESS - $footer_uri
-
+> 'BACK' LINK FILED ADDRESS - $back_link_uri
 
 	General. Scripts and shylesheets:
 
@@ -33,10 +34,11 @@ This document contains essential custom PHP variables used in this project.
 > STUDENT'S GROUP LESSONS APPLICATION FORM HREF - $app_std_group
 > ADMINISTRATOR LOG IN PAGE ADDRESS - $authorization_href
 
+> TOP (HEADER) SECTION HREF - $header_href
 > CONTACTS SECTION HREF - $contacts_href
 > PRICE LIST SECTION HREF - $pricing_href
 > FAQ SECTION HREF - $faq_href
-> 'BACK' LINK HREF - $back_link
+> 'BACK' LINK HREF - $back_link_href
 > LOGO IMAGE LOCATION - $logo_src
 
 

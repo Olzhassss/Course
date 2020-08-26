@@ -10,9 +10,7 @@
 <html lang="en">
 	<?php include_once($head_uri); ?>
 <body>
-	<section id="section-back-link">
-		<a class="nav-link" href="<?=$back_link;?>" id="back-link"><-Back</a>
-	</section>
+	<?php include_once($back_link_uri); ?>
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
@@ -165,6 +163,7 @@
 		validate_text($("input[type='text']"))
 	}
 </script>
+<!-- Importing script files by PHP -->
 <?php
 foreach ($custom_scripts as $value)
     {

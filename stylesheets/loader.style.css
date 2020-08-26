@@ -28,18 +28,3 @@ body{
         visibility: hidden;
     },
 }
-input.error{
-	position: relative;
-	border-width: 1px;
-	border-color: rgba(255,27,27,0.7);
-}
-.error:after {
-  content: " ";
-  position: absolute;
-  z-index: -1;
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
-  border: 5px solid #ffea00;
-}

@@ -21,7 +21,7 @@
 					<p class="alert display-4"><b>For new student applicants!</b></p>
 				</div>
 				<form method="post" action="?" style="height: 200px;">
-					<P class="alert alert-success display-4">Please choose would you like to have group or private lessons</p> 
+					<p class="alert alert-success display-4">Please choose would you like to have group or private lessons</p> 
 					<div class="row mb-3">
 						<div class="col-md"></div>
 						<div class="col-12 col-sm-6 col-md-4 my-3">

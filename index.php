@@ -4,27 +4,32 @@
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
+	// Storing all necessary files in arrays for further import
 	$custom_stylesheets = array("header.style.css", "footer.style.css", "loader.style.css");
-	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js");
-	$custom_styles.= "#section-pricing { padding-bottom: 0px;}";
-
+	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js", "loader.js");
+	// Storing little style adjustments for further amendment 
+	$custom_styles = "#section-pricing { padding-bottom: 0px;}";
+	// Get strings from the database
 	$result = $pdo->query("SELECT `name`,`text` FROM $db_name . short_texts");
 	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
-
+	// Set the string values for corresponding variables to be used on the page
 	$blockquote_citation = $short_texts['blockquote_citation'][0];
 	$welcoming_text = $short_texts['welcoming_text'][0];
 	$blockquote_text = $short_texts['blockquote_text'][0];
 	$schedule_note = $short_texts['schedule_note'][0];
 	$pricing_note = $short_texts['pricing_note'][0];
-
+	// Loader gif
 	$spinner_src = $imgs . "spinner.gif";
 ?>
 <!DOCTYPE html>
 <html>
+<!-- Importing head tag -->
 <?php include_once($head_uri); ?>
 <body>
-<?php include_once($header_uri); ?>
-
+	<!-- Importing the header -->
+	<?php include_once($header_uri); ?>
+	
+	<!-- The loader -->
 	<div id="loader_div" class="loader">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
@@ -67,9 +72,9 @@
 			<div class="row">
 
 				<?php 	//------------------- Extracting card images and titles from the database table 'articles'
-		  		//Fetch results
+		  		// Fetch results
 		  		$result = $pdo->query("SELECT `title`,`img_file_name` FROM $db_name . articles");
-		  		//Display results
+		  		// Display results by repeating the cycle for every fetched row in the table
 		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 		 		?>
 
@@ -94,10 +99,12 @@
 			<div class="accordion my-5" id="accordion-item">
 
 				<?php 	//------------------- Extracting questions and answers from the database table 'faqs'
-		  		//Fetch results
+		  		// Fetch results
 		  		$result = $pdo->query("SELECT `question`,`answer` FROM $db_name . faqs");
-		  		//Display results
+		  		// Display results
+		  		// Temporary variable used to assign non-repeating 'id's for some elements
 		  		$temp = 1;
+		  		// Repeat for every fetched row in the table
 		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 		 		?>
 
@@ -141,9 +148,9 @@
 					  <tbody>
 
 						<?php 	//------------------- Extracting schedule information from the database table 'work_schedule'
-				  		//Fetch results
+				  		// Fetch results
 				  		$result = $pdo->query("SELECT `day_of_week`,`working_time`,`app_time` FROM $db_name . work_schedule");
-				  		//Display results
+		  				// Display results by repeating the cycle for every fetched row in the table
 				  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 				 		?>
 
@@ -178,7 +185,7 @@
 				<?php 	//------------------- Extracting pricing information from the database table 'price_list'
 					//Fetch results
 					$result = $pdo->query("SELECT `card_header`,`price`,`condition`,`note` FROM $db_name . price_list");
-					//Display results
+		  			// Display results by repeating the cycle for every fetched row in the table
 					while($data = $result->fetch(PDO::FETCH_OBJ)):
 				?>
 
@@ -211,14 +218,13 @@
 			</div>
 		</div>
 	</section>
-
-	<?php
-	include_once($footer_uri);
-	?>
+	<!-- Importing the footer -->
+	<?php include_once($footer_uri); ?>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Importing script files by PHP -->
 <?php
 foreach ($custom_scripts as $value)
     {
@@ -230,15 +236,14 @@ foreach ($custom_scripts as $value)
 		// Activating first carousel slide (necessary)
 		$(".carousel-item").first().addClass("active");
 
-		// This array conserves available colors
+		// This array stores available colors for futher usage
 		var colors = ['rgba(208, 210, 208, 0.7)', 'rgba(107, 255, 107, 0.7)', 'rgba(255, 231, 81, 0.7)'];
 		// Assigning background colors randomly for price list cards using data from the array above
 		$(".price-card").each(function(index){
 			$(this).css("background-color", colors[Math.floor(Math.random()*colors.length)]);
 		})
-		$("#loader_div").addClass("hidden").on("animationend", function(){
-			$("body").css("overflow","visible");
-		});
+		// Deactivating loader
+		fix_loader("loader_div");
 	})
 </script>
 </html>

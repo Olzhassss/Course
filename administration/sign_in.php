@@ -5,44 +5,42 @@
 	//session_start();
 	//$username = "";
 	$title = 'Authorization';
-	$custom_stylesheets = array("loader.style.css");
-	//$custom_scripts = array("validate_text.js");
-	//$custom_styles.= "";
+	$custom_stylesheets = array("loader.style.css", "back-link.style.css");
+	$custom_scripts = array("loader.js", "validate_single.js");
+	//$custom_styles = "";
 	$spinner_src = $imgs . "spinner.gif";
+
+	session_start();
+	if (isset($_SESSION['user_login'])) {
+		header('Location:admin_main.php');
+	}
 ?>
 <!DOCTYPE html>
 <html>
 <?php include_once($head_uri); ?>
 <body>
+	<?php include_once($back_link_uri); ?>
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
-	<section id="section-header">
-		<div class="d-flex flex-column flex-md-row align-items-center p-3">
-			<h3 class="m-2 border border-success rounded-right py-2 px-3">
-				<a href="<?=$index?>" class="text-success text-decoration-none"><= Back to main page</a>
-			</h3>
-		</div>
-	</section>
 	<section id="section-form">
 		<form>
 			<div class="container">
 				<div class="row py-3">
 					<div class="col-xs-12 col-sm-8 col-md-4">
 					    <label for="login-field">Login</label>
-					    <input name="login" type="text" class="form-control" id="login-field" pattern="[A-Za-z]{1}[0-9a-zA-Z]{4,20}" required="true">
+					    <input name="login" type="text" class="form-control" id="login-field" pattern="[0-9a-zA-Z]{1,20}" required="true">
 					</div>
 				</div>
 				<div class="row py-3">
 					<div class="col-xs-12 col-sm-8 col-md-4">
 					    <label for="password-field">Password</label>
-					    <input required="true" name="password" type="password" class="form-control" id="password-field"  pattern="[0-9a-zA-Z]{1,}" >
+					    <input name="password" type="password" class="form-control" id="password-field"  pattern="[0-9a-zA-Z]{1,}" required="true">
 					</div>
 				</div>
 				<div class="row py-3">
 					<div class="col-xs-10 col-sm-6 col-md-3">
-						<input type="submit" id="submit" class="btn btn-primary my-2 w-100">
-							Sign in!
+						<input type="submit" id="submit" class="btn btn-primary my-2 w-100" value="Sign in!">
 						<small id="error_0" class="form-text text-danger"></small>
 					</div>
 				</div>
@@ -58,62 +56,52 @@
 <script>
 	// Attaching 'click' function to the 'Sign in!' button via id
 	$(document).ready(function(){
-		$("#loader_div").css("display","flex");
 		$("#submit").click(submit);
+		fix_loader("loader_div");
 	})
 	
 	function submit(event)
 	{
 		event.preventDefault();
-		login = $("input[name='login']");
-		password = $("input[name='password'");
-		var text;
-		if(login.val() != "" && password.val() != "")
+
+		var error_field = $("#error_0");
+		error_field.text("");
+
+		if(validate_single('login-field') && validate_single('password-field'))
 		{
-			
+
 			$.ajax({
 				url: 'authorization.php',
 				type: 'POST',
 				cache: false,
-				data: { 'login':login.val(), 'password':password.val()},
+				data: { 'login':$("#login-field").val(), 'password':$("#password-field").val() },
 				beforeSend: function() {
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
 					if (data == 0)
 					{
-						window.location.replace("admin.php");
+						window.location.replace("admin_main.php");
 						return;
 					}
 					else
 					{
-						$("input[name='password'").val("");
-						$("#loader_div").addClass("hidden");
-						text = "Wrong login or password!";
-						return;
+						error_field.text("Wrong login or password");
 					}
-				},
-				error: function(e){
-					alert(e.text());
 				}
 			})
 		}
-		else
-		{
-			$("input[name='password'").val("");
-			login.addClass("error");
-			password.addClass("error");
-			text = "Please fill the spaces!";
-		}
-		$("#error_0").text(text);
+
+		$("input[name='password'").val("");
+		$("#loader_div").addClass("hidden");
 	}
 
 </script>
-<!--<?php
+<?php
 foreach ($custom_scripts as $value)
     {
-   		//echo "<script src='$js$value'></script>".PHP_EOL;
+   		echo "<script src='$js$value'></script>".PHP_EOL;
     }
-?>-->
+?>
 
 </html>

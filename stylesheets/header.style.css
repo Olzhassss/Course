@@ -1,19 +1,26 @@
 #headerdiv{
 	background-color: #004156;
 }
-.main-text a{
+.main_text{
 	color: lightgreen;
 	font-family:Courier;
+}
+.main_text:hover{
+	color: lightgreen;
+}
+a.disabled{
+	pointer-events: none;
+  	cursor: default;
 }
 #header-logo{
 	width: 170px; height: 150px;
 }
-.application-link{
+.application_link{
 	color: pink;
 	border-width: 2px;
 	border-color: pink;
 }
-.application-link:hover{
+.application_link:hover{
  	color: gold;
  	text-decoration: none;
 	border-color: gold;

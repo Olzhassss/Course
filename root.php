@@ -53,8 +53,10 @@ $app_tch = $temp ."/general/app_t.php";
 
 // The addresses of header and footer, head tag
 $header_uri = $temp ."/header-footer/header.php";
+$headerAdmin_uri = $temp ."/header-footer/headerAdmin.php";
 $footer_uri = $temp ."/header-footer/footer.php";
 $head_uri = $temp ."/head.php";
+$back_link_uri = $temp . "/back_link.php";
 
 
 switch ($temp . $thispage) {

@@ -18,38 +18,31 @@
 		  setcookie('visits', 1, time() + 5);
 		  $_COOKIE['visits'] = 1;
 		}
-	  echo "Welcome! ";
-	  echo "Visited: " . $_COOKIE['visits'] . PHP_EOL;
-	  echo "<a href = 'logout.php'> Log out </a>" ;
 	}
-?>
-<?php
-	include_once('./root.php');
-	include_once($connection_config);
-	//session_start();
-	//$username = "";
+
 	$title = 'Administration page';
-	$custom_stylesheets = array("header.style.css", "footer.style.css");
-	$custom_scripts = array("");	
+	$custom_stylesheets = array("headerAdmin.style.css");
+	//$custom_scripts = array("");	
+	
 ?>
 <!DOCTYPE html>
 <html>
 <?php include_once($head_uri); ?>
 <body>
-	<?php include_once($header_uri); ?>
-
-
-	<?php
-	include_once($footer_uri);
+	<?php include_once($headerAdmin_uri) ?>
+	<?php 
+	  echo "Welcome! ";
+	  echo "Visited: " . $_COOKIE['visits'] . PHP_EOL;
+	  echo "<a href = 'logout.php'> Log out </a>" ;
 	?>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<?php
+<?php/*
 foreach ($custom_scripts as $value)
     {
    		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
+    }*/
 ?>
 
 </html>

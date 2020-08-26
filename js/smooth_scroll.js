@@ -1,43 +1,51 @@
-// The code is based on code from w3schools 'howto' tutorial about smooth page scroll,
-// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_smooth_scroll_jquery
+// Add smooth scrolling to the links in navigation bar
 $(document).ready(function(){
-	  // Add smooth scrolling to the links in navigation bar
 	  try
 	  {
-	  	$("div#headerdiv a").click(function(event)
+	  	$("a").click(function(event)
 	  	{
-	  	  // ------------------ Main 'if'. this.hash must have a value before overriding default behavior
-	  	  if (this.hash !== "")
-	  	  {
-	  	    // Prevent default anchor click behavior
-	  	    event.preventDefault();
-	  	    // Store hash
-	  	    var hash = this.hash;
-	  	    // Setting arbitrary duration time for scrolling in milliseconds
-	  	    var duration = 1300;
-
-	  	    $('html, body').animate(
-	  	    {
-	  	      scrollTop: $(hash).offset().top
-	  	    },
-	  	    duration,
-	  	    function()
-	  	    {
-	  	 	  // Add hash (#) to URL when done scrolling (default click behavior)
-	  	      window.location.hash = hash;
-	  	    }/*,
-	  	    {
-    			progress: function()
-    			{
-      	  		//$('#log').html(100 * progress + "%");
-    			}
-    		  }*/
-    		);
-	  	  } // ---------------- endif
+	  		if (this.getAttribute('href') && this.getAttribute('href').startsWith("." + window.location.pathname))
+	  		{
+		  	  // Prevent default anchor click behavior
+		  	  event.preventDefault();
+		  	  
+		  	  // ------------------ Main 'if'. Works only if links contain hash
+		  	  if (this.hash !== "" && !$(this).hasClass("disabled"))
+		  	  {
+		  	    // Store the html link and its hash
+		  	    var hash = this.hash;
+		  	    var link = $(this);
+		  	    var href = link.attr('href');
+		  	    console.log(href);
+		  	    // Setting the duration time for the animation in milliseconds
+		  	    var var_duration = 1300;
+		  	    // Assigning animation
+		  	    link.addClass("disabled");
+		  	    $('html, body').animate(
+		  	    {
+		  	    	scrollTop: $(hash).offset().top
+		  	    },
+		  	    {
+		  	    	duration: var_duration,
+	    			complete: function() {
+		  	 	  		// Add hash (#) to URL when done scrolling (default click behavior)
+		  	      		window.location.hash = hash;
+		  	      		link.removeClass("disabled");
+		  	    	}
+		  	    }
+	    		);
+		  	  }
+		  	  else
+		  	  {
+		  	  	console.error("'smooth_scroll' function: Link's hash is empty!");
+		  	  }
+		  	  // -------------------- End of 'if'
+	  		}
+	  	  
 	  	});
 	  }
 	  catch
 	  {
-	  	console.error("'smooth_scroll' function: error occured! Check #headerdiv element.")
+	  	console.error("'smooth_scroll' function: No elements found!");
 	  }
 	});
