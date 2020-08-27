@@ -1,34 +1,38 @@
 <?php
+	//echo $_SERVER['REQUEST_URI'];
+	if ($_SERVER['REQUEST_URI'] != "/index.php") {
+		header('LOCATION: index.php');
+	}
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
 	// Storing all necessary files in arrays for further import
-	$custom_stylesheets = array("header.style.css", "footer.style.css", "loader.style.css");
-	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js", "loader.js");
+	$customStylesheets_array = array("header.style.css", "footer.style.css", "loader.style.css");
+	$customScripts_array = array("smooth_scroll.js", "scroll_logo_resize.js", "loader.js");
 	// Storing little style adjustments for further amendment 
-	$custom_styles = "#section-pricing { padding-bottom: 0px;}";
+	$customStyles_css = "#section-pricing { padding-bottom: 0px;}";
 
 	// Get strings from the database
 	$result = $pdo->query("SELECT `name`,`text` FROM $db_name . short_texts");
 	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
 	// Set the string values for corresponding variables to be used on the page
-	$blockquote_citation = $short_texts['blockquote_citation'][0];
+	$blockquoteCitation_text = $short_texts['blockquote_citation'][0];
 	$welcoming_text = $short_texts['welcoming_text'][0];
 	$blockquote_text = $short_texts['blockquote_text'][0];
-	$schedule_note = $short_texts['schedule_note'][0];
-	$pricing_note = $short_texts['pricing_note'][0];
+	$scheduleNote_text = $short_texts['schedule_note'][0];
+	$pricingNote_text = $short_texts['pricing_note'][0];
 	// Loader gif
 	$spinner_src = $imgs . "spinner.gif";
 ?>
 <!DOCTYPE html>
 <html>
 <!-- Importing head tag -->
-<?php require_once($head_uri); ?>
+<?php require_once($head_pathname); ?>
 <body>
 	<!-- Importing the header -->
-	<?php require_once($header_uri); ?>
+	<?php require_once($header_pathname); ?>
 	
 	<!-- The loader -->
 	<div id="loader_div" class="loader">
@@ -57,9 +61,9 @@
 			<h2 id="welcoming_text" class="text-center text-success display-3 mb-5"><?= $welcoming_text ?> </h2>
 			<blockquote class="blockquote text-right">
 			  <p id="blockquote_text" class="mb-0"><?= $blockquote_text ?> </p>
-			  <?php if(isset($blockquote_citation))
+			  <?php if(isset($blockquoteCitation_text))
 			  	{
-			  		echo "<footer class='blockquote-footer bg-white'> <cite title='Source Title'>$blockquote_citation</cite></footer>";
+			  		echo "<footer class='blockquote-footer bg-white'> <cite title='Source Title'>$blockquoteCitation_text</cite></footer>";
 			  	}
 			  ?>
 			</blockquote>
@@ -167,9 +171,9 @@
 					</table>
 					<br>
 					<span id="schedule_note">
-						<?php if(isset($schedule_note))
+						<?php if(isset($scheduleNote_text))
 							{
-								echo "<p class='alert alert-success small'><strong>Note: </strong>$schedule_note</p>";
+								echo "<p class='alert alert-success small'><strong>Note: </strong>$scheduleNote_text</p>";
 							}
 						?>
 					</span>
@@ -209,9 +213,9 @@
 			<div class="row text-center">
 				<div class="col-8 col-lg-6 mx-auto">
 					<span id="pricing_note">
-						<?php if(isset($pricing_note))
+						<?php if(isset($pricingNote_text))
 							{
-								echo "<p class='alert alert-success small'><strong>Note: </strong>$pricing_note</p>";
+								echo "<p class='alert alert-success small'><strong>Note: </strong>$pricingNote_text</p>";
 							}
 						?>
 					</span>
@@ -220,14 +224,14 @@
 		</div>
 	</section>
 	<!-- Importing the footer -->
-	<?php require_once($footer_uri); ?>
+	<?php require_once($footer_pathname); ?>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!-- Importing script files by PHP -->
 <?php
-foreach ($custom_scripts as $value)
+foreach ($customScripts_array as $value)
     {
    		echo "<script src='$js$value'></script>".PHP_EOL;
     }

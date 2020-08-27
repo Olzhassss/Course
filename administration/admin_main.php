@@ -20,15 +20,14 @@
 	}
 
 	$title = 'Administration page';
-	$custom_stylesheets = array("headerAdmin.style.css");
-	//$custom_scripts = array("");	
+	$customStylesheets_array = array("headerAdmin.style.css");
 	
 ?>
 <!DOCTYPE html>
 <html>
-<?php require_once($head_uri); ?>
+<?php require_once($head_pathname); ?>
 <body>
-	<?php require_once($headerAdmin_uri) ?>
+	<?php require_once($headerAdmin_pathname) ?>
 	<?php 
 	  echo "Welcome! ";
 	  echo "Visited: " . $_COOKIE['visits'] . PHP_EOL;

@@ -32,56 +32,62 @@ $connection_config = $temp . '/connection_config.php';
 // The main webpage URL
 $index = $root . '/index.php';
 
-// Location of the scripts (URL)
-$js = $root . '/js' . '/';
+// Location of the scripts (part of URL)
+$js = $root . '/scripts' . '/';
 
-// Location of the stylesheets (URL)
-$stylesheets = $root . '/stylesheets' . '/';
+// Location of the stylesheets (part of URL)
+$css = $root . '/stylesheets' . '/';
 
-// Location of the images (URL)
+// Location of the images (part of URL)
 $imgs = $root . '/images' . '/';
 
+// Location of general (public) pages (part of URL)
+$general = $root . '/general' . '/';
+
+// Location of the pages for authorized users (part of URL)
+$administration = $root . '/administration' . '/';
+
 // The main pre-application webpage URL
-$app0 = $root .'/general/app_main.php';
+$appMain_href = $general . 'app_main.php';
 
 // The group or private lesson choice (student pre-application) webpage URL
-$app_std0 = $root .'/general/app_s0.php';
+$appStd_href = $general . 'app_s0.php';
 
 // The application for students who chose private lessons page URL
-$app_std_private = $root .'/general/app_s_pr.php';
+$appStdPrivate_href = $general .'app_s_pr.php';
 
 // The application for students who chose group lessons page URL
-$app_std_group = $root .'/general/app_s_gr.php';
+$appStdGroup_href = $general .'app_s_gr.php';
 
 // The application for teachers page URL
-$app_tch = $root .'/general/app_t.php';
+$appTch_href = $general .'app_t.php';
 
-// The URIs of headers and footer, head tag
-$header_uri = $temp .'/header-footer/header.php';
-$headerAdmin_uri = $temp .'/header-footer/headerAdmin.php';
-$footer_uri = $temp .'/header-footer/footer.php';
-$head_uri = $temp .'/head.php';
-$back_link_uri = $temp . '/back_link.php';
+// The pathways of headers, footer, head tag, 'back' link
+$header_pathname = $temp .'/header-footer/header.php';
+$headerAdmin_pathname = $temp .'/header-footer/headerAdmin.php';
+$footer_pathname = $temp .'/header-footer/footer.php';
+$head_pathname = $temp .'/head.php';
+$backLink_pathname = $temp . '/backlink.php';
 
 
 switch ($url) {
-	case $app0:
-		$back_link = $index;
+	case $appMain_href:
+		$backLink_href = $index;
 		break;
-	case $app_std0:
-		$back_link = $app0;
+	case $appStd_href:
+		$backLink_href = $appMain_href;
 		break;
-	case $app_std_group:
-		$back_link = $app_std0;
+	case $appStdGroup_href:
+		$backLink_href = $appStd_href;
 		break;
-	case $app_std_private:
-		$back_link = $app_std0;
+	case $appStdPrivate_href:
+		$backLink_href = $appStd_href;
 		break;
-	case $app_tch:
-		$back_link = $app0;
+	case $appTch_href:
+		$backLink_href = $appMain_href;
 		break;
 	default:
-		$back_link = $index;
+		$backLink_href = $index;
 		break;
 }
 
@@ -90,4 +96,8 @@ function exception_handler($exception){
 }
 
 set_exception_handler('exception_handler');
+
+ini_set('session.cookie_httponly',1);
+ini_set('session.cookie_secure',1);
+ini_set('session.use_strict_mode',1);
 ?>

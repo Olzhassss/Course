@@ -6,16 +6,16 @@
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'>
     <!-- Importing custom stylesheets and short style to write in '<style>' tag if detected -->
     <?php
-    if (!empty($custom_stylesheets))
+    if (!empty($customStylesheets_array))
     {
-        foreach ($custom_stylesheets as $value)
+        foreach ($customStylesheets_array as $value)
         {
-            echo "<link rel='stylesheet' href=$stylesheets$value>".PHP_EOL;
+            echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
         }
     }
-    if (!empty($custom_styles))
+    if (!empty($customStyles_css))
     {
-        echo "<style> $custom_styles </style>".PHP_EOL;
+        echo "<style> $customStyles_css </style>".PHP_EOL;
     }
     ?>
     <!-- If the title was provided in variable 'title' earlier on webrage, then use custom title, else default one -->

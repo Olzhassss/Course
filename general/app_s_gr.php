@@ -1,15 +1,15 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	$custom_stylesheets = array("back-link.style.css", "application_private.css");
-	$custom_scripts = array("custom_validation.js", "validate_text.js", "input_masking.js");
+	$customStylesheets_array = array("back-link.style.css", "application_private.css");
+	$customScripts_array = array("custom_validation.js", "validate_text.js", "input_masking.js");
 ?>
 
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once($head_uri); ?>
+	<?php require_once($head_pathname); ?>
 <body>
-	<?php require_once($back_link_uri); ?>
+	<?php require_once($backLink_pathname); ?>
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
@@ -165,7 +165,7 @@
 </script>
 <!-- Importing script files by PHP -->
 <?php
-foreach ($custom_scripts as $value)
+foreach ($customScripts_array as $value)
     {
    		echo "<script src='$js$value'></script>".PHP_EOL;
     }

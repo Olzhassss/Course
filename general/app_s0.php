@@ -1,16 +1,16 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	$custom_styles = " .choice_button{ width: 100%; font-size: 2rem;}";
-	$custom_stylesheets = array("back-link.style.css");
+	$customStylesheets_array = array("back-link.style.css");
+	$customStyles_css = " .choice_button{ width: 100%; font-size: 2rem;}";
+
 ?>
 
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once($head_uri); ?>
+	<?php require_once($head_pathname); ?>
 <body>
-	<a class="nav-link" href="<?=$back_link;?>" id="back-link"><-Back</a>
-
+	<?php require_once($backLink_pathname); ?>
 	<br></br>
 	<div class="mt-5">
 		<!-- Creating and filling teacher application form -->
@@ -24,10 +24,10 @@
 					<div class="row mb-3">
 						<div class="col-md"></div>
 						<div class="col-12 col-sm-6 col-md-4 my-3">
-							<a href="<?=$app_std_group;?>" class="btn btn-secondary py-4 choice_button">Group lessons</a>
+							<a href="<?=$appStdGroup_href?>" class="btn btn-secondary py-4 choice_button">Group lessons</a>
 						</div>
 						<div class="col-12 col-sm-6 col-md-4 my-3">
-							<a href="<?=$app_std_private;?>" class="btn btn-secondary py-4 choice_button">Private lessons</a>
+							<a href="<?=$appStdPrivate_href?>" class="btn btn-secondary py-4 choice_button">Private lessons</a>
 						</div>
 						<div class="col-md"></div>	
 					</div>

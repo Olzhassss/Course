@@ -5,8 +5,8 @@
 	//session_start();
 	//$username = "";
 	$title = 'Authorization';
-	$custom_stylesheets = array("loader.style.css", "back-link.style.css");
-	$custom_scripts = array("loader.js", "validate_single.js");
+	$customStylesheets_array = array("loader.style.css", "back-link.style.css");
+	$customScripts_array = array("loader.js", "validate_single.js");
 	//$custom_styles = "";
 	$spinner_src = $imgs . "spinner.gif";
 
@@ -17,9 +17,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<?php require_once($head_uri); ?>
+<?php require_once($head_pathname); ?>
 <body>
-	<?php require_once($back_link_uri); ?>
+	<?php require_once($backLink_pathname); ?>
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
@@ -65,8 +65,8 @@
 		event.preventDefault();
 
 		var error_field = $("#error_0");
-		error_field.text("");
 
+		error_field.text("");
 		if(validate_single('login-field') && validate_single('password-field'))
 		{
 
@@ -87,6 +87,7 @@
 					else
 					{
 						error_field.text("Wrong login or password");
+						return;
 					}
 				}
 			})
@@ -98,7 +99,7 @@
 
 </script>
 <?php
-foreach ($custom_scripts as $value)
+foreach ($customScripts_array as $value)
     {
    		echo "<script src='$js$value'></script>".PHP_EOL;
     }

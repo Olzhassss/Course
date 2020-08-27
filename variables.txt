@@ -1,46 +1,61 @@
 This document contains essential custom PHP variables used in this project.
 
-	General. Folders and addresses:
+	General. Main:
 
-> PAGE URL - $url
-> CURRENT PAGE URI - $thispage
+> CURRENT PAGE URL - $url
+> CURRENT PAGE URI - $uri
 
-> 'ROOT' FILE ADDRESS - $root_uri
-> ROOT DIRECTORY PREFIX - $temp
-> MAIN PAGE ADDRESS - $index
+> ROOT DIRECTORY PREFIX (PART OF URL) - $root
+> ROOT DIRECTORY PREFIX (LOCAL PATHNAME) - $temp
+> MAIN PAGE ADDRESS (URL) - $index
 
-> CUSTOM SCRIPTS FOLDER ADDRESS (url) - $js
-> CUSTOM STYLESHEETS FOLDER ADDRESS (url) - $stylesheets
-> IMAGES FOLDER ADDRESS (url) - $imgs
+	General. Folders and pathnames:
 
-> HEAD TAG FILE ADDRESS - $head_uri
-> HEADER FILE ADDRESS - $header_uri
-> SPECIAL HEADER FILE ADDRESS - $headerAdmin_uri 
-> FOOTER FILE ADDRESS - $footer_uri
-> 'BACK' LINK FILED ADDRESS - $back_link_uri
+> CUSTOM SCRIPTS FOLDER ADDRESS (PART OF URL) - $js
+> CUSTOM STYLESHEETS FOLDER ADDRESS (PART OF URL) - $stylesheets
+> IMAGES FOLDER ADDRESS (PART OF URL) - $imgs
+> GENERAL (PUBLIC) PAGES FOLDER ADDRESS (PART OF URL) - $general
+> PAGES FOR AUTHORIZED USERS FOLDER ADDRESS (PART OF URL) - $administration
+
+> HEAD TAG FILE ADDRESS (LOCAL PATHNAME) - $head_pathname
+> HEADER FILE ADDRESS (LOCAL PATHNAME) - $header_pathname
+> SPECIAL HEADER FILE ADDRESS (LOCAL PATHNAME) - $headerAdmin_pathname 
+> FOOTER FILE ADDRESS (LOCAL PATHNAME) - $footer_pathname
+> 'BACK' LINK FILE ADDRESS (LOCAL PATHNAME) - $backLink_pathname
 
 	General. Scripts and shylesheets:
 
-> CUSTOM SCRIPTS ARRAY (files' names) - $custom_scripts
-> CUSTOM STYLESHEETS ARRAY (files' names) - $custom_stylesheets
-> CUSTOM STYLES (CSS) - $custom_styles
+> CUSTOM SCRIPTS ARRAY (files' names) - $customScripts_array
+> CUSTOM STYLESHEETS ARRAY (files' names) - $customStylesheets_array
+> CUSTOM STYLES (CSS) - $customStyles_css
 
-	Specific. References:
+	Specific. References (all URL):
 
-> PRE-APPLICATION PAGE ADDRESS- $app0;
-> TEACHERS APPLICATION FORM HREF - $app_tch
-> STUDENTS APPLICATION PAGE HREF - $app_std0
-> STUDENT'S PRIVATE LESSONS APPLICATION FORM HREF - $app_std_private
-> STUDENT'S GROUP LESSONS APPLICATION FORM HREF - $app_std_group
-> ADMINISTRATOR LOG IN PAGE ADDRESS - $authorization_href
-
-> TOP (HEADER) SECTION HREF - $header_href
-> CONTACTS SECTION HREF - $contacts_href
-> PRICE LIST SECTION HREF - $pricing_href
-> FAQ SECTION HREF - $faq_href
-> 'BACK' LINK HREF - $back_link_href
+> 'BACK' LINK - $backLink_href
 > LOGO IMAGE LOCATION - $logo_src
+> SPINNER IMAGE LOCATION - $spinner_src
+> TEACHERS' APPLICATION FORM PAGE - $appTch_href
+> STUDENT APPLICANTS' PAGE - $appStd_href
+> STUDENT'S PRIVATE LESSONS APPLICATION FORM PAGE - $appStdPrivate_href
+> STUDENT'S GROUP LESSONS APPLICATION FORM PAGE - $appStdGroup_href
 
+  General header references:
+
+> PRE-APPLICATION PAGE - $appMain_href
+> ADMINISTRATOR LOG IN PAGE - $authorization_href
+> TOP (HEADER) SECTION - $header_href
+> CONTACTS SECTION - $contacts_href
+> PRICE LIST SECTION - $pricing_href
+> FAQ SECTION - $faq_href
+
+
+  Specific header references:
+
+> APPLICATIONS VIEWING PAGE - $applications_href
+> SCHEDULE VIEWING PAGE - $schedule_href
+> TEACHERS LIST VIEWING PAGE - $teachersList_href
+> STUDENTS LIST VIEWING PAGE - $studentsList_href
+> USER LOG OUT PAGE - $logout_href
 
 	Strings:
 

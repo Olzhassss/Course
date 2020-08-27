@@ -1,10 +1,10 @@
 <?php
 	$logo_src = $imgs . "logo.png";
 	$header_href = $index;
-	$contacts_href = $index . "#section-footer";
-	$pricing_href = $index . "#section-pricing";
-	$faq_href = $index . "#section-faq";
-	$authorization_href = $root . "/administration/sign_in.php";
+	$applications_href = $root . "/administration/admin_main.php";
+	$schedule_href = $root . "/administration/admin_main.php";
+	$teachersList_href = $root . "/administration/admin_main.php";
+	$studentsList_href = $root . "/administration/admin_main.php";
 	$logout_href = $root . "/administration/logout.php";
 ?>
 <section id="section-header" style="padding: 0px;">
@@ -22,10 +22,10 @@
 		<div class="my-3 my-md-0 mx-md-2 w-50">
 			<div class="container-fluid">
 				<nav class="row d-flex justify-content-around">
-					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Applications <span id="app_badge"class="badge badge-warning"></span></a>
-					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Schedule</a>
-					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Teachers list</a>
-					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Students list</a>
+					<a href="<?=$applications_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Applications <span id="app_badge"class="badge badge-warning"></span></a>
+					<a href="<?=$schedule_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Schedule</a>
+					<a href="<?=$teachersList_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Teachers list</a>
+					<a href="<?=$studentsList_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Students list</a>
 				</nav>
 			</div>
 		</div>

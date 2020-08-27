@@ -28,7 +28,7 @@
 			    <a class="p-2 text-light text-decoration-none" href="<?=$authorization_href?>">Administration</a>
 			</nav>
 			<!-- End of navigation -->
-			<a class="btn application_link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$app0?>">Application</a>
+			<a class="btn application_link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$appMain_href?>">Application</a>
 		</div>
 </section>
 <!-- END OF HEADER -->

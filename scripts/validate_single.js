@@ -8,6 +8,8 @@ function validate_single(id)
 	try
 	{
 		var object = document.getElementById(id);
+		// Clearing custom validity error is required to prevent invalidity
+		object.setCustomValidity('');
 		var validityState = object.validity;
 	}
 	catch
@@ -33,4 +35,6 @@ function validate_single(id)
 	{
 		return true;
 	}
+	console.error("'validate_single' function: Unknown error!");
+	return false;
 }
