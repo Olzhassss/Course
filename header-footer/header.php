@@ -5,7 +5,7 @@
 	$contacts_href = $index . "#section-footer";
 	$pricing_href = $index . "#section-pricing";
 	$faq_href = $index . "#section-faq";
-	$authorization_href = $temp . "/administration/sign_in.php";
+	$authorization_href = $root . "/administration/sign_in.php";
 ?>
 <section id="section-header" style="padding: 0px;">
 		<!-- Header content wrapper div -->

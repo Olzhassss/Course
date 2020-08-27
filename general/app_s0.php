@@ -1,6 +1,5 @@
 <?php
-	$temp = "..";
-	include_once('../root.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	$custom_styles = " .choice_button{ width: 100%; font-size: 2rem;}";
 	$custom_stylesheets = array("back-link.style.css");
 ?>
@@ -8,7 +7,7 @@
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php include_once($head_uri); ?>
+	<?php require_once($head_uri); ?>
 <body>
 	<a class="nav-link" href="<?=$back_link;?>" id="back-link"><-Back</a>
 

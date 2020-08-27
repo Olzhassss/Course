@@ -2,64 +2,69 @@
 
 //ini_set("allow_url_include", true);
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
-    $url = "https://";   
+    $url = 'https://';   
 else  
-    $url = "http://";
+    $url = 'http://';
 
 // Append the host(domain name, ip) to the URL.   
 $url.= $_SERVER['HTTP_HOST'];   
 
+// The root directory path of the website
+$root = $url;
+
 // Append the requested resource location to the URL   
 $url.= $_SERVER['REQUEST_URI'];    
-$thispage = $_SERVER['REQUEST_URI'];
 
-// URI template used for href on local server
+// Store URI
+$uri = $_SERVER['REQUEST_URI'];
+
+// Directory template used for addresses for 'include_once' functions of PHP
 if (!isset($temp)) {
-	$temp = ".";
+	$temp = '.';
 }
 
 // The root webpage uri
-$root = $temp . "/root.php";
+//$root = $temp . "/root.php";
 
-// The main webpage uri
-$index = $temp . "/index.php";
+// The main webpage url
+$index = $root . '/index.php';
 
 // The connection configs file uri
-$connection_config = $temp . "/connection_config.php";
+$connection_config = $temp . '/connection_config.php';
 
 // Location of the scripts (url)
-$js = $temp . "/js" . "/";
+$js = $root . '/js' . '/';
 
 // Location of the stylesheets (url)
-$stylesheets = $temp . "/stylesheets" . "/";
+$stylesheets = $root . '/stylesheets' . '/';
 
 // Location of the images (url)
-$imgs = $temp . "/images" . "/";
+$imgs = $root . '/images' . '/';
 
-// The main pre-application webpage uri
-$app0 = $temp ."/general/app_main.php";
+// The main pre-application webpage url
+$app0 = $root .'/general/app_main.php';
 
-// The group or private lesson choice (student pre-application) webpage uri
-$app_std0 = $temp ."/general/app_s0.php";
+// The group or private lesson choice (student pre-application) webpage url
+$app_std0 = $root .'/general/app_s0.php';
 
-// The application for students who chose private lessons
-$app_std_private = $temp ."/general/app_s_pr.php";
+// The application for students who chose private lessons page url
+$app_std_private = $root .'/general/app_s_pr.php';
 
-// The application for students who chose private lessons
-$app_std_group = $temp ."/general/app_s_gr.php";
+// The application for students who chose group lessons page url
+$app_std_group = $root .'/general/app_s_gr.php';
 
-// The application for teachers
-$app_tch = $temp ."/general/app_t.php";
+// The application for teachers page url
+$app_tch = $root .'/general/app_t.php';
 
-// The addresses of header and footer, head tag
-$header_uri = $temp ."/header-footer/header.php";
-$headerAdmin_uri = $temp ."/header-footer/headerAdmin.php";
-$footer_uri = $temp ."/header-footer/footer.php";
-$head_uri = $temp ."/head.php";
-$back_link_uri = $temp . "/back_link.php";
+// The URIs of headers and footer, head tag
+$header_uri = $temp .'/header-footer/header.php';
+$headerAdmin_uri = $temp .'/header-footer/headerAdmin.php';
+$footer_uri = $temp .'/header-footer/footer.php';
+$head_uri = $temp .'/head.php';
+$back_link_uri = $temp . '/back_link.php';
 
 
-switch ($temp . $thispage) {
+switch ($url) {
 	case $app0:
 		$back_link = $index;
 		break;
@@ -80,4 +85,9 @@ switch ($temp . $thispage) {
 		break;
 }
 
+function exception_handler($exception){
+	echo "<b> Exception: </b>" . $exception->getMessage();
+}
+
+set_exception_handler('exception_handler');
 ?>

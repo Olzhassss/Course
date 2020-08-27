@@ -1,11 +1,11 @@
 <?php
 	$logo_src = $imgs . "logo.png";
-	$header_href = $index . "#section-header";
+	$header_href = $index;
 	$contacts_href = $index . "#section-footer";
 	$pricing_href = $index . "#section-pricing";
 	$faq_href = $index . "#section-faq";
-	$authorization_href = $temp . "/administration/sign_in.php";
-	$logout_href = $temp . "/administration/logout.php";
+	$authorization_href = $root . "/administration/sign_in.php";
+	$logout_href = $root . "/administration/logout.php";
 ?>
 <section id="section-header" style="padding: 0px;">
 	<!-- Header content wrapper div -->
@@ -22,7 +22,7 @@
 		<div class="my-3 my-md-0 mx-md-2 w-50">
 			<div class="container-fluid">
 				<nav class="row d-flex justify-content-around">
-					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Applications</a>
+					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Applications <span id="app_badge"class="badge badge-warning"></span></a>
 					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Schedule</a>
 					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Teachers list</a>
 					<a class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none" href="<?=$a?>">Students list</a>

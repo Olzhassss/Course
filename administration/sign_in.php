@@ -1,7 +1,7 @@
 <?php
-	$temp = "..";
-	include_once('../root.php');
-	include_once($connection_config);
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+
+	require_once($connection_config);
 	//session_start();
 	//$username = "";
 	$title = 'Authorization';
@@ -17,9 +17,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<?php include_once($head_uri); ?>
+<?php require_once($head_uri); ?>
 <body>
-	<?php include_once($back_link_uri); ?>
+	<?php require_once($back_link_uri); ?>
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>

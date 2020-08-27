@@ -1,6 +1,5 @@
 <?php 
-	$temp = "..";
-	include_once("../root.php");
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	$custom_stylesheets = array("back-link.style.css");
 	$custom_scripts = array("validate_text.js", "input_masking.js");
 ?>
@@ -8,9 +7,9 @@
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php include_once($head_uri); ?>
+	<?php require_once($head_uri); ?>
 <body>
-	<?php include_once($back_link_uri); ?>
+	<?php require_once($back_link_uri); ?>
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">

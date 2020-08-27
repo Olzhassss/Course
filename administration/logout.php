@@ -1,8 +1,7 @@
 <?php 
-$temp = "..";
-	include_once('../root.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	
-	require_once $connection_config;
+	require_once ($connection_config);
 	session_start();
 $_SESSION = [];
 

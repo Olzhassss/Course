@@ -1,6 +1,5 @@
 <?php
-$temp = "..";
-require_once('../root.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 
 require_once ($connection_config);
 

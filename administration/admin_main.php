@@ -1,6 +1,5 @@
 <?php 
-	$temp = "..";
-	include_once('../root.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	
 	require_once $connection_config;
 	session_start();
@@ -27,9 +26,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<?php include_once($head_uri); ?>
+<?php require_once($head_uri); ?>
 <body>
-	<?php include_once($headerAdmin_uri) ?>
+	<?php require_once($headerAdmin_uri) ?>
 	<?php 
 	  echo "Welcome! ";
 	  echo "Visited: " . $_COOKIE['visits'] . PHP_EOL;

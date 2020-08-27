@@ -4,7 +4,8 @@ $(document).ready(function(){
 	  {
 	  	$("a").click(function(event)
 	  	{
-	  		if (this.getAttribute('href') && this.getAttribute('href').startsWith("." + window.location.pathname))
+	  		let location = window.location.protocol+'//'+window.location.host+window.location.pathname;
+	  		if (this.getAttribute('href') && this.getAttribute('href').startsWith(location))
 	  		{
 		  	  // Prevent default anchor click behavior
 		  	  event.preventDefault();
@@ -13,12 +14,11 @@ $(document).ready(function(){
 		  	  if (this.hash !== "" && !$(this).hasClass("disabled"))
 		  	  {
 		  	    // Store the html link and its hash
-		  	    var hash = this.hash;
-		  	    var link = $(this);
-		  	    var href = link.attr('href');
-		  	    console.log(href);
+		  	    let hash = this.hash;
+		  	    let link = $(this);
+		  	    let href = link.attr('href');
 		  	    // Setting the duration time for the animation in milliseconds
-		  	    var var_duration = 1300;
+		  	    let var_duration = 1300;
 		  	    // Assigning animation
 		  	    link.addClass("disabled");
 		  	    $('html, body').animate(

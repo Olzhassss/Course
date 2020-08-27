@@ -2,7 +2,7 @@
 <?php 
 	if (!isset($short_texts))
 	{
-		include_once($connection_config);
+		require_once($connection_config); //In case the file was not imported earlier
 
 		$sql = "SELECT `name`,`text` FROM $db_name . short_texts WHERE `used_for` = 'footer'";
 		$stmt = $pdo->prepare($sql);

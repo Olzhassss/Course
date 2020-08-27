@@ -1,17 +1,17 @@
 <?php
-	$temp = "..";
-	include_once('../root.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	//$temp = $root;
 	$title = 'AppleTree main page';
-	$custom_stylesheets = array("header.style.css", "footer.style.css", "app_main.style.css");
+	$custom_stylesheets = array("header.style.css", "footer.style.css");
 	$custom_styles = ".choice_button{ width: 100%; padding-top: 20px; padding-bottom: 20px;	font-size: 2rem; } #section-main{ padding-bottom: 0px; }";
 ?>
 
 
 <!DOCTYPE html>
 <html>
-	<?php include_once($head_uri); ?>
+	<?php require_once($head_uri); ?>
 <body>
- 	<?php include_once($header_uri); ?>
+ 	<?php require_once($header_uri); ?>
 	<section id="section-main">
 		<div class="container py-5">	
 			<div class="row">
@@ -30,6 +30,6 @@
 			</div>
 		</div>
 	</section>
-	<?php include_once($footer_uri); ?>
+	<?php require_once($footer_uri); ?>
 </body>
 </html>

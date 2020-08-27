@@ -1,6 +1,6 @@
 <?php
-	include_once('./root.php');
-	include_once($connection_config);
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require_once($connection_config);
 	//session_start();
 	//$username = "";
 	$title = 'AppleTree main page';
@@ -9,6 +9,7 @@
 	$custom_scripts = array("smooth_scroll.js", "scroll_logo_resize.js", "loader.js");
 	// Storing little style adjustments for further amendment 
 	$custom_styles = "#section-pricing { padding-bottom: 0px;}";
+
 	// Get strings from the database
 	$result = $pdo->query("SELECT `name`,`text` FROM $db_name . short_texts");
 	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
@@ -24,10 +25,10 @@
 <!DOCTYPE html>
 <html>
 <!-- Importing head tag -->
-<?php include_once($head_uri); ?>
+<?php require_once($head_uri); ?>
 <body>
 	<!-- Importing the header -->
-	<?php include_once($header_uri); ?>
+	<?php require_once($header_uri); ?>
 	
 	<!-- The loader -->
 	<div id="loader_div" class="loader">
@@ -219,7 +220,7 @@
 		</div>
 	</section>
 	<!-- Importing the footer -->
-	<?php include_once($footer_uri); ?>
+	<?php require_once($footer_uri); ?>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
