@@ -3,10 +3,14 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 
 require_once ($connection_config);
 
-$login = trim( $_POST['login']);
-$password = trim( $_POST['password']);
+// Assigning function to avoid repeat. The function filtrates input string via encoded fuctions
+function filtrateString($a_string)
+{
+	return htmlspecialchars(trim($a_string));
+}
 
-$output = -1;
+$login = filtrateString( $_POST['login']);
+$password = filtrateString( $_POST['password']);
 
 if (!empty($login) && !empty($password))
 {
@@ -21,25 +25,21 @@ if (!empty($login) && !empty($password))
 			session_start();
 			$_SESSION['user_login'] = $user->login;
 			// This execution status means that the password corresponds to the login
-			$output = 0;
-			//header('Location:admin.php');
+			echo 0;
 		} else
 		{
 			// This execution status means that the password does not correspond to the login
-			$output = 1;
+			echo 1;
 		}
 	} else
 	{
 		// This execution status means that query did not get any result, i.e. no record with such login
-		$output = 2;
+		echo 2;
 	}
 }
 else
 {
 	// This execution status means that one or both variables were empty strings
-	$output = 3;
+	echo 3;
 }
-
-echo $output;
-
 ?>

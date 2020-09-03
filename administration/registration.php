@@ -2,8 +2,14 @@
 
 require_once 'connection_config.php';
 
-$login = trim( $_GET['name']);
-$pass = trim( $_GET['password']);
+// Assigning function to avoid repeat. The function filtrates input string via encoded fuctions
+function filtrateString($a_string)
+{
+	return mysql_escape_string(htmlspecialchars(trim($a_string)));
+}
+
+$login = filtrateString( $_POST['name']);
+$pass = filtrateString( $_POST['password']);
 
 if (!empty($login) && ! empty($pass)) {
 	

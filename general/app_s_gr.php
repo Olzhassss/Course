@@ -1,7 +1,17 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
+
+	$title = 'Application form for students!';
+	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("back-link.style.css", "application_private.css");
 	$customScripts_array = array("custom_validation.js", "validate_text.js", "input_masking.js");
+
+	// Prepare SQL query
+	//$stmt = $pdo->query("SELECT `price` FROM $db_name . price_list");	
+	//$data = $stmt->fetch();
+	$weekday_fee = 2000;
+	$weekend_fee = 2500;
 ?>
 
 <!-- BEGINNING OF HTML -->
@@ -124,9 +134,9 @@
 							<div class="card float-right">
 								<div class="card-body">
 									<p class="lead" style="font-size: 2rem;">
-										Extra fee for a weekday is <span id="fee_weekday">0</span>tg
+										The fee for a weekday is <span><?=$weekday_fee? $weekday_fee : 0?></span>tg
 										<br>
-										And for a weekend is <span id="fee_weekend">0</span>tg
+										And for a weekend is <span><?=$weekend_fee? $weekend_fee : 0?></span>tg
 									</p>
 								</div>
 							</div>
@@ -138,8 +148,8 @@
 						<button type="button" id="submit" class="btn btn-primary my-2" style="margin-right: 5%; min-width: 150px;">
 							Register!
 						</button>
-						<button type="reset" class="btn btn-secondary my-2">
-							Reset application form
+						<button type="reset" class="btn btn-secondary my-2 px-4">
+							Clear input fields
 						</button>
 					</div>
 				</div>
@@ -160,10 +170,14 @@
 	{
 		// Calling functions in order to do validation
 		if(validate_text($("input[type='text']")))
-			validate_birthYear("birthyear-field");
+		{
+			if(validate_birthYear("birthyear-field"))
+			{
+				window.location.replace("preview.php");
+			}
+		}
 	}
 </script>
-<!-- Importing script files by PHP -->
 <?php
 foreach ($customScripts_array as $value)
     {

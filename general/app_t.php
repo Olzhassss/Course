@@ -159,10 +159,9 @@
 	function submit()
 	{
 		// Calling functions in order to do validation
-		validate_text($("input[type='text']"))
+		validate_text($("input[type='text']"));
 	}
 </script>
-<!-- Importing script files by PHP -->
 <?php
 foreach ($customScripts_array as $value)
     {

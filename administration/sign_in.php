@@ -10,6 +10,7 @@
 	//$custom_styles = "";
 	$spinner_src = $imgs . "spinner.gif";
 
+	// Redirect signed user from the page
 	session_start();
 	if (isset($_SESSION['user_login'])) {
 		header('Location:admin_main.php');
@@ -54,13 +55,14 @@
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-	// Attaching 'click' function to the 'Sign in!' button via id
+	// Attaching the 'sign_in' function to the 'Sign in!' button click event via id
 	$(document).ready(function(){
-		$("#submit").click(submit);
+		$("#submit").click(sign_in);
 		fix_loader("loader_div");
 	})
 	
-	function submit(event)
+	// Executes Ajax and manages error text
+	function sign_in(event)
 	{
 		event.preventDefault();
 
@@ -69,7 +71,8 @@
 		error_field.text("");
 		if(validate_single('login-field') && validate_single('password-field'))
 		{
-
+			// Sends password and login values to 'authorization.php' and
+			// either redirects the user or displays an error according to the outcome
 			$.ajax({
 				url: 'authorization.php',
 				type: 'POST',
@@ -79,9 +82,10 @@
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
+					console.log(data);
 					if (data == 0)
 					{
-						window.location.replace("admin_main.php");
+						window.location.replace("http://course/administration/admin_main.php");
 						return;
 					}
 					else

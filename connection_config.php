@@ -1,14 +1,14 @@
 <?php
-	//Variables required for mysqli
+	//Variables required for connection
 	$driver = 'mysql';
 	$host = 'localhost';
 	$username = 'root';
 	$password = '';
 	$db_name = 'appletree';
 	$charset = 'utf8';
+	// PDO options
 	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 	 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
-
 
 	try
 	{
@@ -16,7 +16,7 @@
 	} 
 	catch (PDOException $e)
 	{
-		exit(" Access to the database failed! ");
+		exit(" Failed to access the database! ");
 	}
 
 	//session_start();

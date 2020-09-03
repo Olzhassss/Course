@@ -1,5 +1,9 @@
 <?php 
-	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require_once($connection_config);
+
+	$title = 'Application form for students!';
+	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("back-link.style.css", "application_private.css");
 	$customScripts_array = array("custom_validation.js", "clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js");
 ?>
@@ -199,11 +203,9 @@
 							<div class="card ">
 								<div class="card-body">
 									<p class="lead" style="font-size: 2rem;">
-										Extra fee for a weekday is <span id="fee_weekday">0</span>tg
-									</p>
+										The fee for a weekday is <span>0</span>tg
 									<br>
-									<p class="lead" style="font-size: 2rem;">
-										And for a weekend is <span id="fee_weekend">0</span>tg
+										And for a weekend is <span>0</span>tg
 									</p>
 								</div>
 							</div>
@@ -215,8 +217,8 @@
 						<button type="button" id="submit" class="btn btn-primary my-2" style="margin-right: 5%; min-width: 150px;">
 							Register!
 						</button>
-						<button type="reset" class="btn btn-secondary my-2">
-							Reset application form
+						<button type="reset" class="btn btn-secondary my-2 px-4">
+							Clear input fields
 						</button>
 					</div>
 				</div>
@@ -298,7 +300,6 @@
 		$("#" + text_el_id).text(payment);
 	}*/
 </script>
-<!-- Importing script files by PHP -->
 <?php
 foreach ($customScripts_array as $value)
     {
