@@ -9,6 +9,7 @@
 
 <!DOCTYPE html>
 <html>
+	<!-- Importing head tag -->
 	<?php require_once($head_pathname); ?>
 <body>
  	<?php require_once($header_pathname); ?>
