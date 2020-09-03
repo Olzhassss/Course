@@ -82,7 +82,7 @@
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
-					console.log(data);
+					console.log(data);	
 					if (data == 0)
 					{
 						window.location.replace("http://course/administration/admin_main.php");
