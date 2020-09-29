@@ -13,7 +13,7 @@ $pass = filtrateString( $_POST['password']);
 
 if (!empty($login) && ! empty($pass)) {
 	
-	$sql_check = "SELECT EXISTS( SELECT login FROM $db_name . admins WHERE login = :login)";
+	$sql_check = "SELECT EXISTS( SELECT login FROM appletree_personnel.admins WHERE login = :login)";
 	$stmt = $pdo->prepare($sql_check);
 	$stmt->execute([':login' => $login]);
 
@@ -23,7 +23,7 @@ if (!empty($login) && ! empty($pass)) {
 	}
 	$pass = password_hash($pass, PASSWORD_DEFAULT);
 
-	$sql = "INSERT INTO $db_name .admins (login, pswd) VALUES (:login, :pswd)";
+	$sql = "INSERT INTO appletree_personnel.admins (login, pswd) VALUES (:login, :pswd)";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([':login' => $login, ':pswd' => $pass ]);
 

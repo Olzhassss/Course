@@ -14,7 +14,7 @@ $password = filtrateString( $_POST['password']);
 
 if (!empty($login) && !empty($password))
 {
-	$sql = "SELECT login, pswd FROM $db_name . admins WHERE login = :login";
+	$sql = "SELECT login, pswd FROM appletree_personnel.admins WHERE login = :login";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([':login' => $login]);
 	$user = $stmt->fetch(PDO::FETCH_OBJ);

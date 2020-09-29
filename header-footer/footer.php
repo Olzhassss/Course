@@ -4,7 +4,7 @@
 	{
 		require_once($connection_config); //In case the file was not imported earlier
 
-		$sql = "SELECT `name`,`text` FROM $db_name . short_texts WHERE `used_for` = 'footer'";
+		$sql = "SELECT `name`,`text` FROM appletree_general.short_texts WHERE `used_for` = 'footer'";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
 		$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
@@ -46,7 +46,7 @@
 	  						<div class=" d-flex justify-content-around mb-4 row">
 	  							<?php 	//------------------- Extracting references and image file names from the database table 'social_media'
 	  							//Fetch results
-	  							$result = $pdo->query("SELECT `img_file_name`,`href` FROM $db_name . social_media");
+	  							$result = $pdo->query("SELECT `img_file_name`,`href` FROM appletree_general.social_media");
 	  							//Display results
 	  							while($data = $result->fetch(PDO::FETCH_OBJ)):
 	  							?>
