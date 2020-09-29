@@ -20,6 +20,7 @@ a.disabled{
  	color: lightblue;
 	border-color: lightblue;
 }
-section {
+section{
 	padding-bottom:3rem;
+	padding-top: 3rem;
 }

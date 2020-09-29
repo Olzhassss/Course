@@ -14,9 +14,11 @@
 	// Storing little style adjustments for further amendment 
 	$customStyles_css = "#section-pricing { padding-bottom: 0px;}";
 
-	// Get strings from the database
-	$result = $pdo->query("SELECT `name`,`text` FROM $db_name . short_texts");
+	// Get strings from the database // query
+	$result = $pdo->query("SELECT `name`,`text` FROM appletree_general.short_texts");
+
 	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+
 	// Set the string values for corresponding variables to be used on the page
 	$blockquoteCitation_text = $short_texts['blockquote_citation'][0];
 	$welcoming_text = $short_texts['welcoming_text'][0];
@@ -27,7 +29,7 @@
 	$spinner_src = $imgs . "spinner.gif";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <!-- Importing head tag -->
 <?php require_once($head_pathname); ?>
 <body>
@@ -44,7 +46,7 @@
 		  <div class="carousel-inner">
 		  	<?php 	//------------------- Extracting carousel images from the database table 'carousel_imgs'
 		  	//Fetch results
-		  	$result = $pdo->query("SELECT `img_file_name` FROM $db_name . carousel_imgs");
+		  	$result = $pdo->query("SELECT `img_file_name` FROM appletree_general.carousel_imgs");
 		  	//Display results
 		  	while($img_urn = $result->fetch()['img_file_name']):
 		 	?>
@@ -78,7 +80,7 @@
 
 				<?php 	//------------------- Extracting card images and titles from the database table 'articles'
 		  		// Fetch results
-		  		$result = $pdo->query("SELECT `title`,`img_file_name` FROM $db_name . articles");
+		  		$result = $pdo->query("SELECT `title`,`img_file_name` FROM appletree_general.articles");
 		  		// Display results by repeating the cycle for every fetched row in the table
 		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 		 		?>
@@ -105,7 +107,7 @@
 
 				<?php 	//------------------- Extracting questions and answers from the database table 'faqs'
 		  		// Fetch results
-		  		$result = $pdo->query("SELECT `question`,`answer` FROM $db_name . faqs");
+		  		$result = $pdo->query("SELECT `question`,`answer` FROM appletree_general.faqs");
 		  		// Display results
 		  		// Temporary variable used to assign non-repeating 'id's for some elements
 		  		$temp = 1;
@@ -154,7 +156,7 @@
 
 						<?php 	//------------------- Extracting schedule information from the database table 'work_schedule'
 				  		// Fetch results
-				  		$result = $pdo->query("SELECT `day_of_week`,`working_time`,`app_time` FROM $db_name . work_schedule");
+				  		$result = $pdo->query("SELECT `day_of_week`,`working_time`,`app_time` FROM appletree_general.work_schedule");
 		  				// Display results by repeating the cycle for every fetched row in the table
 				  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 				 		?>
@@ -189,7 +191,7 @@
 
 				<?php 	//------------------- Extracting pricing information from the database table 'price_list'
 					//Fetch results
-					$result = $pdo->query("SELECT `card_header`,`price`,`condition`,`note` FROM $db_name . price_list");
+					$result = $pdo->query("SELECT `card_header`,`price`,`condition`,`note` FROM appletree_general.price_list");
 		  			// Display results by repeating the cycle for every fetched row in the table
 					while($data = $result->fetch(PDO::FETCH_OBJ)):
 				?>

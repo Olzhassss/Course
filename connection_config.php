@@ -4,7 +4,9 @@
 	$host = 'localhost';
 	$username = 'root';
 	$password = '';
-	$db_name = 'appletree';
+	$appletree_general = 'appletree_general';
+	$appletree_personnel = 'appletree_personnel';
+	$appletree_schedule = 'appletree_schedule';
 	$charset = 'utf8';
 	// PDO options
 	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -12,11 +14,14 @@
 
 	try
 	{
-		$pdo = new PDO("$driver:host = $host; dbname = $db_name; charset = $charset", $username, $password, $options);
+		$pdo = new PDO("$driver:host=$host;dbname=$appletree_general;charset=$charset", $username, $password, $options);
+		//$db['appletree_general'] = new PDO("$driver:host=$host;dbname=$appletree_general;charset=$charset", $username, $password, $options);
+		//$db['appletree_personnel'] = new PDO("$driver:host=$host;dbname=$appletree_personnel;charset=$charset", $username, $password, $options);
+		//$db['appletree_schedule'] = new PDO("$driver:host=$host;dbname=$appletree_schedule;charset=$charset", $username, $password, $options);
 	} 
 	catch (PDOException $e)
 	{
-		exit(" Failed to access the database! ");
+		exit('Connection failed: ' . $e->getMessage());
 	}
 
 	//session_start();

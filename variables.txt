@@ -53,8 +53,6 @@ This document contains essential custom PHP variables used in this project.
 
 > APPLICATIONS VIEWING PAGE - $applications_href
 > SCHEDULE VIEWING PAGE - $schedule_href
-> TEACHERS LIST VIEWING PAGE - $teachersList_href
-> STUDENTS LIST VIEWING PAGE - $studentsList_href
 > USER LOG OUT PAGE - $logout_href
 
 	Strings:

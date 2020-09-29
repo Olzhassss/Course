@@ -8,7 +8,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<?php require_once($head_pathname); ?>
 <body>
  	<?php require_once($header_pathname); ?>

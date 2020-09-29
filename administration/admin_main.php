@@ -27,12 +27,8 @@
 <html>
 <?php require_once($head_pathname); ?>
 <body>
-	<?php require_once($headerAdmin_pathname) ?>
-	<?php 
-	  echo "Welcome! ";
-	  echo "Visited: " . $_COOKIE['visits'] . PHP_EOL;
-	  echo "<a href = 'logout.php'> Log out </a>" ;
-	?>
+	<?php require_once($headerAdmin_pathname); ?>
+	<div class="container d-flex flex-column"><span>Please select section from menu</span></div>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
