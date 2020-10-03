@@ -5,6 +5,7 @@
 	//session_start();
 	//$username = "";
 	$title = 'Authorization';
+	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("loader.style.css", "back-link.style.css");
 	$customScripts_array = array("loader.js", "validate_single.js");
 	//$custom_styles = "";
@@ -21,9 +22,12 @@
 <?php require_once($head_pathname); ?>
 <body>
 	<?php require_once($backLink_pathname); ?>
+
+	<!-- The loader -->
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
+	
 	<section id="section-form">
 		<form>
 			<div class="container">
