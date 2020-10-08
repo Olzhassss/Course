@@ -14,6 +14,16 @@
 	$customStylesheets_array = array("headerAdmin.style.css", "loader.style.css");
 	$customScripts_array = array("loader.js");
 	$spinner_src = $imgs . "spinner.gif";
+
+	// Taking information about sessions from database
+	$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
+	$stmt = $pdo->query($sql);
+	$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+
+	$sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE NOT `id` = 0";
+	$stmt = $pdo->query($sql);
+	$sessionRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,26 +43,20 @@
 				<thead class="thead-light">
 					<tr>
 				        <th scope="col">Session\Room</td>
-				        <th scope="col">101A</th>
-				        <th scope="col">101B</th>
-				        <th scope="col">102</th>
+				        <?php foreach ($sessionRows as $val):
+				        	echo "<th scope=\"col\">". $val['room']. "</th>";
+				    	endforeach;?>
 				    </tr>
 				</thead>
 				<tbody>
-					<?php 
-					// Taking information about sessions from database
-					$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
-					$stmt = $pdo->query($sql);
-					$head = $stmt->fetch(PDO::FETCH_NUM);
-
-
-					foreach ($head as $value):
-					 ?>
-					<tr>
+				<?php foreach ($sessionColumn as $key=>$value): ?>
+					<tr class="tr tr-<?=$key?>">
 						<th scope="row"><?=$value?></th>
-				        <td></td>
-				        <td></td>
-				        <td></td>
+				        <?php
+				        foreach ($sessionRows as $val):
+				        	$session = "session". ($key+1);
+				        	echo "<td>$val[$session]</td>";
+				        endforeach;?>
 				    </tr>
 				<?php endforeach; ?>
 				</tbody>
@@ -90,6 +94,7 @@
 <script>
 	$(document).ready(function(){
 		fix_loader("loader_div");
+		$('tr')
 	})
 </script>
 <?php

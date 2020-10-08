@@ -1,6 +1,7 @@
 <?php 
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 
-require_once 'connection_config.php';
+require_once ($connection_config);
 
 // Assigning function to avoid repeat. The function filtrates input string via encoded fuctions
 function filtrateString($a_string)

@@ -55,76 +55,76 @@
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 		  					    <label for="lvl-of-ed-field">Desired level of education</label>
 		  					    <select class="form-control" id="lvl-of-ed-field">
-		  					        <option>Elementary</option>
-		  					        <option>Pre Intermediate</option>
-		  					        <option>Upper intermediate</option>
-		  					        <option>Intermediate</option>
-		  					        <option>Advanced</option>
+		  					        <option value="Elementary">Elementary</option>
+		  					        <option value="Pre-Intermediate">Pre-Intermediate</option>
+		  					        <option value="Upper-intermediate">Upper-intermediate</option>
+		  					        <option value="Intermediate">Intermediate</option>
+		  					        <option value="Advanced">Advanced</option>
 		  					    </select>								
 						</div>	
 					</div>
 					<hr>
 					<!-- third form sections row (gender and additional question) -->
 					<div class="row d-flex justify-content-between">
-					<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
-						<label for="gender-field">Your gender</label>
-	    				<select class="form-control" id="gender-field">
-	    					<option>Male</option>
-	    				    <option>Female</option>
-	    				    <option>Other</option>
-	    				</select>
-					</div>
-					<div class="col-xs-12 col-sm-8 col-md-6">
-						<h6>Do you have own methodic material prepared for teaching?</h6>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-1" value="positive" required="true">
-							<label class="form-check-label" for="methodology-radio-1">Yes</label>
+						<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
+							<label for="gender-field">Your gender</label>
+	    					<select class="form-control" id="gender-field">
+	    						<option value="Male">Male</option>
+	    					    <option value="Female">Female</option>
+	    					    <option value="Other">Other</option>
+	    					</select>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" checked="true">
-							<label class="form-check-label" for="methodology-radio-2">No</label>
+						<div class="col-xs-12 col-sm-8 col-md-6">
+							<h6>Do you have own methodic material prepared for teaching?</h6>
+							<div class="form-check">
+								<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-1" value="positive" required="true">
+								<label class="form-check-label" for="methodology-radio-1">Yes</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" checked="true">
+								<label class="form-check-label" for="methodology-radio-2">No</label>
+							</div>
 						</div>
-					</div>
 					</div>
 					<hr>
 					<!-- fourth form sections row (short text field, supplementary info) -->
 					<div class="row">
-					<div class="form-group col-12 col-md-5">
-					    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
-						<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 500 symbols" maxlength="500" style="resize: none;" rows="5" ></textarea>
-						<small id="infoHelp" class="form-text text-muted">
-							Here you can include some details about your personality or career achievements or any other details
-						</small>
-					</div>
-					<div class="col-1 d-none d-lg-block" style="height: inherit; border-right: 1px solid rgba(0,0,0,.1)">
-					</div>
-					<div class="col">
-						<h5>Supplementary information</h5>
-						<br>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="have-whatsapp" id="whatsapp">
-							<label class="form-check-label" for="whatsapp">
-								I have What'sApp registered to the given phone number
-							</label>
+						<div class="form-group col-12 col-md-5">
+						    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
+							<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 500 symbols" maxlength="500" style="resize: none;" rows="5" ></textarea>
+							<small id="infoHelp" class="form-text text-muted">
+								Here you can include some details about your personality or career achievements or any other details
+							</small>
 						</div>
-						<br>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="work-on-sunday" id="sunday">
-							<label class="form-check-label" for="sunday">
-								I have an opportunity to work on Sundays
-							</label>
+						<div class="col-1 d-none d-lg-block" style="height: inherit; border-right: 1px solid rgba(0,0,0,.1)">
 						</div>
-					</div>
+						<div class="col">
+							<h5>Supplementary information</h5>
+							<br>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="check-field-1">
+								<label class="form-check-label" for="check-field-1">
+									I have What'sApp registered to the given phone number
+								</label>
+							</div>
+							<br>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="check-field-2">
+								<label class="form-check-label" for="check-field-2">
+									I have an opportunity to work on Sundays
+								</label>
+							</div>
+						</div>
 					</div>
 					<hr>
 					<!-- div for buttons -->
 					<div class="row d-flex justify-content-center">
-					<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
-						Register!
-					</button>
-					<button type="Reset" class="btn btn-secondary">
-						Reset application form
-					</button>
+						<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
+							Register!
+						</button>
+						<button type="Reset" class="btn btn-secondary">
+							Reset application form
+						</button>
 					</div>
 					<!-- div for additional info in nav tabs -->
 					<div class="mt-5 pt-4">
@@ -158,8 +158,42 @@
 	
 	function submit()
 	{
+
 		// Calling functions in order to do validation
-		validate_text($("input[type='text']"));
+		if(validate_text($("input[type='text']")))
+		{
+
+			// Sends password and login values to 'authorization.php' and
+			// either redirects the user or displays an error according to the outcome
+			$.ajax({
+				url: '../administration/application.php',
+				type: 'POST',
+				cache: false,
+				data: { 'name':$("#name-field").val(), 'surname':$("#surname-field").val(), 'phone_number':$("#phone-number-field").val(),
+						 'email':$("#email-field").val(), 'ed_lvl':$("#lvl-of-ed-field").val(), 'exp':$("#experience-field").val(),
+						 'summary':$("#additional-info").val()/*, 'opt_radio1':$("#opt-radio1"), 'opt_radio2':$("#opt-radio2"), 'opt_radio3':$("#opt-radio3")*/},
+				beforeSend: function() {
+					$("#loader_div").removeClass("hidden");
+				},
+				success: function(data){
+					console.log(data);	
+					if (data == 0)
+					{
+						var result = prompt("Your registration is successul! Press OK to return to main page.")
+						if (result)
+							window.location.replace("http://course/administration/admin_main.php");
+						return;
+					}
+					else
+					{
+						alert(data);
+						return;
+					}
+				}
+			})
+
+			$("#loader_div").addClass("hidden");
+		}
 	}
 </script>
 <?php

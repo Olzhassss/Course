@@ -1,4 +1,4 @@
-<?php 
+	<?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once($connection_config);
 
@@ -60,20 +60,19 @@
 						<div class="col-xs-12 col-sm-8 col-md-4">
 	    				    <label for="lvl-of-ed-field">Your level of education</label>
 	    				    <select class="form-control" id="lvl-of-ed-field">
-	    				    	<option surcharge = "0">Undeterminent</option>
-	    				        <option surcharge = "0">Elementary</option>
-	    				        <option surcharge = "0">Pre Intermediate</option>
-	    				        <option surcharge = "0">Intermediate</option>
-	    				        <option surcharge = "0">Upper intermediate</option>
-	    				        <option surcharge = "0">Advanced</option>
+	    				    	<option surcharge = "0" value="Elementary">Elementary</option>
+	    				    	<option surcharge = "0" value="Pre-Intermediate">Pre-Intermediate</option>
+	    				    	<option surcharge = "0" value="Upper-intermediate">Upper-intermediate</option>
+	    				    	<option surcharge = "0" value="Intermediate">Intermediate</option>
+	    				    	<option surcharge = "0" value="Advanced">Advanced</option>
 	    				    </select>								
 						</div>	
 						<div class="col-xs-12 col-sm-8 col-md-4">
 	    				    <label for="gender-field">Your gender</label>
 	    				    <select class="form-control" id="gender-field">
-	    				    	<option>Male</option>
-	    				        <option>Female</option>
-	    				        <option>Other</option>
+	    				    	<option value="Male">Male</option>
+	    					    <option value="Female">Female</option>
+	    					    <option value="Other">Other</option>
 	    				    </select>								
 						</div>	
 					</div>
