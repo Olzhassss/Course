@@ -24,17 +24,17 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="^[A-Z]{1}[a-z]{0,20}$">
 							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="^[A-Z]{1}[a-z]{0,20}$" >
 						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" class="form-control" required="true" error-field="error_3" id="email-field" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" aria-describedby="emailHelp">
+						    <input type="text" class="form-control" required="true" error-field="error_3" id="email-field" pattern="^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" aria-describedby="emailHelp">
 						    <small id="emailHelp" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_3" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
@@ -49,7 +49,7 @@
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="experience-field">Working Experience (in years)</label>
-						    <input type="text" class="form-control" required="true" error-field="error_5" id="experience-field" pattern="\d{1,2}">
+						    <input type="text" class="form-control" required="true" error-field="error_5" id="experience-field" pattern="^[0-9]{1,2}$">
 						    <small id="error_5" class="form-text text-danger d-none">Please write valid working experience</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
@@ -91,7 +91,7 @@
 					<div class="row">
 						<div class="form-group col-12 col-md-5">
 						    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
-							<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 500 symbols" maxlength="500" style="resize: none;" rows="5" ></textarea>
+							<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 2500 symbols" maxlength="2500" style="resize: none;" rows="5" ></textarea>
 							<small id="infoHelp" class="form-text text-muted">
 								Here you can include some details about your personality or career achievements or any other details
 							</small>
@@ -171,7 +171,7 @@
 				cache: false,
 				data: { 'name':$("#name-field").val(), 'surname':$("#surname-field").val(), 'phone_number':$("#phone-number-field").val(),
 						 'email':$("#email-field").val(), 'ed_lvl':$("#lvl-of-ed-field").val(), 'exp':$("#experience-field").val(),
-						 'summary':$("#additional-info").val()/*, 'opt_radio1':$("#opt-radio1"), 'opt_radio2':$("#opt-radio2"), 'opt_radio3':$("#opt-radio3")*/},
+						 'summary':$("#additional-info").val(), 'application_type':'teacher', 'gender':$("#gender-field").val()/*, 'opt_radio1':$("#opt-radio1"), 'opt_radio2':$("#opt-radio2"), 'opt_radio3':$("#opt-radio3")*/},
 				beforeSend: function() {
 					$("#loader_div").removeClass("hidden");
 				},
@@ -179,9 +179,9 @@
 					console.log(data);	
 					if (data == 0)
 					{
-						var result = prompt("Your registration is successul! Press OK to return to main page.")
+						var result = confirm("Your registration is successul! Press OK to return to main page.")
 						if (result)
-							window.location.replace("http://course/administration/admin_main.php");
+							window.location.replace("<?=$index?>");
 						return;
 					}
 					else
