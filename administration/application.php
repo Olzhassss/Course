@@ -34,7 +34,10 @@ try {
 	$data['exp'] = is_valid(is_empty(filtrateString( $_POST['exp'])),"^([0-9]|[1-9][0-9])$");
 	$data['summary'] = is_valid(filtrateString( $_POST['summary']), ".{0,2500}");
 	$data['app_date'] = date("Y-m-d");
-	$data['gender'] = is_valid(filtrateString($_POST['gender']),"^[A-Z]{1}[a-z]{3,6}$");
+	$data['gender'] = is_valid(filtrateString( $_POST['gender']),"^[A-Z]{1}[a-z]{3,6}$");
+	$data['opt_radio1'] = is_valid(filtrateString( $_POST['opt_radio1']),"(^1$|^0$)");
+	$data['opt_radio2'] = is_valid(filtrateString( $_POST['opt_radio2']),"(^1$|^0$)");
+	$data['opt_radio3'] = is_valid(filtrateString( $_POST['opt_radio3']),"(^1$|^0$)");
 } catch (Exception $e) {
 	echo $e->getMessage();
 	exit();
@@ -84,17 +87,20 @@ try {
 		}
 		else
 		{
-			$sql = "INSERT INTO appletree_personnel.app_teachers (name, surname, app_date, phone_number, email, ed_lvl, exp, gender, summary)
-				VALUES (:name, :surname, :app_date, :phone_number, :email, :ed_lvl, :exp, :gender, :summary)";
+			$sql = "INSERT INTO appletree_personnel.app_teachers
+				(name, surname, app_date, phone_number, email, ed_lvl, exp, gender, summary, opt_radio1, opt_radio2, opt_radio3)
+				VALUES (:name, :surname, :app_date, :phone_number, :email, :ed_lvl, :exp, :gender, :summary, :opt_radio1, :opt_radio2, :opt_radio3)";
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([':name' => $data['name'], ':surname' => $data['surname'], ':app_date' => $data['app_date'],
 				':phone_number' => $data['phone_number'], ':email' => $data['email'], ':ed_lvl' => $data['ed_lvl'],
-				':exp' => $data['exp'], ':gender' => $data['gender'], ':summary' => $data['summary']]);
+				':exp' => $data['exp'], ':gender' => $data['gender'], ':summary' => $data['summary'],
+				':opt_radio1' => $data['opt_radio1'], ':opt_radio2' => $data['opt_radio2'], ':opt_radio3' => $data['opt_radio3']]);
 			echo 0;
 		}
 	}
-} catch{
-	echo "Error occured! Please contact administrator. Failed to manipulate databases.";
+} catch(Exception $e) {
+	echo $e->getMessage();
+	echo 'Error occured! Please contact administrator. Failed to manipulate databases.';
 }
 	
 ?>

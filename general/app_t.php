@@ -77,12 +77,12 @@
 						<div class="col-xs-12 col-sm-8 col-md-6">
 							<h6>Do you have own methodic material prepared for teaching?</h6>
 							<div class="form-check">
-								<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-1" value="positive" required="true">
-								<label class="form-check-label" for="methodology-radio-1">Yes</label>
+								<input class="form-check-input" name="opt_radio" type="radio" id="radio-1" value="Yes" required="true">
+								<label class="form-check-label" for="radio-1">Yes</label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" name="radio-1" type="radio" id="methodology-radio-2" value="negative" checked="true">
-								<label class="form-check-label" for="methodology-radio-2">No</label>
+								<input class="form-check-input" name="opt_radio" type="radio" id="radio-2" value="No" checked="true">
+								<label class="form-check-label" for="radio-2">No</label>
 							</div>
 						</div>
 					</div>
@@ -102,15 +102,15 @@
 							<h5>Supplementary information</h5>
 							<br>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="check-field-1">
-								<label class="form-check-label" for="check-field-1">
+								<input class="form-check-input" type="checkbox" id="checkbox-1">
+								<label class="form-check-label" for="checkbox-1">
 									I have What'sApp registered to the given phone number
 								</label>
 							</div>
 							<br>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="check-field-2">
-								<label class="form-check-label" for="check-field-2">
+								<input class="form-check-input" type="checkbox" id="checkbox-2">
+								<label class="form-check-label" for="checkbox-2">
 									I have an opportunity to work on Sundays
 								</label>
 							</div>
@@ -155,14 +155,16 @@
 	$(document).ready(function(){
 		$("#submit").click(submit);
 	})
-	
+
 	function submit()
 	{
-
-		// Calling functions in order to do validation
+		// 
 		if(validate_text($("input[type='text']")))
 		{
-
+			let opt_radio = new Array(3);
+			opt_radio[0] = $("#checkbox-1").prop("checked")? 1:0;
+			opt_radio[1] = $("#checkbox-2").prop("checked")? 1:0;
+			opt_radio[2] = ($('input[name="opt_radio"][value="Yes"]').is(':checked'))? 1:0;
 			// Sends password and login values to 'authorization.php' and
 			// either redirects the user or displays an error according to the outcome
 			$.ajax({
@@ -171,7 +173,8 @@
 				cache: false,
 				data: { 'name':$("#name-field").val(), 'surname':$("#surname-field").val(), 'phone_number':$("#phone-number-field").val(),
 						 'email':$("#email-field").val(), 'ed_lvl':$("#lvl-of-ed-field").val(), 'exp':$("#experience-field").val(),
-						 'summary':$("#additional-info").val(), 'application_type':'teacher', 'gender':$("#gender-field").val()/*, 'opt_radio1':$("#opt-radio1"), 'opt_radio2':$("#opt-radio2"), 'opt_radio3':$("#opt-radio3")*/},
+						 'summary':$("#additional-info").val(), 'application_type':'teacher', 'gender':$("#gender-field").val(),
+						 'opt_radio1':opt_radio[0], 'opt_radio2':opt_radio[1], 'opt_radio3':opt_radio[2] },
 				beforeSend: function() {
 					$("#loader_div").removeClass("hidden");
 				},
