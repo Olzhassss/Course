@@ -10,7 +10,7 @@
 ?>
 <section id="section-header" style="padding: 0px;">
 	<!-- Header content wrapper div -->
-	<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center p-3 shadow mb-5" >
+	<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center p-3 shadow mb-2" >
 		<!-- Logo and title referencing to the main webpage -->
 		<a href="<?=$header_href?>" class="text-decoration-none">
 			<img src="<?=$logo_src?>" id="header-logo" hspace="0" alt="logo">
@@ -24,11 +24,11 @@
 			<div class="my-3 my-md-0 mx-md-2 col">
 				<div class="container-fluid">
 					<nav class="row d-flex justify-content-around">
-						<a href="<?=$applications_href?>" class="col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span id="app_badge"class="badge badge-warning"></span></a>
-						<a href="<?=$schedule_href?>" class="col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Schedule</a>
-						<a href="<?=$staff_href?>" class="col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Current staff</a>
-						<a href="<?=$classes_href?>" class="col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</a>
-						<a href="<?=$frontpageEdit_href?>" class="col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Front page edit</a>
+						<a essence ="applications" href="<?=$applications_href?>" class="header-link col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span id="app_badge"class="badge badge-warning"></span></a>
+						<a essence ="schedule" href="<?=$schedule_href?>" class="header-link col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Schedule</a>
+						<a essence ="staff" href="<?=$staff_href?>" class="header-link col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Current staff</a>
+						<a essence ="classes" href="<?=$classes_href?>" class="header-link col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</a>
+						<a essence ="frontEdit" href="<?=$frontpageEdit_href?>" class="header-link col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Front page edit</a>
 					</nav>
 				</div>
 			</div>

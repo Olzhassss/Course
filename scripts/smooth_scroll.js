@@ -1,4 +1,4 @@
-// Add smooth scrolling to the links in navigation bar
+// Add smooth scrolling to any links with hashes
 $(document).ready(function(){
 	  try
 	  {
@@ -18,9 +18,10 @@ $(document).ready(function(){
 		  	    let link = $(this);
 		  	    let href = link.attr('href');
 		  	    // Setting the duration time for the animation in milliseconds
-		  	    let var_duration = 1300;
+		  	    let var_duration = 1500;
 		  	    // Assigning animation
 		  	    link.addClass("disabled");
+		  	    console.error("ASDA)");
 		  	    $('html, body').animate(
 		  	    {
 		  	    	scrollTop: $(hash).offset().top
@@ -37,7 +38,7 @@ $(document).ready(function(){
 		  	  }
 		  	  else
 		  	  {
-		  	  	console.error("'smooth_scroll' function: Link's hash is empty!");
+		  	  	console.log("'smooth_scroll' function: Empty link hash.");
 		  	  }
 		  	  // -------------------- End of 'if'
 	  		}

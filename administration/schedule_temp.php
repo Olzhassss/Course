@@ -1,17 +1,18 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	
-	require_once $connection_config;
+
+
+	require_once ($connection_config);
 	session_start();
 
 	if (!isset($_SESSION['user_login'])) {
 		header('Location:sign_in.php');
 	}
 
-	$title = 'Schedule';
-	//$customStylesheets_array = array("headerAdmin.style.css");
+	$url = $_POST['url'];
+
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("headerAdmin.style.css", "loader.style.css", "tables.style.css", "navbar_schedule.style.css");
+	$customStylesheets_array = array("tables.style.css", "navbar_schedule.style.css");
 	$customScripts_array = array("loader.js", "smooth_scroll.js", "scroll_schedule_page.js");
 	//$customStyles_css = "";
 	$spinner_src = $imgs . "spinner.gif";
@@ -29,17 +30,21 @@
 	}
 	
 ?>
-<!DOCTYPE html>
-<html lang="en">
-	<?php require_once($head_pathname); ?>
-<body>
- 	<?php require_once($headerAdmin_pathname); ?>
-
-	<!-- The loader -->
-	<div id="loader_div" class="loader">
-		<img src="<?=$spinner_src?>" alt="spinner">
-	</div>
-
+	<head>
+		<?php
+		if (!empty($customStylesheets_array))
+		{
+		    foreach ($customStylesheets_array as $value)
+		    {
+		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
+		    }
+		}
+		if (!empty($customStyles_css))
+		{
+		    echo "<style> $customStyles_css </style>".PHP_EOL;
+		}
+		?>
+	</head>
 	<div id="navbar" class="navbar w-100 shadow">
 		<nav>
 			<ul class="row" style="list-style-type: none;">
@@ -169,11 +174,11 @@
 		</section>
 	</div>
 
-</body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
+		console.log("successful");
 		fix_loader("loader_div");
 		
 	})
@@ -184,5 +189,3 @@ foreach ($customScripts_array as $value)
    		echo "<script src='$js$value'></script>".PHP_EOL;
     }
 ?>
-
-</html>

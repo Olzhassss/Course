@@ -80,7 +80,15 @@
 					<!-- third form sections row (information about classes schedule) -->
 					<div class="row py-3">
 						<div class="col-12 col-lg-7">
+							<?php 
+							// Fetching data about time sessions of classes from the moday schedule table (for example)
+							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
+							$stmt = $pdo->query($sql);
+							$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+							 ?>
+							<!-- Timetable for Monday -->
 							<table class="my-5 table table-striped border text-center">
+								<caption><small> <i>Note:</i> Timetable for Monday as an example. Details may change for different days.</small></caption>
 							  <thead>
 							    <tr>
 							      <th scope="col">Time session name</th>
@@ -88,10 +96,12 @@
 							    </tr>
 							  </thead>
 							  <tbody>
-							    <tr>
-							      <td></td>
-							      <td></td>
-							    </tr>
+							    <?php foreach ($sessionColumn as $key=>$value): ?>
+							    	<tr class="tr tr-<?=$key?>">
+							    		<th class="font-weight-normal" scope="col"><?=$key>=3?"Evening- ".($key-2):"Morning-".($key+1)?></th>
+							    		<th class="font-weight-normal" scope="col"><?=$value?></th>
+							        </tr>
+							    <?php endforeach; ?>
 							  </tbody>
 							</table>
 						</div>
@@ -107,7 +117,7 @@
 					</div>
 					<hr>
 					<!-- fourth form sections row (supplementary info) -->
-					<div class="row py-3">
+					<div class="row py-3 justify-content-between">
 						<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 mb-4">
 							<h5 class="my-3">Supplementary information</h5>
 							<br>
@@ -130,8 +140,8 @@
 							</div>
 						</div>
 						<div class="col-12 col-md-6 py-4">
-							<div class="card float-right">
-								<div class="card-body">
+							<div class="card w-100">
+								<div class="card-body d-flex justify-content-center">
 									<p class="lead" style="font-size: 2rem;">
 										The fee for a weekday is <span><?=$weekday_fee? $weekday_fee : 0?></span>tg
 										<br>

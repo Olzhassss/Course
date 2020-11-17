@@ -12,6 +12,9 @@
 	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 	 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
 
+	// Session setting to destroy it immediately after user closes browser
+	session_set_cookie_params(0);
+	
 	try
 	{
 		$pdo = new PDO("$driver:host=$host;dbname=$appletree_general;charset=$charset", $username, $password, $options);

@@ -12,15 +12,12 @@
 <body>
 	<?php require_once($backLink_pathname); ?>
 	<br></br>
-	<div class="mt-5">
-		<!-- Creating and filling teacher application form -->
-		<form method="post" action="">
+	<div>
 			<div class="container">
 				<div class="row mb-2">
 					<p class="alert display-4"><b>For new student applicants!</b></p>
 				</div>
-				<form method="post" action="?" style="height: 200px;">
-					<p class="alert alert-success display-4">Please choose would you like to have group or private lessons</p> 
+					<p class="alert alert-success display-4 pb-4">Please choose whether you like to have group or private lessons</p> 
 					<div class="row mb-3">
 						<div class="col-md"></div>
 						<div class="col-12 col-sm-6 col-md-4 my-3">
@@ -32,10 +29,8 @@
 						<div class="col-md"></div>	
 					</div>
 					<br>
-				</form>
 			</div>
 			<br></br>
- 		</form>
  	</div>
 </div>
 </body>

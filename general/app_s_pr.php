@@ -1,4 +1,4 @@
-<?php 
+	<?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
 
@@ -125,7 +125,15 @@
 					</div>
 					<div class="row">
 						<div class="col-12 col-lg-7">
+							<?php 
+							// Fetching data about time sessions of classes from the moday schedule table (for example)
+							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
+							$stmt = $pdo->query($sql);
+							$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+							 ?>
+							<!-- Timetable for Monday -->
 							<table class="my-5 table table-striped border text-center">
+								<caption> <i>Note:</i> Timetable for Monday as an example. Details may change for different days.</caption>
 							  <thead>
 							    <tr>
 							      <th scope="col">Time session name</th>
@@ -133,10 +141,12 @@
 							    </tr>
 							  </thead>
 							  <tbody>
-							    <tr>
-							      <td></td>
-							      <td></td>
-							    </tr>
+							    <?php foreach ($sessionColumn as $key=>$value): ?>
+							    	<tr class="tr tr-<?=$key?>">
+							    		<th class="font-weight-normal" scope="col"><?=$key>=3?"Evening- ".($key-2):"Morning-".($key+1)?></th>
+							    		<th class="font-weight-normal" scope="col"><?=$value?></th>
+							        </tr>
+							    <?php endforeach; ?>
 							  </tbody>
 							</table>
 						</div>
