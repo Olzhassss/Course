@@ -1,12 +1,10 @@
 <?php
-	//echo $_SERVER['REQUEST_URI'];
 	if ($_SERVER['REQUEST_URI'] != "/index.php") {
 		header('LOCATION: index.php');
 	}
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
-	//session_start();
-	//$username = "";
+
 	$title = 'AppleTree main page';
 	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("header.style.css", "footer.style.css", "loader.style.css");
@@ -31,10 +29,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- Importing head tag -->
-<?php require_once($head_pathname); ?>
+<?php require_once($head_ldp); ?>
 <body>
 	<!-- Importing the header -->
-	<?php require_once($header_pathname); ?>
+	<?php require_once($header_ldp); ?>
 	
 	<!-- The loader -->
 	<div id="loader_div" class="loader">
@@ -48,10 +46,10 @@
 		  	//Fetch results
 		  	$result = $pdo->query("SELECT `img_file_name` FROM appletree_general.carousel_imgs");
 		  	//Display results
-		  	while($img_urn = $result->fetch()['img_file_name']):
+		  	while($img_file = $result->fetch()['img_file_name']):
 		 	?>
 		  		<div data-interval="5000" class="carousel-item">
-		  		  <img src="<?= $imgs.$img_urn ?>"  class="d-block w-100" alt="<?= $img_urn ?>">
+		  		  <img src="<?= $imgs.$img_file ?>"  class="d-block w-100" alt="<?= $img_file ?>">
 		  		</div>
 		  	<?php endwhile; ?>
 		  </div>
@@ -80,19 +78,23 @@
 
 				<?php 	//------------------- Extracting card images and titles from the database table 'articles'
 		  		// Fetch results
-		  		$result = $pdo->query("SELECT `title`,`img_file_name` FROM appletree_general.articles");
+		  		$result = $pdo->query("SELECT `id`,`title`,`img_file_name` FROM appletree_general.articles");
 		  		// Display results by repeating the cycle for every fetched row in the table
 		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
 		 		?>
 
-		  			<a href="article.php"  class="col-11 col-sm-6 col-md-4 text-decoration-none mb-3">
-		  				<div class="card shadow-sm">
-		  					<img src="<?= $imgs.$data->img_file_name ?>" class="card-img-top img-thumbnail" alt="card-logo">
-		  					<div class="card-body">
-		  						<h5 class="card-title"><?= $data->title ?></h5>
-		  					</div>
-		  				</div>
-		  			</a>
+		 		<form action="<?= $article_url ?>" method="GET" class="col-11 col-sm-6 col-md-4 mb-3">
+		 			<input type="hidden" name="id" value="<?= $data->id ?>" />
+		 			<a href="#" class="text-decoration-none" onclick="this.closest('form').submit(); return false;">
+		 				<div class="card shadow-sm">
+		 					<img src="<?= $imgs.$data->img_file_name ?>" class="card-img-top img-thumbnail" alt="card-logo">
+		 					<div class="card-body">
+		 						<h5 class="card-title"><?= $data->title ?></h5>
+		 					</div>
+		 				</div>
+		 			</a>
+		 		</form>
+		  			
 
 		  		<?php endwhile; ?>
 
@@ -149,7 +151,7 @@
 					    <tr>
 					      <th scope="col">Day of week</th>
 					      <th scope="col">Working time</th>
-					      <th scope="col">Online application reception time</th>
+					      <th scope="col">Online application reviewing time</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -226,17 +228,11 @@
 		</div>
 	</section>
 	<!-- Importing the footer -->
-	<?php require_once($footer_pathname); ?>
+	<?php require_once($footer_ldp); ?>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<?php
-foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
 <script>
 	$(document).ready(function(){
 		// Activating first carousel slide (necessary)
@@ -252,4 +248,5 @@ foreach ($customScripts_array as $value)
 		fix_loader("loader_div");
 	})
 </script>
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html>

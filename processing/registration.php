@@ -12,7 +12,7 @@ function filtrateString($a_string)
 $login = filtrateString( $_POST['name']);
 $pass = filtrateString( $_POST['password']);
 
-if (!empty($login) && ! empty($pass)) {
+if (!empty($login) && !empty($pass)) {
 	
 	$sql_check = "SELECT EXISTS( SELECT login FROM appletree_personnel.admins WHERE login = :login)";
 	$stmt = $pdo->prepare($sql_check);
@@ -28,8 +28,8 @@ if (!empty($login) && ! empty($pass)) {
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([':login' => $login, ':pswd' => $pass ]);
 
-	echo "Registration is successful!";
+	exit('Ragistration is successful');
 }
 else
-	exit('Fill the spaces!')
+	exit('Fill the spaces!');
 ?>

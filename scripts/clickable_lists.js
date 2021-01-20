@@ -6,7 +6,7 @@ function set_click_listener(list_class)
 	// Input argument validation
 	if(list === undefined || list.length < 1)
 	{
-		console.error("'set_click_listener' (clickable_lists.js) function: False input argument!")
+		console.error("'set_click_listener' (clickable_lists.js) function: No elements with such a class name!")
 		return false;
 	}
 

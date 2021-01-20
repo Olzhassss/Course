@@ -1,11 +1,10 @@
 <!-- BEGINNING OF THE HEADER -->
 <?php
 	$logo_src = $imgs . "logo.png";
-	$header_href = $index . "#section-header";
-	$contacts_href = $index . "#section-footer";
-	$pricing_href = $index . "#section-pricing";
-	$faq_href = $index . "#section-faq";
-	$authorization_href = $root . "/administration/sign_in.php";
+	$header_href = $index_url . "#section-header";
+	$contacts_href = $index_url . "#section-footer";
+	$pricing_href = $index_url . "#section-pricing";
+	$faq_href = $index_url . "#section-faq";
 ?>
 <section id="section-header" style="padding: 0px;">
 		<!-- Header content wrapper div -->
@@ -25,10 +24,10 @@
 			    <a class="p-2 text-light text-decoration-none" href="<?=$contacts_href?>">Contacts</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$pricing_href?>">Price list</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$faq_href?>">FAQ</a>
-			    <a class="p-2 text-light text-decoration-none" href="<?=$authorization_href?>">Administration</a>
+			    <a class="p-2 text-light text-decoration-none" href="<?=$authorizationPage_url?>">Administration</a>
 			</nav>
 			<!-- End of navigation -->
-			<a class="btn application_link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$appMain_href?>">Application</a>
+			<a class="btn application_link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$appMain_url?>">Application</a>
 		</div>
 </section>
 <!-- END OF HEADER -->

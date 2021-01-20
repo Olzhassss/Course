@@ -1,13 +1,12 @@
-<?php 
+<?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	
 	require_once ($connection_config);
-	session_start();
 
+	session_start();
+	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
-		header('Location:sign_in.php');
+		header("Location:$authorizationPage_url");
 	}
-	
 
 	$title = 'Administration page';
 	$customScripts_array = array("loader.js");
@@ -16,9 +15,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<?php require_once($head_pathname); ?>
+<?php require_once($head_ldp); ?>
 <body>
-	<?php require_once($headerAdmin_pathname); ?>
+	<?php require_once($headerAdmin_ldp); ?>
 	<div id="loader_div" class="loader">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
@@ -30,15 +29,10 @@
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<?php foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
 <script>
 	// Attaching the 'loadPage' function to the 'Sign in!' button click event via id
 	$(document).ready(function(){
-		$(".header-link").click(loadPage);
+		$(".header-button").click(loadPage);
 		fix_loader("loader_div");
 	})
 
@@ -46,26 +40,27 @@
 	function loadPage(event)
 	{
 		event.preventDefault();
-
-
-		//$( "#body" ).load( "template.php", {'temp':$(this).attr("essence")});
-		//console.log($(this).attr("essence"));
+		let data = $(this).attr("data-essence");
 		$.ajax({
-			url: 'template.php',
+			url: "<?=$router_url?>",
 			type: 'POST',
 			cache: false,
-			data: { 'temp':$(this).attr("essence") },
+			data: { 'temp': data },
 			beforeSend: function() {
 				$("#loader_div").removeClass("hidden");
+				$("#body").empty();
 			},
 			success: function(data){
+				if (data==1){
+					console.error("'loadPage' function: Unknown url submitted!");
+					return;
+				}
 				try	{
-					$("#body").html(data);
-					//$( "#body" ).load( data, {'url':"<?=$url?>"} );
+					$( "#body" ).load( data, {'url':"<?=$url?>"} );
 				}
 				catch(error)
 				{
-					console.error("Error occured"+error.message());
+					console.error("'loadPage' function: Error occured!");
 				}
 				
 			}
@@ -74,4 +69,5 @@
 		$("#loader_div").addClass("hidden");
 	}
 </script>
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html>

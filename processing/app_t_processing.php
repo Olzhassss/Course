@@ -1,6 +1,5 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-
 require_once ($connection_config);
 
 // Assigning functions to avoid repeats. The functions filtrate input string via encoded fuctions
@@ -39,28 +38,8 @@ try {
 	$data['opt_radio2'] = is_valid(filtrateString( $_POST['opt_radio2']),"(^1$|^0$)");
 	$data['opt_radio3'] = is_valid(filtrateString( $_POST['opt_radio3']),"(^1$|^0$)");
 } catch (Exception $e) {
-	echo $e->getMessage();
-	exit();
+	exit ($e->getMessage());
 }
-/*
-if (false) {
-	
-	$sql_check = "SELECT EXISTS( SELECT login FROM appletree_personnel.admins WHERE login = :login)";
-	$stmt = $pdo->prepare($sql_check);
-	$stmt->execute([':login' => $login]);
-
-	if( $stmt->fetchColumn())
-	{
-		exit('Login is occupied! Try another one.');
-	}
-	$password = password_hash($password, PASSWORD_DEFAULT);
-
-	$sql = "INSERT INTO appletree_personnel.admins (login, pswd) VALUES (:login, :pswd)";
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([':login' => $login, ':pswd' => $password ]);
-
-	echo "Registration is successful!";
-}*/
 
 try {
 	// Check if applicant with given name and surname exists
@@ -71,7 +50,7 @@ try {
 	// if inquery yielded any result
 	if($stmt->fetchColumn())
 	{
-		echo "This person has already applied!";
+		exit("This person has already applied!");
 	} else
 	{
 		// Check if applicant or stuff member with similar phone number or email is recorded
@@ -83,7 +62,7 @@ try {
 		$stmt2->execute([':email' => $data['email'], ':phone_number' => $data['phone_number'] ]);
 		// if inquery yielded any result
 		if ($stmt1->fetchColumn() || $stmt2->fetchColumn()) {
-			echo "Phone number or email is already occupied!";
+			exit("Phone number or email is already occupied!");
 		}
 		else
 		{
@@ -95,12 +74,12 @@ try {
 				':phone_number' => $data['phone_number'], ':email' => $data['email'], ':ed_lvl' => $data['ed_lvl'],
 				':exp' => $data['exp'], ':gender' => $data['gender'], ':summary' => $data['summary'],
 				':opt_radio1' => $data['opt_radio1'], ':opt_radio2' => $data['opt_radio2'], ':opt_radio3' => $data['opt_radio3']]);
-			echo 0;
+			exit(0);
 		}
 	}
 } catch(Exception $e) {
 	echo $e->getMessage();
-	echo 'Error occured! Please contact administrator. Failed to manipulate databases.';
+	exit('Error occured! Please contact administrator. Failed to manipulate the databases.');
 }
 	
 ?>

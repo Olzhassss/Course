@@ -7,7 +7,7 @@
 function validate_list(list, minimum)
 {
 	// This variable reserves the id (by the idea) of html element responsible for error message for further usage.
-	var attr_val = list.first().attr("error-field");
+	var attr_val = list.first().attr("data-error-field");
 	// Input arguments validation
 	if(list.length < 2)
 	{
@@ -16,13 +16,13 @@ function validate_list(list, minimum)
 	}
 	if(attr_val === undefined || attr_val === "" )
 	{
-		console.error("'validate_list' function: Wrong 'error-field' attribute value!");
+		console.error("'validate_list' function: Wrong 'data-error-field' attribute value!");
 		return false;
 	}
 	var error_field = $("#"+attr_val);
 	if (error_field.length === 0)
 	{
-		console.error("'validate_list' function: Failed to access the corresponding error field! Check the'error-field' attribute value.");
+		console.error("'validate_list' function: Failed to access the corresponding error field! Check the'data-error-field' attribute value.");
 		return false;
 	}
 	if(isNaN(parseInt(minimum, 10)) || minimum < 0)

@@ -1,24 +1,24 @@
-table {
+table.schedule-table {
   overflow: hidden;
-  
 }
 
-tr:hover {
+table.schedule-table > tr:hover {
   background-color: rgba(0, 204, 255,0.2);
   
 }
-tr{
+table.schedule-table > tr{
   -webkit-transition: background-color 300ms linear;
   -ms-transition: background-color 300ms linear;
   transition: background-color 300ms linear;
 }
 
-td, th {
+table.schedule-table >td,
+table.schedule-table >th {
   position: relative;
 }
 
-td:hover::after,
-th:hover::after {
+table.schedule-table > td:hover::after,
+table.schedule-table > th:hover::after {
   content: "";
   position: absolute;
   background-color: rgba(0, 204, 255,0.2);

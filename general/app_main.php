@@ -1,7 +1,7 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	//$temp = $root;
-	$title = 'AppleTree main page';
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+
+	$title = 'Apply now!';
 	$customStylesheets_array = array("header.style.css", "footer.style.css");
 	$customStyles_css = ".choice_button{ width: 100%; padding-top: 20px; padding-bottom: 20px;	font-size: 2rem; } #section-main{ padding-bottom: 0px; }";
 ?>
@@ -9,9 +9,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once($head_pathname); ?>
+	<?php require_once($head_ldp); ?>
 <body>
- 	<?php require_once($header_pathname); ?>
+ 	<?php require_once($header_ldp); ?>
 	<section id="section-main">
 		<div class="container py-5">	
 			<div class="row">
@@ -22,14 +22,14 @@
 			</div>
 			<div class="row d-flex justify-content-center">
 				<div class="col-12 col-md-4 my-3">
-					<a href="<?=$appTch_href?>" class="btn btn-secondary choice_button">I am a teacher</a>
+					<a href="<?=$appTch_url?>" class="btn btn-secondary choice_button">I am a teacher</a>
 				</div>
 				<div class="col-12 col-md-4 my-3">
-					<a href="<?=$appStd_href?>" class="btn btn-secondary choice_button">I am a student</a>
+					<a href="<?=$appStd_url?>" class="btn btn-secondary choice_button">I am a student</a>
 				</div>
 			</div>
 		</div>
 	</section>
-	<?php require_once($footer_pathname); ?>
+	<?php require_once($footer_ldp); ?>
 </body>
 </html>

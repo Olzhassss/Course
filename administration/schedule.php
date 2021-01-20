@@ -1,11 +1,11 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once ($connection_config);
 	
-	require_once $connection_config;
 	session_start();
-
+	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
-		header('Location:sign_in.php');
+		header("Location:$authorizationPage_url");
 	}
 
 	$title = 'Schedule';
@@ -90,7 +90,7 @@
 			<p class='display-4 mb-4 pb-4'>$weekDay</p>";
 			?>
 			<div style="overflow-x: auto;">
-			<table class="table table-bordered">
+			<table class="table table-bordered schedule-table">
 				<!-- Table head -->
 				<thead class="thead-light">
 					<tr>
@@ -174,15 +174,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
-		fix_loader("loader_div");
-		
+		fix_loader("loader_div");	
 	})
 </script>
-<?php
-foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
-
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html>

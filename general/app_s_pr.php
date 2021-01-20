@@ -1,19 +1,24 @@
-	<?php 
+<?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
 
 	$title = 'Application form for students!';
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("back-link.style.css", "application_private.css");
-	$customScripts_array = array("custom_validation.js", "clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js");
+	$customStylesheets_array = array("back-link.style.css", "application_private.css", "loader.style.css");
+	$customScripts_array = array("clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js", "loader.js");
 ?>
 
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once($head_pathname); ?>
+	<?php require_once($head_ldp); ?>
 <body>
-	<?php require_once($backLink_pathname); ?>
+	<!-- The loader -->
+	<div id="loader_div" class="loader">
+		<img src="<?=$spinner_src?>" alt="spinner">
+	</div>
+	<!-- The 'Back' link -->
+	<?php require_once($backLink_ldp); ?>
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
@@ -28,17 +33,17 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+						    <input type="text" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
 							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <input type="text" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
 						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" class="form-control" required="true" error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -47,18 +52,19 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" class="form-control" required="true" error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
+						    <input type="text" maxlength="50" class="form-control" required="true" data-error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
 						    <small id="email_help" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_4" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 	    				    <label for="lvl-of-ed-field">Your level of education</label>
 	    				    <select class="form-control" id="lvl-of-ed-field">
-	    				    	<option surcharge = "0" value="Elementary">Elementary</option>
-	    				    	<option surcharge = "0" value="Pre-Intermediate">Pre-Intermediate</option>
-	    				    	<option surcharge = "0" value="Upper-intermediate">Upper-intermediate</option>
-	    				    	<option surcharge = "0" value="Intermediate">Intermediate</option>
-	    				    	<option surcharge = "0" value="Advanced">Advanced</option>
+	    				    	<option data-surcharge = "0" value="Undetermined">Undetermined</option>
+	    				    	<option data-surcharge = "0" value="Elementary">Elementary</option>
+	    				    	<option data-surcharge = "0" value="Pre-Intermediate">Pre-Intermediate</option>
+	    				    	<option data-surcharge = "0" value="Upper-intermediate">Upper-intermediate</option>
+	    				    	<option data-surcharge = "0" value="Intermediate">Intermediate</option>
+	    				    	<option data-surcharge = "0" value="Advanced">Advanced</option>
 	    				    </select>								
 						</div>	
 						<div class="col-xs-12 col-sm-8 col-md-4">
@@ -73,150 +79,165 @@
 					<hr>
 					<!-- third form sections row (information about classes schedule) -->
 					<div class="row py-3">
-						<div class="col-12 col-lg-7">
+						<div class="my-auto col-12 col-lg-7">
 							<h5 class="my-3">Please select the days of week (at least 2) you would like to have lessons</h5>
-							<!-- The begining of 'lesson day' field div -->
-							<div class="row mt-3">
-								<ul class="d-flex flex-wrap list-group list-group-horizontal-md p-3">
-									<li class="list-group-item li_weekday hoverable active" id="weekday_all" exclusive= "true" error-field= "error_weekday">
+							<!-- The begining of the clickable list -->
+							<div class="container-fluid mt-3 my-list">
+								<ul class="row m-0 p-0 justify-content-around border rounded">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3 active" id="weekday_all" exclusive= "true" data-error-field= "error_weekday">
 										<p>Any 2 days</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-									<li class="list-group-item li_weekday hoverable" id="weekday_1">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3" id="weekday_1">
 										<p>Monday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-									<li class="list-group-item li_weekday hoverable" id="weekday_2" >
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3" id="weekday_2" >
 										<p>Tuesday</p>
 										<input type="checkbox" class="d-none">
 									</li>
-									<li class="list-group-item li_weekday hoverable" id="weekday_3">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3" id="weekday_3">
 										<p>Wednesday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-								</ul>
-								<ul class="d-flex flex-wrap list-group list-group-horizontal-md p-3">
-									<li class="li_weekday hoverable list-group-item" id="weekday_4">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3 " id="weekday_4">
 										<p>Thursday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-									<li class="li_weekday hoverable list-group-item" id="weekday_5">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3 " id="weekday_5">
 										<p>Friday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-									<li class="li_weekday hoverable list-group-item" id="weekday_6">
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3 " id="weekday_6">
 										<p>Saturday</p>
 										<input type="checkbox"  class="d-none">
 									</li>
-									<li class="li_weekday hoverable list-group-item" id="weekday_7" >
+									<li class="py-md-4 li_weekday col-12 col-sm-6 col-md-3 " id="weekday_7" >
 										<p>Sunday</p>
 										<input type="checkbox" class="d-none">
 									</li>
 								</ul>
 							</div>
-							<!-- The end of 'lesson day' field div -->
-							<small id="error_weekday" class="form-text text-danger d-none">You should choose 'Everyday' or at least 2 days!</small>
+							<!-- The end of the clickable list -->
+							<small id="error_weekday" class="form-text text-danger d-none">You should choose 'Any 2 days' or at least 2 days!</small>
 						</div>
 						<div class="col-xs-12 col-md-6 col-lg py-4">
-						    <label for="birthyear-field">Birth year</label>
-						    <input type="text" class="form-control" id="birthyear-field"  pattern="\d{4}" required="true" error-field="error_year">
-						    <small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
+							<div class="mb-3">
+								<label for="birthyear-field">Birth year</label>
+								<input type="text" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0,1][0-9])\d{1}$" required="true" data-error-field="error_year">
+								<small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
+							</div>
+							<div class="mb-3">
+								<label for="preferences-field">You can further explain your desired timetable so we can decide to add you to one of the existing classes</label>
+								<textarea class="form-control" id="preferences-field" aria-describedby="infoHelp" placeholder="Maximum - 500 characters" maxlength="500" style="resize: none;" rows="2"></textarea>
+								<small id="infoHelp" class="form-text text-muted">
+									You can describe personal situation, we will later contact you to inform regarding the lessons.
+								</small>
+							</div>							
 						</div>
 					</div>
+					<hr>
 					<div class="row">
 						<div class="col-12 col-lg-7">
 							<?php 
-							// Fetching data about time sessions of classes from the moday schedule table (for example)
+							// Fetching data about time sessions of classes from the monday schedule table (for example)
 							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
 							$stmt = $pdo->query($sql);
-							$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+							$sessionColumn1 = $stmt->fetch(PDO::FETCH_NUM);
+							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.saturday WHERE `id` = 0";
+							$stmt = $pdo->query($sql);
+							$sessionColumn2 = $stmt->fetch(PDO::FETCH_NUM);
 							 ?>
 							<!-- Timetable for Monday -->
 							<table class="my-5 table table-striped border text-center">
-								<caption> <i>Note:</i> Timetable for Monday as an example. Details may change for different days.</caption>
+								<caption><small> <i>Note:</i> This is a timetable for Monday as an example. Details may change for different days.</small></caption>
 							  <thead>
 							    <tr>
-							      <th scope="col">Time session name</th>
-							      <th scope="col">Time</th>
+							      <th scope="col">Session</th>
+							      <th scope="col">Weekday time</th>
+							      <th scope="col">Weekend time</th>
 							    </tr>
 							  </thead>
 							  <tbody>
-							    <?php foreach ($sessionColumn as $key=>$value): ?>
+							    <?php foreach ($sessionColumn1 as $key=>$value): ?>
 							    	<tr class="tr tr-<?=$key?>">
-							    		<th class="font-weight-normal" scope="col"><?=$key>=3?"Evening- ".($key-2):"Morning-".($key+1)?></th>
+							    		<th class="font-weight-normal" scope="col"><?=$key>=3?"Evening-".($key-2):"Morning-".($key+1)?></th>
 							    		<th class="font-weight-normal" scope="col"><?=$value?></th>
+							    		<th class="font-weight-normal" scope="col"><?=$sessionColumn2[$key]?></th>
 							        </tr>
 							    <?php endforeach; ?>
 							  </tbody>
 							</table>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-5 mt-4 mt-lg-0">
-							<h5 class="my-3">Please choose convenient time sessions <br>(you can choose many)</h5>
-							<!-- The begining of 'lesson time' field div -->
-	    				    <div class="text-center my-3">
-	    				    	<div class="d-flex flex-wrap justify-content-center">
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_1" error-field="error_time">
-	    				    	      <p class="card-text"> Morning-1</p>
-	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_2">
-	    				    	      <p class="card-text"> Morning-2</p>
-	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_3">
-	    				    	      <p class="card-text"> Morning-3</p>
-	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_4">
-	    				    	      <p class="card-text"> Evening-1</p>
-	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable"  id="time_5">
-	    				    	      <p class="card-text"> Evening-2</p>
-	    				    	    </div>
-	    				    	    <div class="card m-1 m-md-3 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time hoverable" id="time_6">
-	    				    	      <p class="card-text"> Evening-3</p>
-	    				    	    </div>
-	    				    	</div>
+						<!-- Clickable list of time sessions -->
+						<div class="col-sm-12 col-md-12 col-lg-5 my-4 mt-lg-5 align-items-center">
+							<h5>Please choose convenient time sessions </h5>
+							<p>(you can choose many)</p>
+	    				    <div class="my-3 my-list">
+	    				    	<ul class="d-flex flex-wrap justify-content-center">
+	    				    		<?php foreach ($sessionColumn1 as $key=>$value): ?>
+
+	    				    			<li class="rounded border m-1 m-md-2 p-md-4 m-lg-1 mx-sm-2 col-sm-5 col-md-3 col-lg-5 p-3  li_time"  id="time_<?=$key?>" data-error-field="error_time">
+	    				    			  <p class=""><?=$key>=3?"Evening-".($key-2):"Morning-".($key+1)?></p>
+	    				    			</li>
+
+	    				    		<?php endforeach; ?>
+	    							<li class="rounded border m-1 m-md-2 m-lg-1 mx-sm-2 active col-sm-10 col-md-5 col-lg-7 p-3 li_time" id="time_any" exclusive="true">
+	    								<p>Any time</p>
+	    							</li>
+	    				    	</ul>
 	    				    </div>
-	    				    <div class="text-center d-flex justify-content-center">
-	    				    	<div class="li_time hoverable card active w-50 p-3" id="time_any" exclusive="true">
-										<p>Any time</p>
-								</div>
-	    				    </div>
-	    				    <!-- The begining of 'lesson time' field div -->
 	    				    <small id="error_time" class="form-text text-danger d-none">You should choose at least one option!</small>
 						</div>
 					</div>
 					<hr>
 					<!-- fourth form sections row (supplementary info) -->
 					<div class="row py-3">
-						<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 mb-4">
+						<div class="col-12 col-lg py-4	">
+							<table class="table table-striped text-center border">
+								<tbody>
+
+								<?php 
+								// Fetching data about prices for lessons from the 'price_list' table
+								$sql = "SELECT `card_header`,`price`,`condition`,`note` FROM appletree_general.price_list";
+								$stmt = $pdo->query($sql);
+								while ($row = $stmt->fetch(PDO::FETCH_OBJ)):
+								?>
+								   	<tr>
+							    		<td class="font-weight-normal"><?= $row->card_header ?></td>
+							    		<td class="font-weight-normal"><em><?= $row->condition ?></em></td>
+							    		<td class="lead"><?= $row->price ?> tenge/lesson</td>
+							        </tr>
+								    <tr>
+							       		<td class="font-weight-normal text-muted pt-0" colspan="3">
+							       			<small><em><?= $row->note ?></small></em>
+							       		</td>
+							        </tr>
+
+								<?php endwhile; ?>
+								
+								</tbody>
+							</table>
+						</div>
+						<div class="col-12 col-md-10 col-lg-4 mb-4">
 							<h5 class="my-3">Supplementary information</h5>
 							<br>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="whatsapp-field">
-								<label class="form-check-label" for="whatsapp-field">
-									I have What'sApp registered to the given phone number
+								<input class="form-check-input" type="checkbox" value="" id="checkbox-1">
+								<label class="form-check-label" for="checkbox-1">
+									I have WhatsApp registered to the given phone number
 									<br>
 									<small class="text-muted">(we will use it to contact to you)</small>
 								</label>
 							</div>
 							<br>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" checked="true" value="" id="test-field">
-								<label class="form-check-label" for="test-field">
+								<input class="form-check-input" type="checkbox" checked="true" value="" id="checkbox-2">
+								<label class="form-check-label" for="checkbox-2">
 									I would like to test my English
 									<br>
 									<small class="text-muted">(compulsory if "Undeterminent" is selected)</small>
 								</label>
-							</div>
-						</div>
-						<div class="col-12 col-md-6 col-lg py-4 float-right">
-							<div class="card ">
-								<div class="card-body">
-									<p class="lead" style="font-size: 2rem;">
-										The fee for a weekday is <span>0</span>tg
-									<br>
-										And for a weekend is <span>0</span>tg
-									</p>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -241,78 +262,89 @@
 <script>
 	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
 	$(document).ready(function(){
+		fix_loader("loader_div");
 		if(set_click_listener("li_weekday") && set_click_listener("li_time"))
 			$("#submit").click(submit);
 		else
 			$("#submit").attr("disabled", "true");
 	})
-	
+	// The function converts chosen active (blue) list (sessions and days of week) elements
+	// into a string as a description of choices
+	function convertLists()
+	{
+		let a_string = "Chosen days of week: ";
+		$("li.li_weekday.active > p").map(function(){
+			a_string = a_string.concat($(this).text()).concat(", ");
+		})
+		a_string = a_string.substring(0,a_string.length-2).concat(". Chosen lessons time: ");
+		$("li.li_time.active > p").map(function(){
+			a_string = a_string.concat($(this).text()).concat(", ");
+		})
+		return a_string.substring(0,a_string.length-2).concat(".");
+	}
+
 	function submit()
 	{
-		// Calling functions in order to do validation
-		validate_list($(".li_time"), 1);
-		validate_list($(".li_weekday"), 2);
-		if(validate_text($("input[type='text']")))
-			validate_birthYear("birthyear-field");
-	}
-</script>
-<script>
-	/*function set_payment(list_class, value, text_el_id, sum_el_id)
-	{
-		var list = $("." + list_class);
-		// Input arguments validation
-		if(!(list.length > 0)|| !Number.isInteger(value))
+		// Form is submitted if every field passes validation (through imported functions)
+		if (validate_list($(".li_time"), 1) && validate_list($(".li_weekday"), 2))
 		{
-			console.log("The 'set_payment' function false arguments!")
-			return false;
-		}
-		if (typeof text_el_id === undefined)
-		{
-			console.log("The 'set_payment' function false arguments! Text element id required!")
-			return false;
-		}
-		list.each( function(){
-			this.addEventListener('click', function(){add_payment(list, value, text_el_id, sum_el_id);});
-		})
-	}
-	function add_payment(list, value, text_el_id, special_el_id)
-	{
-		
-		var payment = parseInt($("#" + text_el_id).text(),10);
-		var sum
-		if (!Number.isInteger(payment))
-		{
-			console.log("The'add_payment' function false arguments - text is not an integer!");
-			return false;
-		}
-		if (list[i].id === special_el_id && list[i].classList.contains("active")) {}
-		for(var i=0; i<list.length; i++)
-		{
-			if (list[i].id === special_el_id && list[i].classList.contains("active"))
+			if(validate_text($("input[type='text']")))
 			{
-				sum+= value*list.length;
-			}
+				// An array to keep the values of optional checkbox/radio input fields
+				let opt_check = new Array(2);
+				// Assign values for each of the checkbox/radio fields. Values are either 1 or 0,
+				// since the input can only be True or False
+				opt_check[0] = $("checkbox#checkbox-1").prop("checked")? 1:0;
+				opt_check[1] = ($("#lvl-of-ed-field").val()=="Undetermined")? 1 : ($("#checkbox-2").prop("checked")? 1:0);
+				// Define a new variable for a concatenated string from the 'convertLists' function
+				// and actual provided preferences in the 'textarea' element
+				let preferences = $("#preferences-field").val()==''? convertLists() : convertLists()
+					.concat(" Additionally provided info:\n")
+					.concat($("#preferences-field").val());
 
-		}
-		if ($("#" + object_id).hasClass("active"))
-		{
-			if (object_id === special_el_id)
-			{
-				value*= 1;
+				// Sends data and either redirects the user or displays an alert according to the outcome
+				$.ajax({
+					url: "<?= $appProcessing_url ?>",
+					type: 'POST',
+					cache: false,
+					data: {
+						'name':$("#name-field").val(),
+						'surname':$("#surname-field").val(),
+						'phone_number':$("#phone-number-field").val(),
+						'email':$("#email-field").val(),
+						'ed_lvl':$("#lvl-of-ed-field").val(),
+						'gender':$("#gender-field").val(),
+						'birth_year':$("#birthyear-field").val(),
+						'preferences':preferences,
+						'opt_checkbox1':opt_check[0],
+						'opt_checkbox2':opt_check[1],
+						'application_type':'student',
+						'group_ls':0
+					},
+					beforeSend: function() {
+						$("#loader_div").removeClass("hidden");
+					},
+					success: function(data){
+						if (data == 0)
+						{
+							var result = confirm("Your registration is successul! Press OK to return to main page.")
+							if (result)
+								window.location.replace("<?=$index_url?>");
+							return;
+						}
+						else
+						{
+							alert(data);
+							return;
+						}
+					}
+				})
+
+				$("#loader_div").addClass("hidden");
 			}
-			payment+= value;
 		}
-		else
-		{
-			payment-=value;
-		}
-		$("#" + text_el_id).text(payment);
-	}*/
+		
+	}
 </script>
-<?php
-foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html> 

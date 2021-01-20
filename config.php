@@ -1,5 +1,4 @@
 <?php
-
 //ini_set("allow_url_include", true);
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
     $url = 'https://';   
@@ -9,85 +8,131 @@ else
 // Append the host(domain name, ip) to the URL.   
 $url.= $_SERVER['HTTP_HOST'];   
 
-// The root directory path of the website
-$root = $url;
+// The domain URL address of the website. Used for 'href' and 'src' attributes of html tags
+$root_url = $url;
 
-// Append the requested resource location to the URL   
+// Full URL address of the page
 $url.= $_SERVER['REQUEST_URI'];    
 
-// Store URI
-$uri = $_SERVER['REQUEST_URI'];
-
-// Directory template used for addresses for 'include_once' functions of PHP
-if (!isset($temp)) {
-	$temp = $_SERVER['DOCUMENT_ROOT'];
+// Root ldp on the server. Used for the 'include_once' functions of PHP
+// Note: LDP stands for local directory path
+if (!isset($root_ldp)) {
+	$root_ldp = $_SERVER['DOCUMENT_ROOT'];
 }
+// This configs file LDP
+//$config = $root_ldp . "/config.php";
 
-// This configs file local pathname
-//$config = $temp . "/config.php";
-
-// The connection configs file local pathname
-$connection_config = $temp . '/connection_config.php';
+// The connection configs file LDP
+$connection_config = $root_ldp . '/connection_config.php';
 
 // The main webpage URL
-$index = $root . '/index.php';
+$index_url = $root_url . '/index.php';
 
 // Location of the scripts (part of URL)
-$js = $root . '/scripts' . '/';
+$js = $root_url . '/scripts' . '/';
 
 // Location of the stylesheets (part of URL)
-$css = $root . '/stylesheets' . '/';
+$css = $root_url . '/stylesheets' . '/';
 
 // Location of the images (part of URL)
-$imgs = $root . '/images' . '/';
+$imgs = $root_url . '/images' . '/';
 
-// Location of general (public) pages (part of URL)
-$general = $root . '/general' . '/';
+// Location of general (public) pages as both URL and LDP
+$general_url = $root_url . '/general' . '/';
+$general_ldp = $root_ldp . '/general' . '/';
 
-// Location of the pages for authorized users (part of URL)
-$administration = $root . '/administration' . '/';
+// Location of the pages for authorized users (URL and LDP)
+$administration_url = $root_url . '/administration' . '/';
+$administration_ldp = $root_ldp . '/administration' . '/';
 
-// The main pre-application webpage URL
-$appMain_href = $general . 'app_main.php';
+// Location of the files needed for any kind of processing (without html) (URL and LDP)
+$processing_url = $root_url . '/processing' . '/';
+$processing_ldp = $root_ldp . '/processing' . '/';
+
+// Location of miscellaneous files (URL and LDP)
+$miscellaneous_ldp = $root_ldp . '/miscellaneous' . '/';
+$miscellaneous_url = $root_url . '/miscellaneous' . '/';
+
+// The URLs of the files at 'index.php' header navigation bar ('header.php')
+// (main pre-application page, authorization page)
+$appMain_url = $general_url . 'app_main.php';
+$authorizationPage_url = $general_url . 'authorization_page.php';
 
 // The group or private lesson choice (student pre-application) webpage URL
-$appStd_href = $general . 'app_s0.php';
+$appStd_url = $general_url . 'app_s0.php';
 
-// The application for students who chose private lessons page URL
-$appStdPrivate_href = $general .'app_s_pr.php';
+// URLs to the application webpages
+$appStdPrivate_url = $general_url .'app_s_pr.php';
+$appStdGroup_url = $general_url .'app_s_gr.php';
+$appTch_url = $general_url .'app_t.php';
 
-// The application for students who chose group lessons page URL
-$appStdGroup_href = $general .'app_s_gr.php';
+// The article template webpage URL
+$article_url = $general_url . 'article.php';
 
-// The application for teachers page URL
-$appTch_href = $general .'app_t.php';
+// The main administration webpage URL
+$adminIndex_url = $administration_url .'admin_index.php';
 
-// The pathways of headers, footer, head tag, 'back' link
-$header_pathname = $temp .'/header-footer/header.php';
-$headerAdmin_pathname = $temp .'/header-footer/headerAdmin.php';
-$footer_pathname = $temp .'/header-footer/footer.php';
-$head_pathname = $temp .'/head.php';
-$backLink_pathname = $temp . '/backlink.php';
+// The URLs of the files at 'index.php' header navigation bar ('headerAdmin.php')
+// (log out page)
+$logout_url = $processing_url . 'logout.php';
 
+// URLs to the injectable php files
+$appInject_url = $administration_url .'applications_injection.php';
+$schInject_url = $administration_url .'schedule_injection.php';
+$clsInject_url = $administration_url .'classes_injection.php';
+//$edtInject_url = $administration_url .'edit_injection.php';
+$appCvInject_url = $administration_url .'appBrowse_injection.php';
+$memCvInject_url = $administration_url .'memBrowse_injection.php';
+$clsCvInject_url = $administration_url .'clsBrowse_injection.php'
+$appTables_url = $administration_url . 'appTables_injection.php';
+$memTables_url = $administration_url . 'memTables_injection.php';
+$memInject_url = $administration_url . 'members_injection.php';
+$memEditInject_url = $administration_url . 'memEdit_injection.php';
+$clsEditInject_url = $administration_url . 'clsEdit_injection.php';
+
+
+// The LDPs of headers, footer, head tag, '<-Back' link
+$header_ldp = $root_ldp .'/header-footer/header.php';
+$headerAdmin_ldp = $root_ldp .'/header-footer/headerAdmin.php';
+$footer_ldp = $root_ldp .'/header-footer/footer.php';
+$head_ldp = $root_ldp .'/head.php';
+$backLink_ldp = $miscellaneous_ldp . 'backLink.php';
+
+// The URLs of the files in 'processing'
+$router_url = $processing_url . 'admin_routing.php';
+$appProcessing_url = $processing_url . 'app_processing.php';
+$recordProcessing_url = $processing_url . 'record_processing.php';
+$cvUpdProcessing_url = $processing_url . 'cvUpdate_processing.php';
+$cvDelProcessing_url = $processing_url . 'cvDelete_processing.php';
+$clsUpdProcessing_url = $processing_url . 'clsUpdate_processing.php';
+$clsDelProcessing_url = $processing_url . 'clsDelete_processing.php';
+$authorizationProcessing_url = $processing_url . 'authorization_processing.php';
+
+// The LDPs
+$appTables_ldp = $administration_ldp . 'appTables_injection.php';
+$memTables_ldp = $administration_ldp . 'memTables_injection.php';
+
+// Miscellaneous
+$spinner_src = $imgs . "spinner.gif";
 
 switch ($url) {
-	case $appMain_href:
+	case $appMain_url:
 		$backLink_href = $index;
 		break;
-	case $appStd_href:
-		$backLink_href = $appMain_href;
+	case $appStd_url:
+		$backLink_href = $appMain_url;
 		break;
-	case $appStdGroup_href:
-		$backLink_href = $appStd_href;
+	case $appStdGroup_url:
+		$backLink_href = $appStd_url;
 		break;
-	case $appStdPrivate_href:
-		$backLink_href = $appStd_href;
+	case $appStdPrivate_url:
+		$backLink_href = $appStd_url;
 		break;
-	case $appTch_href:
-		$backLink_href = $appMain_href;
+	case $appTch_url:
+		$backLink_href = $appMain_url;
 		break;
 	default:
-		$backLink_href = $index;
+		$backLink_href = $index_url;
 		break;
 }
 

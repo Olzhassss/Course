@@ -1,5 +1,3 @@
-window.onscroll = function() {scroll_screen()};
-
 function scroll_screen() {
 	let section_monday = document.getElementById("section-monday");
 	let navbar = document.getElementById("navbar");
@@ -8,6 +6,7 @@ function scroll_screen() {
 	if (section_monday === null || navbar === null)
 	{
 		console.error("'scroll_screen' function: impossible to access necessary elements by id!");
+		window.removeEventListener('scroll', scroll_screen, false);
 		return false;
 	}
 	// Managing header fixation
@@ -20,3 +19,4 @@ function scroll_screen() {
 		navbar.classList.remove("not_hidden");
 	}
 }
+window.addEventListener('scroll', scroll_screen, false);

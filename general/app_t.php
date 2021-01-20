@@ -1,15 +1,24 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	$customStylesheets_array = array("back-link.style.css");
-	$customScripts_array = array("validate_text.js", "input_masking.js");
+	require_once($connection_config);
+
+	$title = 'Application form for teachers!';
+	// Storing all necessary files in arrays for further import
+	$customStylesheets_array = array("back-link.style.css", "loader.style.css");
+	$customScripts_array = array("validate_text.js", "input_masking.js", "loader.js");
 ?>
 
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once($head_pathname); ?>
+	<?php require_once($head_ldp); ?>
 <body>
-	<?php require_once($backLink_pathname); ?>
+	<!-- The loader -->
+	<div id="loader_div" class="loader">
+		<img src="<?=$spinner_src?>" alt="spinner">
+	</div>
+	<!-- The 'Back' link -->
+	<?php require_once($backLink_ldp); ?>
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
@@ -24,17 +33,17 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" error-field="error_1" id="name-field" pattern="^[A-Z]{1}[a-z]{0,20}$">
+						    <input type="text" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="^[A-Z]{1}[a-z]{0,20}$">
 							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" error-field="error_2" id="surname-field"  pattern="^[A-Z]{1}[a-z]{0,20}$" >
+						    <input type="text" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="^[A-Z]{1}[a-z]{0,20}$" >
 						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" class="form-control" required="true" error-field="error_3" id="email-field" pattern="^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" aria-describedby="emailHelp">
+						    <input type="text" maxlength="50" class="form-control" required="true" data-error-field="error_3" id="email-field" pattern="^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$" aria-describedby="emailHelp">
 						    <small id="emailHelp" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_3" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
@@ -44,17 +53,18 @@
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" class="form-control" required="true" error-field="error_4" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" class="form-control" required="true" data-error-field="error_4" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
 						    <small id="error_4" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="experience-field">Working Experience (in years)</label>
-						    <input type="text" class="form-control" required="true" error-field="error_5" id="experience-field" pattern="^[0-9]{1,2}$">
+						    <input type="text" class="form-control" required="true" data-error-field="error_5" id="experience-field" pattern="^[0-9]{1,2}$">
 						    <small id="error_5" class="form-text text-danger d-none">Please write valid working experience</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 		  					    <label for="lvl-of-ed-field">Desired level of education</label>
 		  					    <select class="form-control" id="lvl-of-ed-field">
+		  					    	<option value="Any">Any</option>
 		  					        <option value="Elementary">Elementary</option>
 		  					        <option value="Pre-Intermediate">Pre-Intermediate</option>
 		  					        <option value="Upper-intermediate">Upper-intermediate</option>
@@ -65,7 +75,7 @@
 					</div>
 					<hr>
 					<!-- third form sections row (gender and additional question) -->
-					<div class="row d-flex justify-content-between">
+					<div class="row d-flex justify-content-around">
 						<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
 							<label for="gender-field">Your gender</label>
 	    					<select class="form-control" id="gender-field">
@@ -74,16 +84,10 @@
 	    					    <option value="Other">Other</option>
 	    					</select>
 						</div>
-						<div class="col-xs-12 col-sm-8 col-md-6">
-							<h6>Do you have own methodic material prepared for teaching?</h6>
-							<div class="form-check">
-								<input class="form-check-input" name="opt_radio" type="radio" id="radio-1" value="Yes" required="true">
-								<label class="form-check-label" for="radio-1">Yes</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" name="opt_radio" type="radio" id="radio-2" value="No" checked="true">
-								<label class="form-check-label" for="radio-2">No</label>
-							</div>
+						<div class="col-xs-12 col-sm-8 col-md-4 mb-2">
+							<label for="birthyear-field">Birth year</label>
+							<input type="text" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0,1][0-9])\d{1}$" required="true" data-error-field="error_year">
+							<small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
 						</div>
 					</div>
 					<hr>
@@ -100,11 +104,21 @@
 						</div>
 						<div class="col">
 							<h5>Supplementary information</h5>
-							<br>
+							<div class="my-3">
+								<h6>Do you want to use own methodic material prepared for teaching?</h6>
+								<div class="form-check">
+									<input class="form-check-input" name="opt_radio" type="radio" id="radio-1" value="Yes" required="true">
+									<label class="form-check-label" for="radio-1">Yes</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" name="opt_radio" type="radio" id="radio-2" value="No" checked="true">
+									<label class="form-check-label" for="radio-2">No</label>
+								</div>
+							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" id="checkbox-1">
 								<label class="form-check-label" for="checkbox-1">
-									I have What'sApp registered to the given phone number
+									I have WhatsApp registered to the given phone number
 								</label>
 							</div>
 							<br>
@@ -126,19 +140,34 @@
 							Reset application form
 						</button>
 					</div>
-					<!-- div for additional info in nav tabs -->
-					<div class="mt-5 pt-4">
+					<!-- div for additional info tabs -->
+					<div class="mt-5 mb-3 pt-4">
 						<nav>
-						  <div class="nav nav-tabs row" id="nav-tab" role="tablist">
-						    <a class="nav-item nav-link active col-12 col-sm-4 col-md-2" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">About your working schedule</a>
-						    <a class="nav-item nav-link col-12 col-sm-4 col-md-2" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Emergency working conditions</a>
-						    <a class="nav-item nav-link col-12 col-sm-4 col-md-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Supportive application skills</a>
-						  </div>
+							<div class="nav nav-tabs row" id="nav-tab" role="tablist">
+							<?php 
+							// Fetching tabs' titles into an array
+							$stmt = $pdo->query('SELECT `title` FROM appletree_general.form_tabs');
+							$titles = $stmt->fetchAll(PDO::FETCH_COLUMN);
+							// Fetching tabs' contents into an array
+							$stmt = $pdo->query('SELECT `content` FROM appletree_general.form_tabs');
+							$contents = $stmt->fetchAll(PDO::FETCH_COLUMN);
+							// Loading tabs
+							foreach ($titles as $key => $value):
+							?>
+							
+							<a class="nav-item nav-link col-12 col-sm-4 col-md-2" id="nav-tab-<?=$key?>" data-toggle="tab" href="#nav-<?=$key?>"
+								role="tab" aria-controls="nav-<?=$key?>" aria-selected="false"><?=$value?></a>
+							
+							<?php endforeach; ?>
+							</div>
 						</nav>
-						<div class="tab-content" id="nav-tabContent">
-						  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">..1.</div>
-						  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">..2.</div>
-						  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">..3.</div>
+						<div class="tab-content pt-3" id="nav-tabContent">
+							<?php // Loading contents
+							foreach ($contents as $key => $value): ?>
+
+							<div class="tab-pane fade" id="nav-<?=$key?>" role="tabpanel" aria-labelledby="nav-tab-<?=$key?>"><?=$value?></div>
+
+							<?php endforeach?>
 						</div>				
 					</div>
 				</div>
@@ -151,40 +180,53 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
-	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
+	// Attaching 'click' function to the 'Register!' button via id
 	$(document).ready(function(){
+		fix_loader("loader_div");
 		$("#submit").click(submit);
 	})
 
 	function submit()
 	{
-		// 
+		// Form is submitted if every field passes validation (through imported function)
 		if(validate_text($("input[type='text']")))
 		{
+			// An array to save the value of optional checkbox/radio input fields
 			let opt_radio = new Array(3);
+			// Assign values for each of the checkbox/radio fields. Values are either 1 or 0,
+			// since the input can only be True or False
 			opt_radio[0] = $("#checkbox-1").prop("checked")? 1:0;
 			opt_radio[1] = $("#checkbox-2").prop("checked")? 1:0;
 			opt_radio[2] = ($('input[name="opt_radio"][value="Yes"]').is(':checked'))? 1:0;
-			// Sends password and login values to 'authorization.php' and
-			// either redirects the user or displays an error according to the outcome
+			// Sends data and displays an alert with error or a confirmation after the reply is received
 			$.ajax({
-				url: '../administration/application.php',
+				url: "<?= $appProcessing_url ?>",
 				type: 'POST',
 				cache: false,
-				data: { 'name':$("#name-field").val(), 'surname':$("#surname-field").val(), 'phone_number':$("#phone-number-field").val(),
-						 'email':$("#email-field").val(), 'ed_lvl':$("#lvl-of-ed-field").val(), 'exp':$("#experience-field").val(),
-						 'summary':$("#additional-info").val(), 'application_type':'teacher', 'gender':$("#gender-field").val(),
-						 'opt_radio1':opt_radio[0], 'opt_radio2':opt_radio[1], 'opt_radio3':opt_radio[2] },
+				data: { 
+					'name':$("#name-field").val(),
+					'surname':$("#surname-field").val(),
+					'phone_number':$("#phone-number-field").val(),
+					'email':$("#email-field").val(),
+					'ed_lvl':$("#lvl-of-ed-field").val(),
+					'exp':$("#experience-field").val(),
+					'summary':$("#additional-info").val(),
+					'gender':$("#gender-field").val(),
+					'birth_year':$("#birthyear-field").val(),
+					'opt_radio1':opt_radio[0],
+					'opt_radio2':opt_radio[1],
+					'opt_radio3':opt_radio[2],
+					'application_type':'teacher',
+				},
 				beforeSend: function() {
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
-					console.log(data);	
 					if (data == 0)
 					{
 						var result = confirm("Your registration is successul! Press OK to return to main page.")
 						if (result)
-							window.location.replace("<?=$index?>");
+							window.location.replace("<?=$index_url?>");
 						return;
 					}
 					else
@@ -199,10 +241,5 @@
 		}
 	}
 </script>
-<?php
-foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html>

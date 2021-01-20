@@ -6,7 +6,7 @@
 	font-family:Courier;
 }
 .main_text:hover{
-	color: black;
+	color: gold;
 }
 a.disabled{
 	pointer-events: none;
