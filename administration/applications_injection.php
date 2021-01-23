@@ -1,6 +1,7 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once ($connection_config);
+	
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -8,7 +9,6 @@
 	}
 
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
 	$customScripts_array = array("insert.js");
 ?>
 	<head>
@@ -28,7 +28,7 @@
 
 		<div id="content" style="overflow-x: auto;">
 				<?php
-					if(!isset($_POST['role']))
+					if($_POST['role'] == '')
 						$_POST['role'] = 'teachers';
 					include_once($appTables_ldp);
 				?>

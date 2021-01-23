@@ -87,6 +87,7 @@ $appTables_url = $administration_url . 'appTables_injection.php';
 $memTables_url = $administration_url . 'memTables_injection.php';
 $memInject_url = $administration_url . 'members_injection.php';
 $memEditInject_url = $administration_url . 'memEdit_injection.php';
+
 $clsInfoInject_url = $administration_url . 'clsBrowse_injection.php';
 $clsEditInject_url = $administration_url . 'clsEdit_injection.php';
 
@@ -112,6 +113,8 @@ $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
 $appTables_ldp = $administration_ldp . 'appTables_injection.php';
 $memTables_ldp = $administration_ldp . 'memTables_injection.php';
 $memCvInject_ldp = $administration_ldp .'memBrowse_injection.php';
+$memTchEdtTbInject_ldp = $administration_ldp . 'memEditTablesTch_injection.php';
+$memStdEdtTbInject_ldp = $administration_ldp . 'memEditTablesStd_injection.php';
 
 // Miscellaneous
 $spinner_src = $imgs . "spinner.gif";

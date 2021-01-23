@@ -7,29 +7,26 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required arguments are not passed
+	// Terminate if required argument is not passed
 	if (!isset($_POST['id'])) {
 		exit("False");
 	}
 
-	// Store all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
-
 	// Fetch columns' despcriptions and names
 	$sql = "SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
 	$stmt = $pdo->query($sql);
-	$columnData_array = $stmt->fetchAll();
+	$columnsData_array = $stmt->fetchAll();
 
 	// Fetch particular record's data
 	$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
 	$stmt->execute([':id' => $_POST['id']]);
 	$classData_array = $stmt->fetch();
 
-	$sql = "SELECT `name`,`surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id";
-	$stmt = $pdo->prepare($sql);
+	/*// Fetch the class's teacher's name and surname
+	$stmt = $pdo->prepare("SELECT `name`,`surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
 	$stmt->execute([':id' => $classData_array['id_teacher']]);
 	$teacherData_array = $stmt->fetch();
-	$teacher = $teacherData_array['name'] .' '. $teacherData_array['surname'];
+	$teacher = $teacherData_array['name'] .' '. $teacherData_array['surname'];*/
 ?>
 	<head>
 		<?php
@@ -50,17 +47,17 @@
 	<h1 class="my-3"><?=$classData_array['id']?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="memUpd(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Save changes</button>
-		<button class="btn btn-warning w-50 mx-4" onclick="memDel(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Delete</button>
+		<button class="btn btn-warning w-50 mx-4" onclick="clsDelete('<?=$id?>')">Delete</button>
 	</div>
 
 	<form class="mt-3">
 		<table class="table table-bordered">
 			<!-- Table rows -->
 			<tr>
-				<th scope='col' width="40%" ><?=$columnData_array[0]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[0]["column_comment"]?></th>
 			    <td>
 			    	<input type="text" class="form-control" name="<?=$value["column_name"]?>" required="true" value="<?=$classData_array['id']?>"></td>
-			    <!--<select class="form-control" name="<?=$columnData_array[0]['column_name']?>">
+			    <!--<select class="form-control" name="<?=$columnsData_array[0]['column_name']?>">
 			    		<?php 
 			    			$stmt = $pdo->query("SELECT `classes`.`id`, `classes`.`std_num`,`teachers`.`name`, `teachers`.`surname` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`");
 			    			while ($select_options = $stmt->fetch()):
@@ -71,7 +68,7 @@
 			    </select>-->
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnData_array[3]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
 				<td>
 					<select class="form-control" id="lvl-of-ed-field">
 						<option value="Undetermined">Undetermined</option>
@@ -84,12 +81,16 @@
 				</td>
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnData_array[2]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[2]["column_comment"]?></th>
 				<td>
-					<select class="form-control" name="<?=$columnData_array[0]['column_name']?>">
-			    		<?php 
+					<select class="form-control" name="<?=$columnsData_array[0]['column_name']?>">
+			    		<?php
 			    			$stmt = $pdo->query("SELECT `id`, `name`, `surname` FROM `appletree_personnel`.`teachers`");
 			    			while ($select_options = $stmt->fetch()):
+			    				$sql = "SELECT COUNT(id) FROM `appletree_personnel`.`classes` WHERE `id_teacher` = :id";
+			    				$stmt1 = $pdo->prepare($sql);
+			    				$stmt1->execute([':id' => $select_options['id']]);
+			    				$numberOfClasses = $stmt1->fetch(PDO::FETCH_NUM)[0];
 			    		?>
 			    			<option value="<?=$select_options['id']?>"><?=$select_options['name'] .' '. $select_options['surname'] .' ('.$numberOfClasses.' class[es])'?></option>
 			    		<?php endwhile; ?>
@@ -98,7 +99,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnData_array[1]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[1]["column_comment"]?></th>
 				<td><?=$classData_array['std_num']?></td>
 			</tr>
 		</table>

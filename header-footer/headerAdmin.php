@@ -1,11 +1,12 @@
 <?php
 	$logo_src = $imgs . "logo.png";
-	$applications_href = $appInject_url;
-	$schedule_href = $schInject_url;
-	$members_href = $memInject_url;
-	$classes_href = $clsInject_url;
-	$edit_href = $edtInject_url;
-	$logout_href = $logout_url;
+
+	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_teachers`");
+	$numberOfApplications = $stmt->fetch(PDO::FETCH_NUM)[0];
+	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_students`");
+	$numberOfApplications += $stmt->fetch(PDO::FETCH_NUM)[0];
+	if ($numberOfApplications == 0)
+		unset($numberOfApplications);
 ?>
 <section id="section-header" style="padding: 0px;">
 	<!-- Header content wrapper div -->
@@ -23,11 +24,11 @@
 			<div class="my-3 my-md-0 mx-md-2 col">
 				<div class="container-fluid">
 					<nav class="row d-flex justify-content-around">
-						<button data-essence ="schedule" href="<?=$schedule_href?>" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Schedule</button>
-						<button data-essence ="applications" href="<?=$applications_href?>" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span class="badge badge-warning"></span></button>						
-						<button data-essence ="members" href="<?=$members_href?>" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Members</button>
-						<button data-essence ="classes" href="<?=$classes_href?>" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</button>
-						<button data-essence ="edit" href="<?=$edit_href?>" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Main page</button>
+						<button data-essence ="schedule" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Schedule</button>
+						<button data-essence ="applications" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span class="badge badge-warning"><?=$numberOfApplications?></span></button>						
+						<button data-essence ="members" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Members</button>
+						<button data-essence ="classes" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</button>
+						<button data-essence ="edit" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Main page</button>
 					</nav>
 				</div>
 			</div>

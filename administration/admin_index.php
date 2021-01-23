@@ -9,9 +9,10 @@
 	}
 
 	$title = 'Administration page';
-	$customScripts_array = array("loader.js");
-	$customStylesheets_array = array("headerAdmin.style.css", "loader.style.css");
 	$spinner_src = $imgs . "spinner.gif";
+	// Store all necessary files in arrays for further import
+	$customScripts_array = array("loader.js");
+	$customStylesheets_array = array("headerAdmin.style.css", "loader.style.css", "tables.style.css");	
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,19 +38,18 @@
 	})
 
 	// Executes Ajax and manages error text
-	function loadPage(event, derivative_value = null, arg_id = null, role = null)
+	function loadPage(event, derivative = null, arg_id = null, role = null)
 	{
-		console.log(derivative_value, arg_id, role);
+		console.log(derivative, arg_id, role);
 		event.preventDefault();
 		let data = $(this).attr("data-essence");
 		$.ajax({
 			url: "<?=$router_url?>",
 			type: 'POST',
 			cache: false,
-			data: { 'temp': data, 'derivative': derivative_value, 'id': arg_id, 'role': role},
+			data: {'temp': data},
 			beforeSend: function() {
 				$("#loader_div").removeClass("hidden");
-				$("#body").empty();
 			},
 			success: function(data){
 				if (data=="False"){
@@ -57,7 +57,8 @@
 					return;
 				}
 				try	{
-					$( "#body" ).load( data, {'url':"<?=$url?>"} );
+					$("#body").empty();
+					$("#body").load( data, {'url':"<?=$url?>", 'derivative': derivative, 'id': arg_id, 'role': role} );
 				}
 				catch(error)
 				{

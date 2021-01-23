@@ -4,10 +4,6 @@
 .main_text{
 	font-family: Segoe UI;
 }
-a.disabled{
-	pointer-events: none;
-  	cursor: default;
-}
 #header-logo{
 	width: 170px; height: 150px;
 }

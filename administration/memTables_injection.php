@@ -11,21 +11,23 @@
 	if (!isset($_POST['role'])) {
 		exit("False");
 	}
+
+	// Variate sql queries depending on the role
 	if ($_POST['role'] == "teachers") {
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' AND
-		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'gender' OR `column_name` = 'email' OR `column_name` = 'set_date') ORDER BY `ORDINAL_POSITION`";
-		$sql2 = "SELECT `id`, `name`, `surname`, `gender`, `email`, `set_date` FROM appletree_personnel.teachers";
-	}
-	
-	elseif ($_POST['role'] == "students") {
+		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'sex' OR `column_name` = 'email' OR `column_name` = 'set_date') ORDER BY `ORDINAL_POSITION`";
+		$sql2 = "SELECT `id`, `name`, `surname`, `sex`, `email`, `set_date` FROM `appletree_personnel`.`teachers`";
+	} elseif ($_POST['role'] == "students") {
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'students' AND `table_schema` = 'appletree_personnel' AND
-		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'gender' OR `column_name` = 'email' OR `column_name` = 'set_date') ORDER BY `ORDINAL_POSITION`";
-		$sql2 = "SELECT `id`, `name`, `surname`, `gender`, `email`, `set_date` FROM appletree_personnel.students";
+		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'sex' OR `column_name` = 'email' OR `column_name` = 'set_date') ORDER BY `ORDINAL_POSITION`";
+		$sql2 = "SELECT `id`, `name`, `surname`, `sex`, `email`, `set_date` FROM `appletree_personnel`.`students`";
 	}
-	// Terminate if the argument has incorrect value
+	// Terminate if the argument has an incorrect value
 	else { exit("False"); }
 	
+	// Field descriptions
 	$stmt1 = $pdo->query($sql1);
+	// The person's data
 	$stmt2 = $pdo->query($sql2);
 ?>
 
@@ -36,8 +38,8 @@
 		        <th scope="col">#</th>
 		        <?php
 		        //------------------- Filling the column names with the descriptions of the fields
-		        while ($result = $stmt1->fetch(PDO::FETCH_NUM)) {
-		        	echo "<th scope='col'>". $result[0] . "</th>";	
+		        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_NUM)) {
+		        	echo '<th scope=\'col\'>'. $descriptions_array[0] . '</th>';	
 		        }
 		    	?>
 		    	<th scope="col">#</th>
@@ -47,20 +49,17 @@
 		<tbody>
 			<?php 	//------------------- Filling the table
 			$i = 0;
-			while($result = $stmt2->fetch(PDO::FETCH_NUM)):
+			while($memberData_array = $stmt2->fetch(PDO::FETCH_NUM)):
 			$i++;
 			?>
 		
 				<tr>
 					<?php
-						foreach ($result as $key => $value) {
-							// For the first column
-							if ($key == 0) {
-								$id = $value;
-								echo "<td class='p-0'><a class='btn btn-secondary rounded-0' data-ref-id=\"$value\" href=\"$index_url\">$i</a></td>";
-							} else{
-								echo "<td>$value</td>";	
-							}
+						$id = $memberData_array[0];
+						echo '<td class=\'p-0\'><button class=\'btn btn-secondary rounded-0\' onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$memCvInject_url.'")\'>'.$i.'</button></td>';
+						unset($memberData_array[0]);
+						foreach ($memberData_array as $value) {
+							echo '<td>'.$value.'</td>';
 						}
 					?>		
 		

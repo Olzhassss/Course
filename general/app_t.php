@@ -74,11 +74,11 @@
 						</div>	
 					</div>
 					<hr>
-					<!-- third form sections row (gender and additional question) -->
+					<!-- third form sections row (sex and additional question) -->
 					<div class="row d-flex justify-content-around">
 						<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
-							<label for="gender-field">Your gender</label>
-	    					<select class="form-control" id="gender-field">
+							<label for="sex-field">Your sex</label>
+	    					<select class="form-control" id="sex-field">
 	    						<option value="Male">Male</option>
 	    					    <option value="Female">Female</option>
 	    					    <option value="Other">Other</option>
@@ -211,7 +211,7 @@
 					'ed_lvl':$("#lvl-of-ed-field").val(),
 					'exp':$("#experience-field").val(),
 					'summary':$("#additional-info").val(),
-					'gender':$("#gender-field").val(),
+					'sex':$("#sex-field").val(),
 					'birth_year':$("#birthyear-field").val(),
 					'opt_radio1':opt_radio[0],
 					'opt_radio2':opt_radio[1],

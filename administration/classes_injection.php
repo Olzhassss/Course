@@ -7,30 +7,12 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	
-	// Fixing url address to implement links correctly
-	//(otherwise url would be for this file, not the one it is being loaded to)
-	$url = $_POST['url'];
-	
-	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
 
-	$spinner_src = $imgs . "spinner.gif";
-
-	// Getting information about classes from the database
-	$sql = "SELECT `classes`.`id`, `teachers`.`name`, `teachers`.`surname`, `classes`.`std_num` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`";
-	$stmt = $pdo->query($sql);
-	$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-	$sql2 = "SELECT * FROM appletree_personnel.classes";
-	$stmt1 = $pdo->query($sql1);
-	$stmt2 = $pdo->query($sql2);
-	// Creating and filling an associative array (key = DB table's id column value, class code in other words)
-	// to have a two-dimensional array and alleviate further processing
-	$classesAssoc = array();
-	while ($classes = $stmt->fetch()) {
-		//$classesAssoc[$classes["id"]] = array('name' => $classes["name"], 'surname' => $classes["surname"], 'std_num' => $classes["std_num"]);
-	}
-	
+	// Field descriptions
+	$sql = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
+	$stmt1 = $pdo->query($sql);
+	// The class's data
+	$stmt2 = $pdo->query("SELECT * FROM appletree_personnel.classes");
 ?>
 	<head>
 		<?php
@@ -49,7 +31,7 @@
 	</head>
 	<div id="content" class="container">
 		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-success" onclick="clsCreate('<?=$appTables_url?>')">Create a new class</button>
+			<button class="px-5 btn btn-success" onclick="clsBrowse('<?=$clsEditInject_url?>')">Create a new class</button>
 		</nav>
 
 		<table class="table table-bordered schedule-table">
@@ -59,8 +41,8 @@
 			        <th scope="col">#</th>
 			        <?php
 			        //------------------- Filling the column names with the descriptions of the fields
-			        while ($result = $stmt1->fetch(PDO::FETCH_NUM)) {
-			        	echo "<th scope='col'>". $result[0] . "</th>";	
+			        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_NUM)) {
+			        	echo "<th scope='col'>". $descriptions_array[0] . "</th>";	
 			        }
 			    	?>
 			    	<th scope="col">#</th>
@@ -70,14 +52,14 @@
 			<tbody>
 				<?php 	//------------------- Filling the table
 				$i = 0;
-				while($result = $stmt2->fetch(PDO::FETCH_NUM)):
+				while($classData_array = $stmt2->fetch(PDO::FETCH_NUM)):
 				$i++;
 				?>
 			
 					<tr>
 						<?php
-							echo "<td class='p-0'><a class='btn btn-secondary rounded-0' data-ref-id=\"$value\" href=\"$index_url\">$i</a></td>";
-							foreach ($result as $key => $value) {
+							echo '<td class=\'p-0\'><button class=\'btn btn-secondary rounded-0\' onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$memCvInject_url.'")\'>'.$i.'</button></td>';
+							foreach ($classData_array as $key => $value) {
 								// For the first column
 								if ($key == 0)
 									$id = $value;
@@ -135,7 +117,7 @@
 		return;
 	}
 	// The funtion loads full information about classes / editing interface (depending on the URL) into the '#content' div
-	function clsBrowse(url, arg_id){
+	function clsBrowse(url, arg_id = 0){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
 		$("#content").load(url, { id: arg_id}, function( responseText, textStatus, jqXHR ){

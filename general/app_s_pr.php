@@ -48,7 +48,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- second form sections row (additional phone number, level of education, gender) -->
+					<!-- second form sections row (additional phone number, level of education, sex) -->
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
@@ -68,8 +68,8 @@
 	    				    </select>								
 						</div>	
 						<div class="col-xs-12 col-sm-8 col-md-4">
-	    				    <label for="gender-field">Your gender</label>
-	    				    <select class="form-control" id="gender-field">
+	    				    <label for="sex-field">Your sex</label>
+	    				    <select class="form-control" id="sex-field">
 	    				    	<option value="Male">Male</option>
 	    					    <option value="Female">Female</option>
 	    					    <option value="Other">Other</option>
@@ -313,7 +313,7 @@
 						'phone_number':$("#phone-number-field").val(),
 						'email':$("#email-field").val(),
 						'ed_lvl':$("#lvl-of-ed-field").val(),
-						'gender':$("#gender-field").val(),
+						'sex':$("#sex-field").val(),
 						'birth_year':$("#birthyear-field").val(),
 						'preferences':preferences,
 						'opt_checkbox1':opt_check[0],

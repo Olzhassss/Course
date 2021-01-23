@@ -7,23 +7,26 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required arguments are not passed
+	// Terminate if required argument is not passed
 	if (!isset($_POST['id'])) {
 		exit("False");
 	}
 
-	// Store all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
-
-	// Fetch data 
-	$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-	$stmt2 = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
-	// Fetch column descriptions into an array
-	$stmt1 = $pdo->query($sql1);
-	$descriptions_array = $stmt1->fetchAll(PDO::FETCH_COLUMN);
+	// Fetch descriptions
+	$sql = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
+	$stmt = $pdo->query($sql);
+	$descriptions_array = $stmt->fetchAll(PDO::FETCH_COLUMN);
+	
 	// Fetch particular record's data
-	$stmt2->execute([':id' => $_POST['id']]);
-	$classData_array = $stmt2->fetch(PDO::FETCH_BOTH);
+	$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
+	$stmt->execute([':id' => $_POST['id']]);
+	$classData_array = $stmt->fetch(PDO::FETCH_BOTH);
+
+	// Fetch the class's teacher's name and surname
+	$stmt = $pdo->prepare("SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
+	$stmt->execute([':id' => $classData_array['id_teacher']]);
+	$data = $stmt->fetch();
+	$teacherName = $data['name'] . ' ' . $data['surname'];
 ?>
 	<head>
 		<?php
@@ -41,9 +44,9 @@
 		?>
 	</head>
 
-	<h1 class="my-3"><?=$classData_array['id']?></h1>
+	<h1 class="my-3"><?=$classData_array['id'].', '.$teacherName ?></h1>
 	<div class="w-75 d-flex justify-content-between">
-		<button class="btn btn-success w-50 mx-4" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$id?>')">Edit</button>
+		<button class="btn btn-success w-50 mx-4" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$_POST['id']?>')">Edit</button>
 		<button class="btn btn-warning w-50 mx-4" onclick="clsDelete('<?=$id?>')">Delete</button>
 	</div>
 	

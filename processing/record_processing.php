@@ -32,13 +32,13 @@ try{
 		// Insert the data
 		if ($_POST['role'] == 'teachers'){
 			$sql = 'INSERT INTO `appletree_personnel`.`teachers`
-				(name, surname, gender, birth_year, phone_number, email, exp, ed_lvl, set_date, opt_radio1, opt_radio2, opt_radio3)
-				VALUES (:name, :surname, :gender, :birth_year, :phone_number, :email, :exp, :ed_lvl, :set_date, :opt_radio1, :opt_radio2, :opt_radio3)';
+				(name, surname, sex, birth_year, phone_number, email, exp, ed_lvl, set_date, opt_radio1, opt_radio2, opt_radio3)
+				VALUES (:name, :surname, :sex, :birth_year, :phone_number, :email, :exp, :ed_lvl, :set_date, :opt_radio1, :opt_radio2, :opt_radio3)';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([
 				':name' => $data_array['name'],
 				':surname' => $data_array['surname'],
-				':gender' => $data_array['gender'],
+				':sex' => $data_array['sex'],
 				':birth_year' => $data_array['birth_year'],
 				':phone_number' => $data_array['phone_number'],
 				':email' => $data_array['email'],
@@ -51,14 +51,14 @@ try{
 		}
 		if ($_POST['role'] == 'students'){
 			$sql = 'INSERT INTO `appletree_personnel`.`students`
-				(id_class, name, surname, gender, birth_year, phone_number, email, group_ls, ed_lvl, set_date, opt_checkbox1)
-				VALUES (:id_class, :name, :surname, :gender, :birth_year, :phone_number, :email, :group_ls, :ed_lvl, :set_date, :opt_checkbox1)';
+				(id_class, name, surname, sex, birth_year, phone_number, email, group_ls, ed_lvl, set_date, opt_checkbox1)
+				VALUES (:id_class, :name, :surname, :sex, :birth_year, :phone_number, :email, :group_ls, :ed_lvl, :set_date, :opt_checkbox1)';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([
 				':id_class' => $_POST['id_class'],
 				':name' => $data_array['name'],
 				':surname' => $data_array['surname'],
-				':gender' => $data_array['gender'],
+				':sex' => $data_array['sex'],
 				':birth_year' => $data_array['birth_year'],
 				':phone_number' => $data_array['phone_number'],
 				':email' => $data_array['email'],

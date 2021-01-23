@@ -5,7 +5,6 @@ require_once ($connection_config);
 if (!isset($_POST['role'])) {
 	header("Location:$adminIndex_url");
 }
-
 if ($_POST['role']=='teachers')
 	$tableName = '`appletree_personnel`.`teachers`';
 elseif ($_POST['role']=='students')
@@ -23,12 +22,13 @@ try {
 	// Common to both roles input
 	$_POST['name'] = is_valid(filtrateString( $_POST['name']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
-	$_POST['gender'] = is_valid(filtrateString( $_POST['gender']),'^[A-Z]{1}[a-z]{3,6}$');
+	$_POST['sex'] = is_valid(filtrateString( $_POST['sex']),'^[A-Z]{1}[a-z]{3,6}$');
 	$_POST['birth_year'] = is_valid(filtrateString( $_POST['birth_year']),'^([1][9][2-9]|[2][0,1][0-9])\d{1}$');
 	$_POST['phone_number'] = filtrateString( $_POST['phone_number']);
 	$_POST['email'] = is_valid(is_valid(filtrateString( $_POST['email']),
 			'^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$'),'^.{5,50}$');
 	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[a-z]{0,24}$');
+	$_POST['set_date'] = validateDate(filtrateString($_POST['set_date']));
 
 	if ($_POST['role']=='teachers') // If records is a teacher form
 	{
@@ -37,15 +37,12 @@ try {
 		$_POST['opt_radio1'] = is_valid(filtrateString( $_POST['opt_radio1']),'(^1$|^0$)');
 		$_POST['opt_radio2'] = is_valid(filtrateString( $_POST['opt_radio2']),'(^1$|^0$)');
 		$_POST['opt_radio3'] = is_valid(filtrateString( $_POST['opt_radio3']),'(^1$|^0$)');
-
-		// Check if the record with given ID exists
-
 		
 		// Update the data
 		$sql = 'UPDATE '.$tableName.' SET 
 			name = :name,
 			surname = :surname,
-			gender = :gender,
+			sex = :sex,
 			birth_year = :birth_year,
 			phone_number = :phone_number,
 			email = :email,
@@ -61,7 +58,7 @@ try {
 			':id' => $_POST['id'],
 			':name' => $_POST['name'],
 			':surname' => $_POST['surname'],
-			':gender' => $_POST['gender'],
+			':sex' => $_POST['sex'],
 			':birth_year' => $_POST['birth_year'],
 			':phone_number' => $_POST['phone_number'],
 			':email' => $_POST['email'],
@@ -77,13 +74,13 @@ try {
 	{
 		// Specific input from student records form
 		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
-
+		$_POST['id_class'] = ($_POST['id_class']=="null")? null : $_POST['id_class'];
 		// Insert the data
 		$sql = 'UPDATE '.$tableName.' SET
 			id_class = :id_class,
 			name = :name,
 			surname = :surname,
-			gender = :gender,
+			sex = :sex,
 			birth_year = :birth_year,
 			phone_number = :phone_number,
 			email = :email,
@@ -98,7 +95,7 @@ try {
 			':id_class' => $_POST['id_class'],
 			':name' => $_POST['name'],
 			':surname' => $_POST['surname'],
-			':gender' => $_POST['gender'],
+			':sex' => $_POST['sex'],
 			':birth_year' => $_POST['birth_year'],
 			':phone_number' => $_POST['phone_number'],
 			':email' => $_POST['email'],
@@ -126,5 +123,14 @@ function is_valid($a_string, $reg_ex){
 		throw new Exception('Please fill the fields correctly. Incorrect value - "'.$a_string.'"', 1);
 	else
 		return $a_string;
-}	
+}
+function validateDate($date, $format = 'Y-m-d')
+{
+    $temp = DateTime::createFromFormat($format, $date);
+    if (!$temp || $temp->format($format) !== $date)
+    	throw new Exception("Wrong data format", 1);
+    else
+    	return $date;
+    	
+}
 ?>

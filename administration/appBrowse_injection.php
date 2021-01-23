@@ -12,9 +12,6 @@
 		exit("False");
 	}
 
-	// Store all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
-
 	// Fetch data according to the role
 	if ($_POST['role'] == "teachers") {
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'app_teachers' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
@@ -25,7 +22,7 @@
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'app_students' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
 		$stmt2 = $pdo->prepare("SELECT * FROM appletree_personnel.app_students WHERE `id` = :id");
 	}
-	// Terminate if the argument has incorrect value
+	// Terminate if the argument has an incorrect value
 	else { exit("False"); }
 
 	// Fetch column descriptions into an array

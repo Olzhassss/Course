@@ -12,20 +12,17 @@
 		exit("False");
 	}
 
-	// Store all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css");
-
-	// Fetch data according to the role
+	// Variate sql queries / PDO statements depending on the role
 	if ($_POST['role'] == "teachers") {
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-		$stmt2 = $pdo->prepare("SELECT * FROM appletree_personnel.teachers WHERE `id` = :id");
+		$stmt2 = $pdo->prepare("SELECT * FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
 		
 	}
 	elseif ($_POST['role'] == "students") {
 		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'students' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-		$stmt2 = $pdo->prepare("SELECT * FROM appletree_personnel.students WHERE `id` = :id");
+		$stmt2 = $pdo->prepare("SELECT * FROM `appletree_personnel`.`students` WHERE `id` = :id");
 	}
-	// Terminate if the argument has incorrect value
+	// Terminate if the argument has an incorrect value
 	else { exit("False"); }
 
 	// Fetch column descriptions into an array
@@ -64,8 +61,7 @@
 
 			    <tr>
 			    	<th scope='col' width="40%" ><?=$value?></th>
-			    	<td><?=$data_array[$key]?>
-			    	</td>
+			    	<td><?=($data_array[$key]=='')?'N/A':$data_array[$key]?></td>
 			    </tr>
 				
 			<?php endforeach;?>

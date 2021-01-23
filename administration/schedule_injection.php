@@ -13,14 +13,14 @@
 	$url = $_POST['url'];
 	
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("tables.style.css", "navbar_schedule.style.css");
+	$customStylesheets_array = array("navbar_schedule.style.css");
 	$customScripts_array = array("smooth_scroll.js", "scroll_schedule_page.js");
 	//$customStyles_css = "";
 	//$spinner_src = $imgs . "spinner.gif";
 	$days_array = array("Monday","Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
-	// Getting information about classes from the database
-	$sql = "SELECT classes.id, teachers.name, teachers.surname, classes.std_num FROM appletree_personnel.classes INNER JOIN appletree_personnel.teachers ON classes.id_teacher = teachers.id";
+	// Getting information about class teachers from the database
+	$sql = "SELECT `classes`.`id`, `teachers`.`name`, `teachers`.`surname`, `classes`.`std_num` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`";
 	$stmt= $pdo->query($sql);
 	
 	// Creating and filling an associative array (key = DB table's id column value, class code in other words)
