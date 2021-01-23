@@ -37,21 +37,22 @@
 	})
 
 	// Executes Ajax and manages error text
-	function loadPage(event)
+	function loadPage(event, derivative_value = null, arg_id = null, role = null)
 	{
+		console.log(derivative_value, arg_id, role);
 		event.preventDefault();
 		let data = $(this).attr("data-essence");
 		$.ajax({
 			url: "<?=$router_url?>",
 			type: 'POST',
 			cache: false,
-			data: { 'temp': data },
+			data: { 'temp': data, 'derivative': derivative_value, 'id': arg_id, 'role': role},
 			beforeSend: function() {
 				$("#loader_div").removeClass("hidden");
 				$("#body").empty();
 			},
 			success: function(data){
-				if (data==1){
+				if (data=="False"){
 					console.error("'loadPage' function: Unknown url submitted!");
 					return;
 				}

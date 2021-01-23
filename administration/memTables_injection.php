@@ -64,9 +64,9 @@
 						}
 					?>		
 		
-					<td data-ref-id="<?=$id?>">
+					<td>
 						<button class="btn btn-primary btn-browse" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$memCvInject_url?>')"><img src="" alt="Brw"></button>
-						<button class="btn btn-primary btn-browse" onclick="insertCV_edit('<?=$id?>', '<?=$_POST['role']?>')"><img src="" alt="Edt"></button>
+						<button class="btn btn-primary btn-browse" onclick="memEdt('<?=$id?>', '<?=$_POST['role']?>')"><img src="" alt="Edt"></button>
 						<button class="btn btn-primary btn-browse" onclick="memDel('<?=$id?>', '<?=$_POST['role']?>')"><img src="" alt="Del"></button>
 					</td>
 				</tr>

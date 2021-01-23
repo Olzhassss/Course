@@ -6,8 +6,15 @@ if (!isset($_POST['role'])) {
 	header("Location:$adminIndex_url");
 }
 
+if ($_POST['role']=='teachers')
+	$tableName = '`appletree_personnel`.`teachers`';
+elseif ($_POST['role']=='students')
+	$tableName = '`appletree_personnel`.`students`';
+else
+	exit('False');
 try {
-	$sql_check1 = "SELECT EXISTS( SELECT id FROM appletree_personnel.teachers WHERE id = :id)";
+
+	$sql_check1 = 'SELECT EXISTS( SELECT `id` FROM '.$tableName.' WHERE `id` = :id)';
 	$stmt = $pdo->prepare($sql_check1);
 	$stmt->execute([':id' => $_POST['id']]);
 	// Throw an expection if query does not yield any result
@@ -23,7 +30,7 @@ try {
 			'^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$'),'^.{5,50}$');
 	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[a-z]{0,24}$');
 
-	if ($_POST['role']=='teacher') // If records is a teacher form
+	if ($_POST['role']=='teachers') // If records is a teacher form
 	{
 		// Specific input from teacher records form
 		$_POST['exp'] = is_valid(filtrateString( $_POST['exp']),'^([0-9]|[1-9][0-9])$');
@@ -32,11 +39,11 @@ try {
 		$_POST['opt_radio3'] = is_valid(filtrateString( $_POST['opt_radio3']),'(^1$|^0$)');
 
 		// Check if the record with given ID exists
-		
+
 		
 		// Update the data
-		$sql = 'UPDATE appletree_personnel.app_teachers SET 
-			(name = :name,
+		$sql = 'UPDATE '.$tableName.' SET 
+			name = :name,
 			surname = :surname,
 			gender = :gender,
 			birth_year = :birth_year,
@@ -47,10 +54,11 @@ try {
 			set_date = :set_date,
 			opt_radio1 = :opt_radio1,
 			opt_radio2 = :opt_radio2,
-			opt_radio3 = :opt_radio3)
+			opt_radio3 = :opt_radio3
 			WHERE id = :id';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
+			':id' => $_POST['id'],
 			':name' => $_POST['name'],
 			':surname' => $_POST['surname'],
 			':gender' => $_POST['gender'],
@@ -65,15 +73,14 @@ try {
 			':opt_radio3' => $_POST['opt_radio3']]);
 		exit(0);
 	}
-	elseif ($_POST['role']=='student') // If records is a student form
+	else // If records is a student form
 	{
 		// Specific input from student records form
 		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
-		$_POST['opt_checkbox2'] = is_valid(filtrateString( $_POST['opt_checkbox2']),'(^1$|^0$)');
 
 		// Insert the data
-		$sql = 'UPDATE appletree_personnel.app_students SET
-			(id_class = :id_class,
+		$sql = 'UPDATE '.$tableName.' SET
+			id_class = :id_class,
 			name = :name,
 			surname = :surname,
 			gender = :gender,
@@ -83,11 +90,12 @@ try {
 			group_ls = :group_ls,
 			ed_lvl = :ed_lvl,
 			set_date = :set_date,
-			opt_checkbox1 = :opt_checkbox1)
+			opt_checkbox1 = :opt_checkbox1
 			WHERE id = :id';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
-			':id_class' => $_POST['id_class'];
+			':id' => $_POST['id'],
+			':id_class' => $_POST['id_class'],
 			':name' => $_POST['name'],
 			':surname' => $_POST['surname'],
 			':gender' => $_POST['gender'],
@@ -97,9 +105,10 @@ try {
 			':group_ls' => $_POST['group_ls'],
 			':ed_lvl' => $_POST['ed_lvl'],
 			':set_date' => $_POST['set_date'],
-			':opt_checkbox1' => $_POST['opt_checkbox1'];
+			':opt_checkbox1' => $_POST['opt_checkbox1']]);
 		exit(0);
 	}
+		
 } catch (Exception $e) {
 	exit($e->getMessage());
 }
@@ -114,7 +123,7 @@ function filtrateString($a_string){
 }
 function is_valid($a_string, $reg_ex){
 	if (!preg_match('/'.$reg_ex.'/',$a_string))
-		throw new Exception('Please reload your page and fill the fields correctly.', 1);
+		throw new Exception('Please fill the fields correctly. Incorrect value - "'.$a_string.'"', 1);
 	else
 		return $a_string;
 }	

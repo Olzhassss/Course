@@ -14,7 +14,6 @@
 
 	// Store all necessary files in arrays for further import
 	$customStylesheets_array = array("tables.style.css");
-	$customScripts_array = array("insertList.js");
 
 	// Fetch data according to the role
 	if ($_POST['role'] == "teachers") {
@@ -34,7 +33,7 @@
 	$descriptions_array = $stmt1->fetchAll(PDO::FETCH_COLUMN);
 	// Fetch particular record's data
 	$stmt2->execute([':id' => $_POST['id']]);
-	$data_array = $stmt2->fetch(PDO::FETCH_NUM);
+	$data_array = $stmt2->fetch(PDO::FETCH_BOTH);
 ?>
 	<head>
 		<?php
@@ -52,7 +51,7 @@
 		?>
 	</head>
 
-	<h1 class="my-3">Name Surname (id)</h1>
+	<h1 class="my-3"><?=$data_array['name'].' '.$data_array['surname'].' ('.$data_array['id'].')'?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="appAdd(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Accept</button>
 		<button class="btn btn-warning w-50 mx-4" onclick="appDel(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Reject</button>

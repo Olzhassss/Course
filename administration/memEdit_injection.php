@@ -14,13 +14,11 @@
 
 	// Store all necessary files in arrays for further import
 	$customStylesheets_array = array("tables.style.css");
-	$customScripts_array = array("insertList.js");
 
 	// Fetch data according to the role
 	if ($_POST['role'] == 'teachers') {
 		$sql1 = "SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
 		$stmt2 = $pdo->prepare("SELECT * FROM appletree_personnel.teachers WHERE `id` = :id");
-		
 	}
 	elseif ($_POST['role'] == 'students') {
 		$sql1 = "SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'students' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
@@ -65,7 +63,7 @@
 			    <tr>
 			    	<th scope='col' width="40%" ><?=$value["column_comment"]?></th>
 			    	<td>
-			    		<input type="text" name="<?=$value["column_name"]?>" required="true" value="<?=$recordData_array[$key]?>">
+			    		<input type="text" class="form-control" name="<?=$value["column_name"]?>" required="true" value="<?=$recordData_array[$key]?>">
 			    	</td>
 			    </tr>
 				

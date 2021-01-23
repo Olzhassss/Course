@@ -56,6 +56,9 @@
 					var result = confirm("The applicant has been successfully added to the database! Press OK to remain on this page.")
 					if (result)
 						insertList(role, "<?=$appTables_url?>");
+					else
+						// Redirect to CV editing interface
+						$("button[data-essence = 'members']").trigger("click", ["editor", arg_id, role]);
 					return;
 				}
 				else
@@ -65,9 +68,9 @@
 				}
 			}
 		});
-		// Redirect to CV editing interface
-		window.location.replace('<?=$memEditInject_url?>');
+		return;
 	}
+
 
 	// The function sends POST form to the other file to delete the record of the given ID and role
 	// from corresponding applications table

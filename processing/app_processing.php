@@ -69,7 +69,7 @@ try {
 			':opt_radio3' => $_POST['opt_radio3']]);
 		exit(0);
 	}
-	else // If application is a student form
+	elseif($_POST['application_type']=='student') // If application is a student form
 	{
 		// Specific input from student application form
 		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
@@ -109,6 +109,8 @@ try {
 			':preferences' => $_POST['preferences']]);
 		exit(0);
 	}
+	else
+		exit("False");
 } catch (Exception $e) {
 	exit($e->getMessage());
 }

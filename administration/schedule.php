@@ -18,8 +18,8 @@
 	$days_array = array("Monday","Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
 	// Getting information about classes from the database
-	$sql = "SELECT classes.id, teachers.name, teachers.surname, classes.std_num FROM appletree_personnel.classes INNER JOIN appletree_personnel.teachers ON classes.id_teacher = teachers.id";
-	$stmt= $pdo->query($sql);
+	$sql = "SELECT `classes`.`id`, `classes`.`std_num`,`teachers`.`name`, `teachers`.`surname` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`";
+	$stmt = $pdo->query($sql);
 	
 	// Creating and filling an associative array (key = DB table's id column value, class code in other words)
 	// to have a two-dimensional array and alleviate further processing

@@ -14,23 +14,21 @@
 	
 	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("tables.style.css");
-	$customScripts_array = array("loader.js",);
-	//$customStyles_css = "";
+
 	$spinner_src = $imgs . "spinner.gif";
 
 	// Getting information about classes from the database
 	$sql = "SELECT `classes`.`id`, `teachers`.`name`, `teachers`.`surname`, `classes`.`std_num` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`";
-	$stmt= $pdo->query($sql);
-	$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' AND
-	(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'gender' OR `column_name` = 'email' OR `column_name` = 'set_date') ORDER BY `ORDINAL_POSITION`";
-	$sql2 = "SELECT `id`, `name`, `surname`, `gender`, `email`, `set_date` FROM appletree_personnel.teachers";
+	$stmt = $pdo->query($sql);
+	$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
+	$sql2 = "SELECT * FROM appletree_personnel.classes";
 	$stmt1 = $pdo->query($sql1);
 	$stmt2 = $pdo->query($sql2);
 	// Creating and filling an associative array (key = DB table's id column value, class code in other words)
 	// to have a two-dimensional array and alleviate further processing
 	$classesAssoc = array();
 	while ($classes = $stmt->fetch()) {
-		$classesAssoc[$classes["id"]] = array('name' => $classes["name"], 'surname' => $classes["surname"], 'std_num' => $classes["std_num"]);
+		//$classesAssoc[$classes["id"]] = array('name' => $classes["name"], 'surname' => $classes["surname"], 'std_num' => $classes["std_num"]);
 	}
 	
 ?>
@@ -49,7 +47,11 @@
 		}
 		?>
 	</head>
-	<div class="container">
+	<div id="content" class="container">
+		<nav class="btn-group my-4">
+			<button class="px-5 btn btn-success" onclick="clsCreate('<?=$appTables_url?>')">Create a new class</button>
+		</nav>
+
 		<table class="table table-bordered schedule-table">
 			<!-- Table head -->
 			<thead class="thead-light">
@@ -74,20 +76,23 @@
 			
 					<tr>
 						<?php
+							echo "<td class='p-0'><a class='btn btn-secondary rounded-0' data-ref-id=\"$value\" href=\"$index_url\">$i</a></td>";
 							foreach ($result as $key => $value) {
 								// For the first column
-								if ($key == 0) {
+								if ($key == 0)
 									$id = $value;
-									echo "<td class='p-0'><a class='btn btn-secondary rounded-0' data-ref-id=\"$value\" href=\"$index_url\">$i</a></td>";
-								} else{
-									echo "<td>$value</td>";	
-								}
+								if (!is_null($value))
+									echo "<td>$value</td>";
+								else
+									echo "<td><i class='text-muted'>None</i></td>";
+								;	
+								
 							}
 						?>		
 			
-						<td data-ref-id="<?=$id?>">
-							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$id?>', '<?=$clsCvInject_url?>')"><img src="" alt="Brw"></button>
-							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$id?>', '<?=$clsEditInject_url?>')"><img src="" alt="Edt"></button>
+						<td>
+							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$clsInfoInject_url?>', '<?=$id?>')"><img src="" alt="Brw"></button>
+							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$id?>')"><img src="" alt="Edt"></button>
 							<button class="btn btn-primary btn-browse" onclick="clsDelete('<?=$id?>')"><img src="" alt="Del"></button>
 						</td>
 					</tr>
@@ -100,7 +105,7 @@
 	// The function sends POST form to the other file to delete the record of the given ID and role
 	// from corresponding members table
 	function clsDelete(arg_id) {
-		var confirmation = confirm("Do you want to delete this member from the database?");
+		var confirmation = confirm("Do you want to delete this class from the database?");
 		if (confirmation)
 		{
 			$.ajax({
@@ -133,7 +138,7 @@
 	function clsBrowse(url, arg_id){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
-		$("#content").load(url, function( responseText, textStatus, jqXHR ){
+		$("#content").load(url, { id: arg_id}, function( responseText, textStatus, jqXHR ){
 			// Displaying error in console
 			if (textStatus == "error") {
 				let message = "'clsBrowse' function error occured: ";
@@ -144,5 +149,3 @@
 		});
 	}
 </script>
-<!-- Importing custom scripts -->
-<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>

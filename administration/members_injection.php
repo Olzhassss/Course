@@ -28,9 +28,15 @@
 
 		<div id="content" style="overflow-x: auto;">
 				<?php
-					if(!isset($_POST['role']))
-						$_POST['role'] = 'teachers';
-					include_once($memTables_ldp);
+					// Load further injectable addons if is needed
+					if ($_POST['derivative'] == 'browser')
+						include_once($memCvInject_ldp);
+					elseif ($_POST['derivative'] == 'editor')
+						include_once($memEditInject_url);
+					else
+						if(!isset($_POST['role']))
+							$_POST['role'] = 'teachers';
+						include_once($memTables_ldp);
 				?>
 		</div>
 	</div>
@@ -70,14 +76,14 @@
 	}
 
 	// The function loads editing interface for a record (of the given ID and role) from the file into the '#content' div
-	function insertCV_edit(arg_id, role){
+	function memEdt(arg_id, role){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
-		$("#content").load("<?=$cvEditInject_url?>", { id: arg_id, role: role},
+		$("#content").load("<?=$memEditInject_url?>", { id: arg_id, role: role},
 			function (responseText, textStatus, jqXHR ){
 				// Displaying error in console
 				if (textStatus == "error") {
-					let message = "'insertCV_edit' function error occured: ";
+					let message = "'memEdt' function error occured: ";
 					console.error( message + jqXHR.status + " " + jqXHR.statusText );
 				} else{
 					$("#loader_div").addClass("hidden");

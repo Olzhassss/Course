@@ -20,14 +20,6 @@ elseif ($_POST['role'] == 'students')
 else
 	exit("False");
 
-// Delete
-if ($_POST['action'] == 'delete') {
-	$sql = 'DELETE FROM '.$appTable.' WHERE id = :id';
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([':id' => $_POST['id']]);
-	exit(0);
-}
-
 try{
 	// Insert new record to a corresponding table
 	if ($_POST['action'] == 'add') {
@@ -35,13 +27,13 @@ try{
 		$stmt = $pdo->prepare('SELECT * FROM '.$appTable.' WHERE `id` = :id');
 		$stmt->execute([':id' => $_POST['id']]);
 		$data_array = $stmt->fetch();
-		$data_array['app_date'] = date('Y-m-d');
+		$data_array['set_date'] = date('Y-m-d');
 	
 		// Insert the data
 		if ($_POST['role'] == 'teachers'){
-			$sql = 'INSERT INTO appletree_personnel.teachers
-				(name, surname, gender, birth_year, phone_number, email, exp, ed_lvl, app_date, opt_radio1, opt_radio2, opt_radio3)
-				VALUES (:name, :surname, :gender, :birth_year, :phone_number, :email, :exp, :ed_lvl, :app_date, :opt_radio1, :opt_radio2, :opt_radio3)';
+			$sql = 'INSERT INTO `appletree_personnel`.`teachers`
+				(name, surname, gender, birth_year, phone_number, email, exp, ed_lvl, set_date, opt_radio1, opt_radio2, opt_radio3)
+				VALUES (:name, :surname, :gender, :birth_year, :phone_number, :email, :exp, :ed_lvl, :set_date, :opt_radio1, :opt_radio2, :opt_radio3)';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([
 				':name' => $data_array['name'],
@@ -52,13 +44,13 @@ try{
 				':email' => $data_array['email'],
 				':exp' => $data_array['exp'],
 				':ed_lvl' => $data_array['ed_lvl'],
+				':set_date' => $data_array['set_date'],
 				':opt_radio1' => $data_array['opt_radio1'],
 				':opt_radio2' => $data_array['opt_radio2'],
 				':opt_radio3' => $data_array['opt_radio3']]);
-			exit(0);
 		}
 		if ($_POST['role'] == 'students'){
-			$sql = 'INSERT INTO appletree_personnel.students
+			$sql = 'INSERT INTO `appletree_personnel`.`students`
 				(id_class, name, surname, gender, birth_year, phone_number, email, group_ls, ed_lvl, set_date, opt_checkbox1)
 				VALUES (:id_class, :name, :surname, :gender, :birth_year, :phone_number, :email, :group_ls, :ed_lvl, :set_date, :opt_checkbox1)';
 			$stmt = $pdo->prepare($sql);
@@ -74,9 +66,14 @@ try{
 				':ed_lvl' => $data_array['ed_lvl'],
 				':set_date' => $data_array['set_date'],
 				':opt_checkbox1' => $data_array['opt_checkbox1']]);
-			exit(0);
 		}
 	}
+
+	// Delete application if action was not 'add' and after CV was relocated
+	$sql = 'DELETE FROM '.$appTable.' WHERE id = :id';
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute([':id' => $_POST['id']]);
+	exit(0);
 } catch(Exception $e) { exit ($e->getMessage()); }
 // Normally the system should not reach this
 exit("Unknown action initiated!");
