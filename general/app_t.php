@@ -95,7 +95,7 @@
 					<div class="row">
 						<div class="form-group col-12 col-md-5">
 						    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
-							<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 2500 symbols" maxlength="2500" style="resize: none;" rows="5" ></textarea>
+							<textarea class="form-control" id="additional-info" aria-describedby="infoHelp" placeholder="Maximum - 2500 symbols" maxlength="2500" style="resize: none;" rows="5"></textarea>
 							<small id="infoHelp" class="form-text text-muted">
 								Here you can include some details about your personality or career achievements or any other details
 							</small>

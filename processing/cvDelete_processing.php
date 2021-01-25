@@ -7,7 +7,7 @@ session_start();
 if (!isset($_SESSION['user_login'])) {
 	header("Location:$authorizationPage_url");
 }
-// Terminate if required arguments are not passed
+// Terminate if the required arguments are not passed
 if (!isset($_POST['id']) || !isset($_POST['role'])) {
 	exit("False");
 }
@@ -23,7 +23,7 @@ elseif ($_POST['role'] == 'students')
 else
 	exit("False");
 
-// Delete
+// Deletion
 if ($_POST['action'] == 'delete') {
 	$sql = 'DELETE FROM '.$tableName.' WHERE id = :id';
 	$stmt = $pdo->prepare($sql);

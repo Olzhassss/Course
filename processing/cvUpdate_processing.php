@@ -5,21 +5,24 @@ require_once ($connection_config);
 if (!isset($_POST['role'])) {
 	header("Location:$adminIndex_url");
 }
+
+// Set the applicants table name
 if ($_POST['role']=='teachers')
 	$tableName = '`appletree_personnel`.`teachers`';
 elseif ($_POST['role']=='students')
 	$tableName = '`appletree_personnel`.`students`';
 else
 	exit('False');
-try {
 
+try {
+	// Check if the record still exists (or simply a record with the id)
 	$sql_check1 = 'SELECT EXISTS( SELECT `id` FROM '.$tableName.' WHERE `id` = :id)';
 	$stmt = $pdo->prepare($sql_check1);
 	$stmt->execute([':id' => $_POST['id']]);
-	// Throw an expection if query does not yield any result
+	// Throw an exception if query does not yield any result
 	if (!$stmt->fetchColumn())
 		throw new Exception("A record with such ID does not exist!", 1);
-	// Common to both roles input
+	// Filtrate common to both roles input
 	$_POST['name'] = is_valid(filtrateString( $_POST['name']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['sex'] = is_valid(filtrateString( $_POST['sex']),'^[A-Z]{1}[a-z]{3,6}$');
@@ -30,9 +33,9 @@ try {
 	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[a-z]{0,24}$');
 	$_POST['set_date'] = validateDate(filtrateString($_POST['set_date']));
 
-	if ($_POST['role']=='teachers') // If records is a teacher form
+	if ($_POST['role']=='teachers') // For teachers
 	{
-		// Specific input from teacher records form
+		// Specific input for a teacher record
 		$_POST['exp'] = is_valid(filtrateString( $_POST['exp']),'^([0-9]|[1-9][0-9])$');
 		$_POST['opt_radio1'] = is_valid(filtrateString( $_POST['opt_radio1']),'(^1$|^0$)');
 		$_POST['opt_radio2'] = is_valid(filtrateString( $_POST['opt_radio2']),'(^1$|^0$)');
@@ -70,12 +73,12 @@ try {
 			':opt_radio3' => $_POST['opt_radio3']]);
 		exit(0);
 	}
-	else // If records is a student form
+	else // For students
 	{
-		// Specific input from student records form
+		// Specific input for a student record
 		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
 		$_POST['id_class'] = ($_POST['id_class']=="null")? null : $_POST['id_class'];
-		// Insert the data
+		// Update the data
 		$sql = 'UPDATE '.$tableName.' SET
 			id_class = :id_class,
 			name = :name,
@@ -105,7 +108,6 @@ try {
 			':opt_checkbox1' => $_POST['opt_checkbox1']]);
 		exit(0);
 	}
-		
 } catch (Exception $e) {
 	exit($e->getMessage());
 }

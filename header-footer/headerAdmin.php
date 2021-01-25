@@ -1,3 +1,4 @@
+<!-- BEGINNING OF THE HEADER -->
 <?php
 	$logo_src = $imgs . "logo.png";
 
@@ -28,7 +29,7 @@
 						<button data-essence ="applications" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span class="badge badge-warning"><?=$numberOfApplications?></span></button>						
 						<button data-essence ="members" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Members</button>
 						<button data-essence ="classes" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</button>
-						<button data-essence ="edit" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Main page</button>
+						<button data-essence ="frontEdit" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Main page</button>
 					</nav>
 				</div>
 			</div>

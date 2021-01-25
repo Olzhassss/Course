@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 require_once ($connection_config);
 
-// Assigning function to avoid repeat. The function filtrates input string via encoded fuctions
+// The function filtrates input string via encoded fuctions
 function filtrateString($a_string)
 {
 	return htmlspecialchars(trim($a_string));
@@ -13,7 +13,8 @@ $password = filtrateString( $_POST['password']);
 
 if (!empty($login) && !empty($password))
 {
-	$sql = "SELECT login, pswd FROM appletree_personnel.admins WHERE login = :login";
+	// Fetch data to check according to the login
+	$sql = "SELECT `login`, `pswd` FROM `appletree_personnel`.`admins` WHERE `login` = :login";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([':login' => $login]);
 	$user = $stmt->fetch(PDO::FETCH_OBJ);

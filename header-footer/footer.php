@@ -4,7 +4,7 @@
 	{
 		require_once($connection_config); //In case the file was not imported earlier
 
-		$sql = "SELECT `name`,`text` FROM appletree_general.short_texts WHERE `used_for` = 'footer'";
+		$sql = "SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'footer'";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
 		$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);

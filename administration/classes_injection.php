@@ -1,5 +1,5 @@
 <?php 
-	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once ($connection_config);
 	
 	session_start();
@@ -31,7 +31,7 @@
 	</head>
 	<div id="content" class="container">
 		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-success" onclick="clsBrowse('<?=$clsEditInject_url?>')">Create a new class</button>
+			<button class="px-5 btn btn-success py-3" onclick="clsBrowse('<?=$clsEditInject_url?>')">Create a new class</button>
 		</nav>
 
 		<table class="table table-bordered schedule-table">
@@ -117,7 +117,7 @@
 		return;
 	}
 	// The funtion loads full information about classes / editing interface (depending on the URL) into the '#content' div
-	function clsBrowse(url, arg_id = 0){
+	function clsBrowse(url, arg_id = ''){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
 		$("#content").load(url, { id: arg_id}, function( responseText, textStatus, jqXHR ){

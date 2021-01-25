@@ -30,7 +30,7 @@ try{
 		$data_array['set_date'] = date('Y-m-d');
 	
 		// Insert the data
-		if ($_POST['role'] == 'teachers'){
+		if ($_POST['role'] == 'teachers'){ // For teachers
 			$sql = 'INSERT INTO `appletree_personnel`.`teachers`
 				(name, surname, sex, birth_year, phone_number, email, exp, ed_lvl, set_date, opt_radio1, opt_radio2, opt_radio3)
 				VALUES (:name, :surname, :sex, :birth_year, :phone_number, :email, :exp, :ed_lvl, :set_date, :opt_radio1, :opt_radio2, :opt_radio3)';
@@ -49,7 +49,7 @@ try{
 				':opt_radio2' => $data_array['opt_radio2'],
 				':opt_radio3' => $data_array['opt_radio3']]);
 		}
-		if ($_POST['role'] == 'students'){
+		if ($_POST['role'] == 'students'){ // For students
 			$sql = 'INSERT INTO `appletree_personnel`.`students`
 				(id_class, name, surname, sex, birth_year, phone_number, email, group_ls, ed_lvl, set_date, opt_checkbox1)
 				VALUES (:id_class, :name, :surname, :sex, :birth_year, :phone_number, :email, :group_ls, :ed_lvl, :set_date, :opt_checkbox1)';

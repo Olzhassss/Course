@@ -19,7 +19,7 @@ function validate_text(fields)
 	var errors = [];
 	try
 	{
-		fields.each(function (index)
+		$(fields).each(function (index)
 		{
 			// This variable reserves the id (by the idea) of html element responsible for error message for further usage.
 			var attr_val = $(this).attr("data-error-field");

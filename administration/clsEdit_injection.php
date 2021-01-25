@@ -17,10 +17,13 @@
 	$stmt = $pdo->query($sql);
 	$columnsData_array = $stmt->fetchAll();
 
-	// Fetch particular record's data
-	$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
-	$stmt->execute([':id' => $_POST['id']]);
-	$classData_array = $stmt->fetch();
+	if ($_POST['id'] != "-1") {
+		// Fetch particular record's data
+		$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
+		$stmt->execute([':id' => $_POST['id']]);
+		$classData_array = $stmt->fetch(PDO::FETCH_BOTH);
+	}
+	
 
 	/*// Fetch the class's teacher's name and surname
 	$stmt = $pdo->prepare("SELECT `name`,`surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
@@ -46,17 +49,17 @@
 
 	<h1 class="my-3"><?=$classData_array['id']?></h1>
 	<div class="w-75 d-flex justify-content-between">
-		<button class="btn btn-success w-50 mx-4" onclick="memUpd(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Save changes</button>
-		<button class="btn btn-warning w-50 mx-4" onclick="clsDelete('<?=$id?>')">Delete</button>
+		<button class="btn btn-success w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','update')">Save</button>
+		<button id="button-delete" class="btn btn-warning w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','delete')">Delete</button>
 	</div>
 
-	<form class="mt-3">
+	<form class="mt-3" id="form">
 		<table class="table table-bordered">
 			<!-- Table rows -->
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[0]["column_comment"]?></th>
 			    <td>
-			    	<input type="text" class="form-control" name="<?=$value["column_name"]?>" required="true" value="<?=$classData_array['id']?>"></td>
+			    	<input type="text" class="form-control" name="<?=$columnsData_array[0]["column_name"]?>" required="true" value="<?=$classData_array['id']?>"></td>
 			    <!--<select class="form-control" name="<?=$columnsData_array[0]['column_name']?>">
 			    		<?php 
 			    			$stmt = $pdo->query("SELECT `classes`.`id`, `classes`.`std_num`,`teachers`.`name`, `teachers`.`surname` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`");
@@ -64,13 +67,13 @@
 			    		?>
 			    			<option value="<?=$select_options['id']?>"><?=$select_options['id'] .', '. $select_options['name'] .' '. $select_options['surname'] .' ('.$select_options['std_num'].' student[s])'?></option>
 			    		<?php endwhile; ?>
-			    		<input type="text" class="form-control" name="<?=$value["column_name"]?>" required="true" value="<?=$teacher?>">
+			    		<input type="text" class="form-control" name="<?=$columnsData_array[0]["column_name"]?>" required="true" value="<?=$teacher?>">
 			    </select>-->
 			</tr>
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
 				<td>
-					<select class="form-control" id="lvl-of-ed-field">
+					<select class="form-control" name="<?=$columnsData_array[3]["column_name"]?>">
 						<option value="Undetermined">Undetermined</option>
 						<option value="Elementary">Elementary</option>
 						<option value="Pre-Intermediate">Pre-Intermediate</option>
@@ -83,7 +86,7 @@
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[2]["column_comment"]?></th>
 				<td>
-					<select class="form-control" name="<?=$columnsData_array[0]['column_name']?>">
+					<select class="form-control" name="<?=$columnsData_array[2]['column_name']?>">
 			    		<?php
 			    			$stmt = $pdo->query("SELECT `id`, `name`, `surname` FROM `appletree_personnel`.`teachers`");
 			    			while ($select_options = $stmt->fetch()):
@@ -100,7 +103,8 @@
 			</tr>
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[1]["column_comment"]?></th>
-				<td><?=$classData_array['std_num']?></td>
+				<?php $std_num = (isset($classData_array['std_num']))?$classData_array['std_num']:'0'; ?>
+				<td><input type="hidden" name="<?=$columnsData_array[1]['column_name']?>" value="<?=$std_num?>"><?=$std_num?></td>
 			</tr>
 		</table>
 		<table>
@@ -123,17 +127,25 @@
 	</form>
 <script>
 	$(document).ready(function(){
-		$('select#lvl-of-ed-field').val("<?=$classData_array['ed_lvl']?>");
+		$('select[name=<?=$columnsData_array[3]["column_name"]?>]').val("<?=$classData_array[3]?>");
+		$('select[name=<?=$columnsData_array[2]["column_name"]?>]').val("<?=$classData_array[2]?>");
+		if ('<?=$_POST['id']?>'=='') { $('#button-delete').attr('disabled',true);}
 	})
 
-	function memUpd(arg_id, role) {
-		// Get an array of objects for every
-		let fields = $('input[type="text"]').serializeArray();
+	function clsUpd(arg_id, action) {
 		let data = new Object();
-		fields.forEach(function(value){ data[value['name']] = value['value']; })
-		data['role'] = '<?=$_POST['role']?>';
+		// Fill an object properties with values of every field if a record should be updated
+		if (action == 'update'){
+			let fields = $('form#form').serializeArray();
+			fields.forEach(function(value){ data[value['name']] = value['value']; })
+			data['previous_id'] = arg_id;
+		}
+		else // In case the record should be deleted
+			data['id'] = arg_id;
+		data['action'] = action;
+		
 		$.ajax({
-			url: "<?= $cvUpdProcessing_url ?>",
+			url: "<?= $classProcessing_url ?>",
 			type: 'POST',
 			cache: false,
 			data: data,

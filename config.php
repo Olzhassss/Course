@@ -80,7 +80,7 @@ $logout_url = $processing_url . 'logout.php';
 $appInject_url = $administration_url .'applications_injection.php';
 $schInject_url = $administration_url .'schedule_injection.php';
 $clsInject_url = $administration_url .'classes_injection.php';
-//$edtInject_url = $administration_url .'edit_injection.php';
+$edtInject_url = $administration_url .'frontEdit_injection.php';
 $appCvInject_url = $administration_url .'appBrowse_injection.php';
 $memCvInject_url = $administration_url .'memBrowse_injection.php';
 $appTables_url = $administration_url . 'appTables_injection.php';
@@ -105,14 +105,14 @@ $appProcessing_url = $processing_url . 'app_processing.php';
 $recordProcessing_url = $processing_url . 'record_processing.php';
 $cvUpdProcessing_url = $processing_url . 'cvUpdate_processing.php';
 $cvDelProcessing_url = $processing_url . 'cvDelete_processing.php';
-$clsUpdProcessing_url = $processing_url . 'clsUpdate_processing.php';
-$clsDelProcessing_url = $processing_url . 'clsDelete_processing.php';
+$classProcessing_url = $processing_url . 'class_processing.php';
 $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
 
 // The LDPs
 $appTables_ldp = $administration_ldp . 'appTables_injection.php';
 $memTables_ldp = $administration_ldp . 'memTables_injection.php';
 $memCvInject_ldp = $administration_ldp .'memBrowse_injection.php';
+$memEditInject_ldp = $administration_ldp . 'memEdit_injection.php';
 $memTchEdtTbInject_ldp = $administration_ldp . 'memEditTablesTch_injection.php';
 $memStdEdtTbInject_ldp = $administration_ldp . 'memEditTablesStd_injection.php';
 

@@ -22,11 +22,11 @@
 	</head>
 	<div class="container">
 		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-secondary" onclick="insertList('teachers','<?=$appTables_url?>')">Teachers</button>
-			<button class="px-5 btn btn-secondary" onclick="insertList('students','<?=$appTables_url?>')">Students</button>
+			<button class="px-5 btn btn-secondary py-3" onclick="insertList('teachers','<?=$appTables_url?>')">Teachers</button>
+			<button class="px-5 btn btn-secondary py-3" onclick="insertList('students','<?=$appTables_url?>')">Students</button>
 		</nav>
 
-		<div id="content" style="overflow-x: auto;">
+		<div id="content">
 				<?php
 					if($_POST['role'] == '')
 						$_POST['role'] = 'teachers';
@@ -53,12 +53,12 @@
 			success: function(data){
 				if (data == 0)
 				{
-					var result = confirm("The applicant has been successfully added to the database! Press OK to remain on this page.")
+					var result = confirm("The applicant has been successfully added to the database! Press 'OK' to remain on this page. Press 'Cancel' to shift to members list.")
 					if (result)
 						insertList(role, "<?=$appTables_url?>");
 					else
 						// Redirect to CV editing interface
-						$("button[data-essence = 'members']").trigger("click", ["editor", arg_id, role]);
+						$("button[data-essence = 'members']").trigger("click", [role]);
 					return;
 				}
 				else

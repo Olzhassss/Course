@@ -22,21 +22,23 @@
 	</head>
 	<div class="container">
 		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-secondary" onclick="insertList('teachers','<?=$memTables_url?>')">Teachers</button>
-			<button class="px-5 btn btn-secondary" onclick="insertList('students','<?=$memTables_url?>')">Students</button>
+			<button class="px-5 btn btn-secondary py-3" onclick="insertList('teachers','<?=$memTables_url?>')">Teachers</button>
+			<button class="px-5 btn btn-secondary py-3" onclick="insertList('students','<?=$memTables_url?>')">Students</button>
 		</nav>
 
-		<div id="content" style="overflow-x: auto;">
+		<div id="content">
 				<?php
 					// Load further injectable addons if is needed
-					if ($_POST['derivative'] == 'browser')
-						include_once($memCvInject_ldp);
-					elseif ($_POST['derivative'] == 'editor')
-						include_once($memEditInject_url);
-					else
-						if($_POST['role']=='')
-							$_POST['role'] = 'teachers';
-						include_once($memTables_ldp);
+					// if ($_POST['derivative'] == 'browser')
+					// 	include_once($memCvInject_ldp);
+					// elseif ($_POST['derivative'] == 'editor'){
+					// 	include_once($memEditInject_ldp);
+
+					// }
+					// else
+					if($_POST['role']=='')
+						$_POST['role'] = 'teachers';
+					include_once($memTables_ldp);
 				?>
 		</div>
 	</div>

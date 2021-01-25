@@ -113,7 +113,7 @@
 							</div>
 						    <div class="col">
 						    	<label for="preferences-field">Please explain your desired timetable so we can decide to add you to one of the existing classes</label>
-								<textarea required="true" class="form-control" id="preferences-field" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5" ></textarea>
+								<textarea required="true" class="form-control" id="preferences-field" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5"></textarea>
 								<small id="infoHelp" class="form-text text-muted">
 									You can enter the most convenient days of week and time for your classes, we will later contact you to inform regarding available seats.
 								</small>
