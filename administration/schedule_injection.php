@@ -31,117 +31,153 @@
 	}
 	
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		{
-		    foreach ($customStylesheets_array as $value)
-		    {
-		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-		    }
-		}
-		if (!empty($customStyles_css))
-		{
-		    echo "<style> $customStyles_css </style>".PHP_EOL;
-		}
-		?>
-	</head>
-	<div id="navbar" class="navbar w-100 shadow">
-		<nav>
-			<ul class="row" style="list-style-type: none;">
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light border border-info" href="<?=$url?>#headerdiv">Up</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-monday">Monday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-tuesday">Tuesday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-wednesday">Wednesday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-thursday">Thursday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-friday">Friday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-saturday">Saturday</a></li>
-				<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-sunday">Sunday</a></li>
-			</ul>
-		</nav>
-	</div>
-	<div class="container">
-		<section id="section-navbar">
-				<nav>
-					<ul class="row px-0" style="list-style-type: none;">
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-monday">Monday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-tuesday">Tuesday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-wednesday">Wednesday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-thursday">Thursday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-friday">Friday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-saturday">Saturday</a></li>
-						<li class="col-6 col-md-3 col-xl mb-3 mb-xl-0"><a class="w-100 btn btn-light" href="<?=$url?>#section-sunday">Sunday</a></li>
-					</ul>
-				</nav>
-		</section>
-		<hr>
-		
-		<?php foreach ($days_array as $weekDay):
-			$weekDay_lowered = strtolower($weekDay);
-
-			// Taking the information about time sessions from the corresponding table in the database to fill schedule table on the webpage later
-			$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.$weekDay_lowered WHERE `id` = 0";
-			$stmt = $pdo->query($sql);
-			// One day's (webpage) table's first row's records (id = 0)
-			$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
-
-			$sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.$weekDay_lowered WHERE NOT `id` = 0";
-			$stmt = $pdo->query($sql);
-			// The day's (webpage) table's other row's records (with class code) as an array of arrays
-			$sessionRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-			
-			echo "<section id='section-$weekDay_lowered'>
-			<p class='display-4 mb-4 pb-4'>$weekDay</p>";
+	<div id="content">
+		<head>
+			<?php
+			if (!empty($customStylesheets_array))
+			{
+			    foreach ($customStylesheets_array as $value)
+			    {
+			        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
+			    }
+			}
+			if (!empty($customStyles_css))
+			{
+			    echo "<style> $customStyles_css </style>".PHP_EOL;
+			}
 			?>
-			<div style="overflow-x: auto;">
-			<table class="table table-bordered schedule-table">
-				<!-- Table head -->
-				<thead class="thead-light">
-					<tr>
-				        <th scope="col">Session\Room</td>
-				        <?php
-				        // Filling the first row with auditory numbers
-				        foreach ($sessionRows as $val):
-				        	echo "<th scope='col'>Room ". $val['room']. "</th>";
-				    	endforeach;?>
-				    </tr>
-				</thead>
-				<!-- Table rows -->
-				<tbody>
-				<?php
-				// Filling first record of every row with session time
-				foreach ($sessionColumn as $key=>$value): ?>
-					<tr class="tr tr-<?=$key?>">
-						<th scope="col"><?=$value?></th>
-
-				        <?php
-				        // Filling next records of the current rows with class codes
-				        foreach ($sessionRows as $val):
-				        	// The variable used to access the field (in DB) corresponting to the row of the webpage table
-				        	$session = "session". ($key+1);
-				        	
-				        	if (isset($val[$session])) {
-				        		if (isset($classesAssoc[$val[$session]])) {
-				        			$val[$session]= $val[$session] . ', ' . $classesAssoc[$val[$session]]['name'] . ' ' . $classesAssoc[$val[$session]]['surname'] . ', ' . $classesAssoc[$val[$session]]['std_num'] . ' student(s)';
-				        		}
-				        		echo "<td>$val[$session]</td>";
-				        	}
-				        	else
-				        	{
-				        		echo '<td><i style="color: rgb(168, 168, 168); pointer-events: none;">EMPTY</i></td>';
-				        	}
-				        endforeach;?>
-				        
-				    </tr>
-				<?php endforeach; ?>
-				</tbody>
-			</table>
-			</div>
-		</section>
-
-		<?php endforeach;?>
+		</head>
+		<div id="overlay" class="overlay"></div>
+		<div id="navbar" class="navbar w-100 shadow">
+			<nav>
+				<ul class="row" style="list-style-type: none;">
+					<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light border border-info" href="<?=$url?>#headerdiv">Up</a></li>
+					<?php foreach ($days_array as $a_day): // Display a link-button for each day of week ?>
+						<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-<?=strtolower($a_day)?>"><?=$a_day?></a></li>
+					<?php endforeach ?>
+					
+					
+				</ul>
+			</nav>
+		</div>
+		<div class="container">
+			<section id="section-navbar">
+					<nav>
+						<ul class="row px-0" style="list-style-type: none;">
+							<?php foreach ($days_array as $a_day): // Display a link-button for each day of week ?>
+								<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-<?=strtolower($a_day)?>"><?=$a_day?></a></li>
+							<?php endforeach ?>
+						</ul>
+					</nav>
+			</section>
+			<hr>
+				<div class="d-block px-3">
+					<button class="btn btn-light w-100" onclick="schEdt('<?=$schEditInject_url?>')">Edit</button>
+				</div>
+			<hr>
+			<?php foreach ($days_array as $weekDay): // Display the schedule for each day
+				$tableName = strtolower($weekDay);
+	
+				// Taking the information about time sessions from the corresponding table in the database to fill schedule table on the webpage later
+				$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$tableName` WHERE `id` = 0";
+				$stmt = $pdo->query($sql);
+				// One day's (webpage) table's first row's records (id = 0)
+				$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+	
+				$sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$tableName` WHERE NOT `id` = 0";
+				$stmt = $pdo->query($sql);
+				// The day's (webpage) table's other row's records (with class code) as an array of arrays
+				$sessionRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+				
+				echo "<section id='section-$tableName'>
+				<p class='display-4 mb-4 pb-4'>$weekDay<button class='edit-button btn mx-3' data-day-name='$tableName'><small>Edit</small></button></p>";
+				?>
+	
+				<div style="overflow-x: auto;">
+					<table class="table table-bordered schedule-table">
+						<!-- Table head -->
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">Session\Room</th>
+								<?php
+								// Filling the first row with auditory numbers
+								foreach ($sessionRows as $val):
+									echo "<th scope='col'>Room ". $val['room']. "</th>";
+								endforeach;?>
+						    </tr>
+						</thead>
+						<!-- Table rows -->
+						<tbody>
+						<?php
+						// Filling first record of every row with session time
+						foreach ($sessionColumn as $key=>$value): ?>
+							<tr class="tr tr-<?=$key?>">
+								<th scope="col"><?=$value?></th>
+		
+								<?php
+								// Filling next records of the current rows with class codes
+								foreach ($sessionRows as $val):
+									// The variable used to access the field (in DB) corresponting to the row of the webpage table
+									$session = "session". ($key+1);
+									
+									if (isset($val[$session])) {
+										if (isset($classesAssoc[$val[$session]])) {
+											$val[$session]= $val[$session] . ', ' . $classesAssoc[$val[$session]]['name'] . ' ' . $classesAssoc[$val[$session]]['surname'] . ', ' . $classesAssoc[$val[$session]]['std_num'] . ' student(s)';
+										}
+										echo "<td>$val[$session]</td>";
+									}
+									else
+									{
+										echo '<td><i style="color: rgb(168, 168, 168); pointer-events: none;">EMPTY</i></td>';
+									}
+								endforeach;?>
+								
+						    </tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			</section>
+	
+			<?php endforeach;?>
+		</div>
 	</div>
 
 <!-- Importing custom scripts -->
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
+<script>
+	// Binding the 'displayOverlay' function to every schedule edit button
+	$(document).ready(function(){
+		$(".edit-button").click(displayOverlay);
+	})
+	function displayOverlay(event){
+		let the_day = $(this).attr("data-day-name");
+		$("#overlay").load('<?=$schEditOver_url?>', { tableName: the_day}, function( responseText, textStatus, jqXHR ){
+			// Displaying error in console
+			if (textStatus == "error") {
+				let message = "'clsBrowse' function error occured: ";
+				console.error( message + jqXHR.status + " " + jqXHR.statusText );
+			} else{
+				$("#overlay").removeClass("hidden");
+				$("#overlay").addClass("hidden");
+			}
+		});
+		return;
+	}
+
+	function schEdt(url){
+		$("#loader_div").removeClass("hidden");
+		$("#content").empty();
+		$("#content").load(url, function( responseText, textStatus, jqXHR ){
+			// Displaying error in console
+			if (textStatus == "error") {
+				let message = "'clsBrowse' function error occured: ";
+				console.error( message + jqXHR.status + " " + jqXHR.statusText );
+			} else{
+				$("#loader_div").addClass("hidden");
+			}
+		});
+		return;
+	}
+</script>

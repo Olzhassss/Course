@@ -15,51 +15,66 @@ if (!isset($_POST['id'])) {
 
 
 try {
-	if ($_POST['action']=='delete') {
+	// Input validation
+	if (mb_strlen($_POST['name'])>2500)
+		throw new Exception('Characters limit for the class name is exceeded! Length is: '.mb_strlen($_POST['name']), 1);
+
+	if ($_POST['action']=='delete') { // Deletion
+		$_POST['id'] = is_valid(filtrateString( $_POST['id']),'^([GP]R|SP)[MBPIUA]-[0-9].{0,14}$');
 		$stmt = $pdo->prepare('DELETE FROM `appletree_personnel`.`classes` WHERE `id` = :id');
 		$stmt->execute([':id' => $_POST['id']]);
 		exit (0);
-	} elseif ($_POST['action']=='update') {
-		// Formatting the class id
-		$_POST['id'] = is_valid(filtrateString( $_POST['id']),'^([GP]R|SP)[A-Z]-[0-9].{0,14}$');
+	} elseif ($_POST['action']=='update') { // Update
+		// Formatting the new class id
+		$id = $_POST['group_ls'] . substr($_POST['ed_lvl'], 0, 1) . '-' . $_POST['class_number'];
+		$name = ($_POST['name'] =='')? $id : $_POST['name'];
+
+		// Calcucating number of students in the class
+		$stmt = $pdo->prepare('SELECT COUNT(`id`) FROM `appletree_personnel`.`students` WHERE `id_class` = :id_class');
+		$stmt->execute([':id_class' => $id]);
+		$std_num = ($std_num = $stmt->fetchColumn())? $std_num : 0;
+		
 		// Check if the class already exists (by id)
 		$stmt = $pdo->prepare("SELECT EXISTS( SELECT `id` FROM `appletree_personnel`.`classes` WHERE `id` = :id )");
-		$stmt->execute([':id' => $_POST['id']]);
+		$stmt->execute([':id' => $id]);
 		if ($stmt->fetchColumn()) // If the class exists
 		{	
 			// If it has to be a new record (new class)
-			if ($_POST['previous_id']!=-1) {
-				exit('This class already exists! Please, choose other or change its name first.');
+			if ($_POST['id']=='') {
+				exit('This class already exists! Please, choose other category or change its number.');
 			}
 			// Update the data
 			$sql = 'UPDATE `appletree_personnel`.`classes` SET 
+				`name` = :name,
 				`id_teacher` = :id_teacher,
 				`ed_lvl` = :ed_lvl,
 				`std_num` = :std_num
 				WHERE `id` = :id';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([
-				':id' => $_POST['id'],
+				':id' => $id,
+				':name' => $name,
 				':id_teacher' => $_POST['id_teacher'],
 				':ed_lvl' => $_POST['ed_lvl'],
-				':std_num' => $_POST['std_num']]);
+				':std_num' => $std_num]);
 		}
 		else // If the class does not exist
 		{
 			// Insert the data
-			$sql = 'INSERT INTO `appletree_personnel`.`classes`(`id`,`id_teacher`,`ed_lvl`,`std_num`)
-					VALUES (:id, :id_teacher, :ed_lvl, :std_num)';
+			$sql = 'INSERT INTO `appletree_personnel`.`classes`(`id`,`name`,`id_teacher`,`ed_lvl`,`std_num`)
+					VALUES (:id, :name, :id_teacher, :ed_lvl, :std_num)';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute([
-				':id' => $_POST['id'],
+				':id' => $id,
+				':name' => $name,
 				':id_teacher' => $_POST['id_teacher'],
 				':ed_lvl' => $_POST['ed_lvl'],
-				':std_num' => $_POST['std_num']]);
-			// Delete the previous record if it exists ('previous_id' should not be -1 otherwise)
+				':std_num' => $std_num]);
+			// Delete the previous record if it exists ('id' should not be an empty string otherwise)
 			// and the class ID (name) has changed
-			if ($_POST['previous_id']!=-1 && $_POST['previous_id']!=$_POST['id']) {
+			if ($_POST['id']!='' && $_POST['id']!= $id) {
 				$stmt = $pdo->prepare('DELETE FROM `appletree_personnel`.`classes` WHERE `id` = :id');
-				$stmt->execute([':id' => $_POST['previous_id']]);
+				$stmt->execute([':id' => $_POST['id']]);
 			}
 		}
 		exit(0);
@@ -78,7 +93,7 @@ function filtrateString($a_string){
 }
 function is_valid($a_string, $reg_ex){
 	if (!preg_match('/'.$reg_ex.'/',$a_string))
-		throw new Exception('Invalid class name!', 1);
+		throw new Exception('Invalid class id!', 1);
 	else
 		return $a_string;
 }

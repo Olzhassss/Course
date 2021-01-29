@@ -12,19 +12,18 @@
 	// Storing little style adjustments for further amendment 
 	$customStyles_css = "#section-pricing { padding-bottom: 0px;}";
 
-	// Get strings from the database // query
-	$result = $pdo->query("SELECT `name`,`text` FROM appletree_general.short_texts");
+	// Get strings from the database table 'short_texts'
+	$result = $pdo->query("SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'index'");
 
+	// Fetch all records in an associative array with first column values as keys
 	$short_texts = $result->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
 
-	// Set the string values for corresponding variables to be used on the page
+	// Assign values to corresponding variables used on the page
 	$blockquoteCitation_text = $short_texts['blockquote_citation'][0];
 	$welcoming_text = $short_texts['welcoming_text'][0];
 	$blockquote_text = $short_texts['blockquote_text'][0];
 	$scheduleNote_text = $short_texts['schedule_note'][0];
 	$pricingNote_text = $short_texts['pricing_note'][0];
-	// Loader gif
-	$spinner_src = $imgs . "spinner.gif";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +43,7 @@
 		  <div class="carousel-inner">
 		  	<?php 	//------------------- Extracting carousel images from the database table 'carousel_imgs'
 		  	//Fetch results
-		  	$result = $pdo->query("SELECT `img_file_name` FROM appletree_general.carousel_imgs");
+		  	$result = $pdo->query("SELECT `img_file_name` FROM `appletree_general`.`carousel_imgs`");
 		  	//Display results
 		  	while($img_file = $result->fetch()['img_file_name']):
 		 	?>

@@ -21,9 +21,9 @@
 		?>
 	</head>
 	<div class="container">
-		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-secondary py-3" onclick="insertList('teachers','<?=$appTables_url?>')">Teachers</button>
-			<button class="px-5 btn btn-secondary py-3" onclick="insertList('students','<?=$appTables_url?>')">Students</button>
+		<nav class="btn-group my-4 d-flex w-50">
+			<button class="btn btn-secondary my-4 py-3" onclick="insertList('teachers','<?=$appTables_url?>')">Teachers</button>
+			<button class="btn btn-secondary my-4 py-3" onclick="insertList('students','<?=$appTables_url?>')">Students</button>
 		</nav>
 
 		<div id="content">

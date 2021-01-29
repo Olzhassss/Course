@@ -1,24 +1,42 @@
 table.schedule-table {
   overflow: hidden;
+  table-layout: auto;
 }
 
-table.schedule-table > tr:hover {
-  background-color: rgba(0, 204, 255,0.2);
-  
+table.schedule-table tr:hover {
+  background-color: rgba(0, 204, 255,0.2);  
 }
-table.schedule-table > tr{
+
+table.schedule-table tr{
   -webkit-transition: background-color 300ms linear;
   -ms-transition: background-color 300ms linear;
   transition: background-color 300ms linear;
 }
 
-table.schedule-table >td,
-table.schedule-table >th {
+.btn-control{
+	border-width: 2px;
+	border-style: solid;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: unset;
+}
+.btn-control:hover{
+	border-color: #46bdb2;
+}
+.btn-control img{
+  display: flex;
+	width: 1.5rem;
+	height: 1.5rem;
+  margin:auto;
+}
+
+table.schedule-table td,
+table.schedule-table th {
   position: relative;
 }
 
-table.schedule-table > td:hover::after,
-table.schedule-table > th:hover::after {
+table.schedule-table td:hover::after,
+table.schedule-table th:hover::after {
   content: "";
   position: absolute;
   background-color: rgba(0, 204, 255,0.2);

@@ -44,7 +44,7 @@
 		?>
 	</head>
 
-	<h1 class="my-3"><?=$classData_array['id'].', '.$teacherName ?></h1>
+	<h1 class="mb-3 mt-5"><?=$classData_array['id'].', '.$teacherName ?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$_POST['id']?>')">Edit</button>
 		<button class="btn btn-warning w-50 mx-4" onclick="clsDelete('<?=$id?>')">Delete</button>

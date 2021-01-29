@@ -12,29 +12,29 @@
 	$sql = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
 	$stmt1 = $pdo->query($sql);
 	// The class's data
-	$stmt2 = $pdo->query("SELECT * FROM appletree_personnel.classes");
+	$stmt2 = $pdo->query("SELECT * FROM `appletree_personnel`.`classes`");
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		{
-		    foreach ($customStylesheets_array as $value)
-		    {
-		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-		    }
-		}
-		if (!empty($customStyles_css))
-		{
-		    echo "<style> $customStyles_css </style>".PHP_EOL;
-		}
-		?>
-	</head>
 	<div id="content" class="container">
-		<nav class="btn-group my-4">
-			<button class="px-5 btn btn-success py-3" onclick="clsBrowse('<?=$clsEditInject_url?>')">Create a new class</button>
+		<head>
+			<?php
+			if (!empty($customStylesheets_array))
+			{
+			    foreach ($customStylesheets_array as $value)
+			    {
+			        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
+			    }
+			}
+			if (!empty($customStyles_css))
+			{
+			    echo "<style> $customStyles_css </style>".PHP_EOL;
+			}
+			?>
+		</head>
+		<nav class="my-4 w-50 d-block">
+			<button class="py-3 m-4 btn w-50 btn-success" onclick="clsBrowse('<?=$clsEditInject_url?>')">Create a new class</button>
 		</nav>
 
-		<table class="table table-bordered schedule-table">
+		<table class="table table-bordered">
 			<!-- Table head -->
 			<thead class="thead-light">
 				<tr>
@@ -58,7 +58,13 @@
 			
 					<tr>
 						<?php
-							echo '<td class=\'p-0\'><button class=\'btn btn-secondary rounded-0\' onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$memCvInject_url.'")\'>'.$i.'</button></td>';
+							echo '<td class=\'p-0\'><button class=\'btn btn-secondary rounded-0\' onclick=\'clsBrowse("'.$clsInfoInject_url.'", "'.$classData_array[0].'")\'>'.$i.'</button></td>';
+							// Substituting teacher id with name
+							$sql = "SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id";
+							$stmt = $pdo->prepare($sql);
+							$stmt->execute([':id' => $classData_array[3]]);
+							$data = $stmt->fetch();
+							$classData_array[3] = $data['name'] . ' ' . $data['surname'];
 							foreach ($classData_array as $key => $value) {
 								// For the first column
 								if ($key == 0)
@@ -73,9 +79,9 @@
 						?>		
 			
 						<td>
-							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$clsInfoInject_url?>', '<?=$id?>')"><img src="" alt="Brw"></button>
-							<button class="btn btn-primary btn-browse" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$id?>')"><img src="" alt="Edt"></button>
-							<button class="btn btn-primary btn-browse" onclick="clsDelete('<?=$id?>')"><img src="" alt="Del"></button>
+							<button class="btn btn-control" onclick="clsBrowse('<?=$clsInfoInject_url?>', '<?=$id?>')"><img src="<?=$imgBrw?>" alt="Brw"></button>
+							<button class="btn btn-control" onclick="clsBrowse('<?=$clsEditInject_url?>', '<?=$id?>')"><img src="<?=$imgEdt?>" alt="Edt"></button>
+							<button class="btn btn-control" onclick="clsDelete('<?=$id?>')"><img src="<?=$imgDel?>" alt="Del"></button>
 						</td>
 					</tr>
 		
@@ -129,5 +135,6 @@
 				$("#loader_div").addClass("hidden");
 			}
 		});
+		return;
 	}
 </script>

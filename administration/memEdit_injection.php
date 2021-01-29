@@ -44,7 +44,7 @@
 <script>
 	// Pass data to update the record of the corresponding member
 	function memUpd(arg_id, role) {
-		// Get an array of objects for every
+		// Get an array of objects for every form field
 		let fields = $('form#form').serializeArray();
 		let data = new Object();
 		fields.forEach(function(value){ data[value['name']] = value['value']; })

@@ -30,7 +30,7 @@
 	$stmt2 = $pdo->query($sql2);
 ?>
 
-	<table class="table table-bordered schedule-table">
+	<table class="table table-bordered">
 		<!-- Table head -->
 		<thead class="thead-light">
 			<tr>
@@ -63,9 +63,9 @@
 					?>		
 		
 					<td>
-						<button class="btn btn-primary btn-browse" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$appCvInject_url?>')"><img src="" alt="Brw"></button>
-						<button class="btn btn-primary btn-browse" onclick="appAdd('<?=$id?>', '<?=$_POST['role']?>')"><img src="" alt="Add"></button>
-						<button class="btn btn-primary btn-browse" onclick="appDel('<?=$id?>', '<?=$_POST['role']?>')"><img src="" alt="Del"></button>
+						<button class="btn btn-control" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$appCvInject_url?>')"><img src="<?=$imgBrw?>" alt="Brw"></button>
+						<button class="btn btn-control" onclick="appAdd('<?=$id?>', '<?=$_POST['role']?>')"><img src="<?=$imgAdd?>" alt="Add"></button>
+						<button class="btn btn-control" onclick="appDel('<?=$id?>', '<?=$_POST['role']?>')"><img src="<?=$imgDel?>" alt="Del"></button>
 					</td>
 				</tr>
 	

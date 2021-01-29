@@ -26,12 +26,13 @@
 	<div id="body">
 		
 	</div>
-
+	<!-- Empty div to prevent instant page offset shifts -->
+	<div style="margin-bottom: 60vw;"></div>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-	// Attaching the 'loadPage' function to the 'Sign in!' button click event via id
+	// Binding the 'loadPage' function to the 'Sign in!' button click event via class
 	$(document).ready(function(){
 		$(".header-button").click(loadPage);
 		fix_loader("loader_div");
@@ -61,7 +62,7 @@
 				}
 				catch(error)
 				{
-					console.error("'loadPage' function: Error occured!");
+					console.error("'loadPage' function: "+error);
 				}
 				
 			}

@@ -1,14 +1,11 @@
 <!-- BEGINNING OF THE FOOTER -->
 <?php 
-	if (!isset($short_texts))
-	{
-		require_once($connection_config); //In case the file was not imported earlier
+	$sql = "SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'footer'";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
 
-		$sql = "SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'footer'";
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute();
-		$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
-	}
+	// Assign values to corresponding variables used in footer
 	$slogan_text = $short_texts['slogan_text'][0];
 	$email_text = $short_texts['email_text'][0];
 	$phone_text = $short_texts['phone_text'][0];

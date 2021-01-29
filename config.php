@@ -81,16 +81,20 @@ $appInject_url = $administration_url .'applications_injection.php';
 $schInject_url = $administration_url .'schedule_injection.php';
 $clsInject_url = $administration_url .'classes_injection.php';
 $edtInject_url = $administration_url .'frontEdit_injection.php';
+$memInject_url = $administration_url . 'members_injection.php';
 $appCvInject_url = $administration_url .'appBrowse_injection.php';
 $memCvInject_url = $administration_url .'memBrowse_injection.php';
 $appTables_url = $administration_url . 'appTables_injection.php';
 $memTables_url = $administration_url . 'memTables_injection.php';
-$memInject_url = $administration_url . 'members_injection.php';
+
 $memEditInject_url = $administration_url . 'memEdit_injection.php';
 
 $clsInfoInject_url = $administration_url . 'clsBrowse_injection.php';
 $clsEditInject_url = $administration_url . 'clsEdit_injection.php';
 
+$schEditInject_url = $administration_url . 'schEdit_injection.php';
+$schEditOver_url = $administration_url . 'scheduleOverlay_injection.php';
+$schStdEdtTbInject_url = $administration_url . 'schEditTable_injection.php';
 
 // The LDPs of headers, footer, head tag, '<-Back' link
 $header_ldp = $root_ldp .'/header-footer/header.php';
@@ -106,6 +110,7 @@ $recordProcessing_url = $processing_url . 'record_processing.php';
 $cvUpdProcessing_url = $processing_url . 'cvUpdate_processing.php';
 $cvDelProcessing_url = $processing_url . 'cvDelete_processing.php';
 $classProcessing_url = $processing_url . 'class_processing.php';
+$scheduleProcessing_url = $processing_url . 'schedule_processing.php';
 $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
 
 // The LDPs
@@ -118,6 +123,10 @@ $memStdEdtTbInject_ldp = $administration_ldp . 'memEditTablesStd_injection.php';
 
 // Miscellaneous
 $spinner_src = $imgs . "spinner.gif";
+$imgBrw = $imgs.'loupe.png';
+$imgAdd = $imgs.'checkmark.png';
+$imgDel = $imgs.'xmark.png';
+$imgEdt = $imgs.'pencil.png';
 
 switch ($url) {
 	case $appMain_url:

@@ -47,7 +47,7 @@
 		?>
 	</head>
 
-	<h1 class="my-3"><?=$classData_array['id']?></h1>
+	<h1 class="my-3"><?=$_POST['id']?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','update')">Save</button>
 		<button id="button-delete" class="btn btn-warning w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','delete')">Delete</button>
@@ -59,22 +59,32 @@
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[0]["column_comment"]?></th>
 			    <td>
-			    	<input type="text" class="form-control" name="<?=$columnsData_array[0]["column_name"]?>" required="true" value="<?=$classData_array['id']?>"></td>
-			    <!--<select class="form-control" name="<?=$columnsData_array[0]['column_name']?>">
-			    		<?php 
-			    			$stmt = $pdo->query("SELECT `classes`.`id`, `classes`.`std_num`,`teachers`.`name`, `teachers`.`surname` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`");
-			    			while ($select_options = $stmt->fetch()):
-			    		?>
-			    			<option value="<?=$select_options['id']?>"><?=$select_options['id'] .', '. $select_options['name'] .' '. $select_options['surname'] .' ('.$select_options['std_num'].' student[s])'?></option>
-			    		<?php endwhile; ?>
-			    		<input type="text" class="form-control" name="<?=$columnsData_array[0]["column_name"]?>" required="true" value="<?=$teacher?>">
-			    </select>-->
+			    	<input type="text" style="width: 48%;" class="d-inline-block form-control" value="<?=substr($_POST['id'],0,3)?>" disabled="true">
+			    	<span> - </span>
+			    	<input type="text" style="width: 48%;" class="d-inline-block form-control" name="class_number" required="true" value="<?=substr($_POST['id'],strpos($_POST['id'], '-')+1)?>">
+			    </td>
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[1]["column_comment"]?></th>
+			    <td>
+			    	<input type="text" class="form-control" maxlength="100" name="<?=$columnsData_array[1]["column_name"]?>" required="true" value="<?=$classData_array[$columnsData_array[1]["column_name"]]?>">
+			    </td>
+			</tr>
+			<tr>
+				<th scope='col' width="40%" >Class category</th>
+			    <td>
+			    	<select class="form-control" name="group_ls">
+						<option value="PR">Private</option>
+						<option value="GR">Group</option>
+						<option value="SP">Special</option>
+					</select>	
+			    </td>
+			</tr>
+			<tr>
+				<th scope='col' width="40%" ><?=$columnsData_array[4]["column_comment"]?></th>
 				<td>
-					<select class="form-control" name="<?=$columnsData_array[3]["column_name"]?>">
-						<option value="Undetermined">Undetermined</option>
+					<select class="form-control" name="<?=$columnsData_array[4]["column_name"]?>">
+						<option value="Mixed">Mixed</option>
 						<option value="Elementary">Elementary</option>
 						<option value="Pre-Intermediate">Pre-Intermediate</option>
 						<option value="Upper-intermediate">Upper-intermediate</option>
@@ -84,9 +94,9 @@
 				</td>
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnsData_array[2]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
 				<td>
-					<select class="form-control" name="<?=$columnsData_array[2]['column_name']?>">
+					<select class="form-control" name="<?=$columnsData_array[3]['column_name']?>">
 			    		<?php
 			    			$stmt = $pdo->query("SELECT `id`, `name`, `surname` FROM `appletree_personnel`.`teachers`");
 			    			while ($select_options = $stmt->fetch()):
@@ -102,9 +112,9 @@
 				</td>
 			</tr>
 			<tr>
-				<th scope='col' width="40%" ><?=$columnsData_array[1]["column_comment"]?></th>
+				<th scope='col' width="40%" ><?=$columnsData_array[2]["column_comment"]?></th>
 				<?php $std_num = (isset($classData_array['std_num']))?$classData_array['std_num']:'0'; ?>
-				<td><input type="hidden" name="<?=$columnsData_array[1]['column_name']?>" value="<?=$std_num?>"><?=$std_num?></td>
+				<td><input type="text" class="form-control" disabled="true" value="<?=$std_num?>"></td>
 			</tr>
 		</table>
 		<table>
@@ -127,8 +137,9 @@
 	</form>
 <script>
 	$(document).ready(function(){
+		$('select[name=<?=$columnsData_array[4]["column_name"]?>]').val("<?=$classData_array[4]?>");
 		$('select[name=<?=$columnsData_array[3]["column_name"]?>]').val("<?=$classData_array[3]?>");
-		$('select[name=<?=$columnsData_array[2]["column_name"]?>]').val("<?=$classData_array[2]?>");
+		$('select[name=group_ls]').val("<?=substr($_POST['id'],0,2)?>");
 		if ('<?=$_POST['id']?>'=='') { $('#button-delete').attr('disabled',true);}
 	})
 
@@ -138,12 +149,9 @@
 		if (action == 'update'){
 			let fields = $('form#form').serializeArray();
 			fields.forEach(function(value){ data[value['name']] = value['value']; })
-			data['previous_id'] = arg_id;
 		}
-		else // In case the record should be deleted
-			data['id'] = arg_id;
 		data['action'] = action;
-		
+		data['id'] = arg_id;		
 		$.ajax({
 			url: "<?= $classProcessing_url ?>",
 			type: 'POST',

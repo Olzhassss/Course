@@ -12,6 +12,7 @@
 	//$sql = "SELECT `column_comment`,`column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'students' AND `table_schema` = 'appletree_general' ORDER BY `ORDINAL_POSITION`";
 	//$stmt = $pdo->query($sql);
 	//$columnsData_array = $stmt->fetchAll();
+	$customStyles_css = 'tr.borderless td { padding:1rem; } tr.borderless td input, textarea { border-color: transparent!important; }'
 ?>
 
 <head>
@@ -24,33 +25,100 @@
 		?>
 	</head>
 	<div class="container">
-		<nav class="btn-group my-4 w-50">
-			<button class="px-5 btn btn-success py-3" onclick="txtUpd('<?=$appTables_url?>')">Save changes</button>
+		<nav class="my-4 w-50 d-block">
+			<button class="btn btn-success w-50 py-3 m-4" onclick="txtUpd('<?=$appTables_url?>')">Save changes</button>
 		</nav>
+		<hr>
 
-		<form id="form">
-			<table class="table table-bordered">
-				<?php // Fetch short texts
-				$stmt = $pdo->query("SELECT * FROM `appletree_general`.`short_texts`");
-				while ($record = $stmt->fetch()):?>
-					<tr>
-						<th scope='col' width="40%" ><?=$record["description"]?></th>
-						<td>
-							<textarea rows="2" type="text" name="<?=$record["id"]?>" class="form-control"><?=$record["text"]?></textarea>
-						</td>
-					</tr>
-				<?php endwhile; ?>
-				<?php // Fetch social media data
-				$stmt = $pdo->query("SELECT * FROM `appletree_general`.`social_media`");
-				while ($record = $stmt->fetch()):?>
-					<tr>
-						<th scope='col' width="40%" ><?=$record["description"]?></th>
-						<td>
-							<textarea rows="2" type="text" name="<?=$record["id"]?>" class="form-control"><?=$record["href"]?></textarea>
-						</td>
-					</tr>
-				<?php endwhile; ?>
-				<!--
+		<label class="mt-3 mb-2 pl-3" for="form-1"><h2 class="font-weight-light">General information table</h2></label>
+		<table id="form-1" class="table table-bordered">
+			<tbody>
+					<?php // Fetch short texts
+					$stmt = $pdo->query("SELECT `id`,`description`,`text` FROM `appletree_general`.`short_texts`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col' width="40%" ><?=$record["description"]?></th>
+							<td>
+								<textarea rows="1" maxlength="400" type="text" data-field="text" data-table="short_texts" name="<?=$record["id"]?>" class="form-control"><?=$record["text"]?></textarea>
+							</td>
+						</tr>
+					<?php endwhile;
+						// Fetch social media data
+					$stmt = $pdo->query("SELECT * FROM `appletree_general`.`social_media`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col'><?=$record["description"]?></th>
+							<td>
+								<textarea rows="1" maxlength="255" type="text" data-table="social_media" name="<?=$record["id"]?>" class="form-control"><?=$record["href"]?></textarea>
+							</td>
+						</tr>
+					<?php endwhile;
+						// Fetch carousel imgs data
+					$stmt = $pdo->query("SELECT * FROM `appletree_general`.`carousel_imgs`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col'>Carousel image (file name) #</th>
+							<td>
+								<textarea rows="1" maxlength="100" type="text" data-table="carousel_imgs" name="<?=$record["id"]?>" class="form-control"><?=$record["img_file_name"]?></textarea>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+			</tbody>
+		</table>
+
+		<label class="mt-3 mb-2 pl-3" for="form-2"><h2 class="font-weight-light">Working terms and FAQ information table</h2></label>
+		<table id="form-2" class="table table-bordered">
+			<tbody>
+					<?php // Fetch short texts
+					$stmt = $pdo->query("SELECT * FROM `appletree_general`.`work_schedule`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col' width="15%" ><?=$record["day_of_week"]?></th>
+							<td width="30%">
+								<input maxlength="50" type="text" data-field="working_time" data-table="work_schedule" name="<?=$record["id"]?>" class="form-control border-0" value="<?=$record["working_time"]?>">
+							</td>
+							<td>
+								<input maxlength="50" type="text" data-field="app_time" data-table="work_schedule" name="<?=$record["id"]?>" class="form-control border-0" value="<?=$record["app_time"]?>">
+							</td>
+						</tr>
+					<?php endwhile; ?>
+
+					<tr class="bg-light"><th></th><td></td><td></td></tr>
+
+					<?	  // Fetch form tabs data
+					$stmt = $pdo->query("SELECT * FROM `appletree_general`.`form_tabs`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col' >Tab #</th>
+							<td class="p-1">
+								<textarea rows="5" maxlength="100" type="text" data-table="form_tabs" name="<?=$record["id"]?>" class="form-control border-0"><?=$record["title"]?></textarea>
+							</td>
+							<td class="p-1">
+								<textarea rows="5" maxlength="1000" type="text" data-table="form_tabs" name="<?=$record["id"]?>" class="form-control border-0"><?=$record["content"]?></textarea>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+
+					<tr class="bg-light"><th></th><td></td><td></td></tr>
+
+					<?    // Fetch FAQ data
+					$stmt = $pdo->query("SELECT * FROM `appletree_general`.`faqs`");
+					while ($record = $stmt->fetch()):?>
+						<tr class="borderless">
+							<th scope='col' >Question #</th>
+							<td class="p-1">
+								<textarea rows="4" maxlength="255" type="text" data-table="faqs" name="<?=$record["id"]?>" class="form-control border-0"><?=$record["question"]?></textarea>
+							</td>
+							<td class="p-1">
+								<textarea rows="4" maxlength="650" type="text" data-table="faqs" name="<?=$record["id"]?>" class="form-control border-0"><?=$record["answer"]?></textarea>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+			</tbody>
+		</table>
+
+	</div>
+<!--
 				
 				<?php
 				$i = 2;
@@ -131,13 +199,47 @@
 				    </tr>
 					
 				<?php endforeach; */ ?>
-			</table>
-		</form>
-	</div>
-
 <script>
-	// The script selects actual values for 'select' fields
+	var flags = new Object();
 	$(document).ready(function(){
-		
+		$('textarea').change(function(){ flags[$(this).attr('data-table')] = true; console.log("triggered");});
+		$('input').change(function(){ flags[$(this).attr('data-table')] = true; console.log("triggered");});
 	});
+
+	function txtUpd(url){
+		let data = new Object();
+
+		let fields = $('textarea[data-table="short_texts"]').serializeArray();
+		fields.forEach(function(value){ data[value['name']] = value['value']; })
+		
+		console.log(data);
+		return;
+		data['action'] = action;
+		data['id'] = arg_id;		
+		$.ajax({
+			url: "<?= $classProcessing_url ?>",
+			type: 'POST',
+			cache: false,
+			data: data,
+			beforeSend: function() {
+				$("#loader_div").removeClass("hidden");
+			},
+			success: function(reply){
+				if (reply == 0)
+				{
+					var result = confirm("Update is successul! Press OK to return to lists.")
+					if (result)
+						$("button[data-essence = 'classes']").trigger("click");
+					return;
+				}
+				else
+				{
+					alert(reply);
+					return;
+				}
+			}
+		})
+		$("#loader_div").addClass("hidden");
+		return;
+	}
 </script>
