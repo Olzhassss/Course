@@ -1,5 +1,6 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require_once($connection_config);
 
 	$title = 'Apply now!';
 	$customStylesheets_array = array("header.style.css", "footer.style.css");

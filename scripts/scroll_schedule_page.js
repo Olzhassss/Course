@@ -5,7 +5,7 @@ function scroll_screen() {
 	// Check if script successfully accessed necessary elements
 	if (section_monday === null || navbar === null)
 	{
-		console.error("'scroll_screen' function: impossible to access necessary elements by id!");
+		console.warn("'scroll_screen' function: impossible to access necessary elements by id! Removing event listener.");
 		window.removeEventListener('scroll', scroll_screen, false);
 		return false;
 	}

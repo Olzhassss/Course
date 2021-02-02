@@ -9,14 +9,12 @@
 	}
 
 	// Storing all necessary files in arrays for further import
-	$customScripts_array = array("insert.js");
+	$customScripts_array = array('insert.js');
 ?>
 	<head>
 		<?php
 		if (!empty($customStylesheets_array))
-		{
 		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-		}
 		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
 		?>
 	</head>

@@ -9,15 +9,15 @@
 	}
 	// Terminate if required argument is not passed
 	if (!isset($_POST['tableName'])) {
-		exit("False");
+		exit('False');
 	}
 	// Taking the information about time sessions from the corresponding table in the database to fill schedule table on the webpage later
-	// $sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$weekDay_lowered` WHERE `id` = 0";
+	// $sql = 'SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$weekDay_lowered` WHERE `id` = 0';
 	// $stmt = $pdo->query($sql);
 	// // One day's (webpage) table's first row's records (id = 0)
 	// $sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
 
-	// $sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$weekDay_lowered` WHERE NOT `id` = 0";
+	// $sql = 'SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$weekDay_lowered` WHERE NOT `id` = 0';
 	// $stmt = $pdo->query($sql);
 	// // The day's (webpage) table's other row's records (with class code) as an array of arrays
 	// $sessionRows = $stmt->fetchAll(PDO::FETCH_ASSOC);

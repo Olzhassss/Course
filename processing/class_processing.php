@@ -9,10 +9,8 @@ if (!isset($_SESSION['user_login'])) {
 }
 // Terminate if the required arguments are not passed
 if (!isset($_POST['id'])) {
-	exit("False");
+	exit('False');
 }
-
-
 
 try {
 	// Input validation
@@ -20,14 +18,20 @@ try {
 		throw new Exception('Characters limit for the class name is exceeded! Length is: '.mb_strlen($_POST['name']), 1);
 
 	if ($_POST['action']=='delete') { // Deletion
-		$_POST['id'] = is_valid(filtrateString( $_POST['id']),'^([GP]R|SP)[MBPIUA]-[0-9].{0,14}$');
+		// Validate class id just in case
+		$_POST['id'] = is_valid(filtrateString($_POST['id']),'^([GP]R|SP)[MBEPIUA]-[0-9]{1,9}$');
+		$stmt = $pdo->prepare('UPDATE `appletree_personnel`.`students` SET `id_class` = null WHERE `id_class` = :id');
+		$stmt->execute([':id' => $_POST['id']]);
 		$stmt = $pdo->prepare('DELETE FROM `appletree_personnel`.`classes` WHERE `id` = :id');
 		$stmt->execute([':id' => $_POST['id']]);
 		exit (0);
 	} elseif ($_POST['action']=='update') { // Update
+		// Validating input
+		$_POST['class_number'] = is_valid(filtrateString($_POST['class_number']), '^[0-9]{1,9}$');
 		// Formatting the new class id
 		$id = $_POST['group_ls'] . substr($_POST['ed_lvl'], 0, 1) . '-' . $_POST['class_number'];
 		$name = ($_POST['name'] =='')? $id : $_POST['name'];
+		$id_teacher = ($_POST['id_teacher'] =='')? null : $_POST['id_teacher'];
 
 		// Calcucating number of students in the class
 		$stmt = $pdo->prepare('SELECT COUNT(`id`) FROM `appletree_personnel`.`students` WHERE `id_class` = :id_class');
@@ -35,7 +39,7 @@ try {
 		$std_num = ($std_num = $stmt->fetchColumn())? $std_num : 0;
 		
 		// Check if the class already exists (by id)
-		$stmt = $pdo->prepare("SELECT EXISTS( SELECT `id` FROM `appletree_personnel`.`classes` WHERE `id` = :id )");
+		$stmt = $pdo->prepare('SELECT EXISTS( SELECT `id` FROM `appletree_personnel`.`classes` WHERE `id` = :id )');
 		$stmt->execute([':id' => $id]);
 		if ($stmt->fetchColumn()) // If the class exists
 		{	
@@ -54,7 +58,7 @@ try {
 			$stmt->execute([
 				':id' => $id,
 				':name' => $name,
-				':id_teacher' => $_POST['id_teacher'],
+				':id_teacher' => $id_teacher,
 				':ed_lvl' => $_POST['ed_lvl'],
 				':std_num' => $std_num]);
 		}
@@ -67,7 +71,7 @@ try {
 			$stmt->execute([
 				':id' => $id,
 				':name' => $name,
-				':id_teacher' => $_POST['id_teacher'],
+				':id_teacher' => $id_teacher,
 				':ed_lvl' => $_POST['ed_lvl'],
 				':std_num' => $std_num]);
 			// Delete the previous record if it exists ('id' should not be an empty string otherwise)
@@ -93,7 +97,7 @@ function filtrateString($a_string){
 }
 function is_valid($a_string, $reg_ex){
 	if (!preg_match('/'.$reg_ex.'/',$a_string))
-		throw new Exception('Invalid class id!', 1);
+		throw new Exception('Invalid class id (number)!', 1);
 	else
 		return $a_string;
 }

@@ -7,24 +7,16 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required arguments are not passed
+	// Terminate if the required arguments are not passed
 	if (!isset($_POST['id']) || !isset($_POST['role'])) {
-		exit("False");
+		exit('False');
 	}
 ?>
 	<head>
 		<?php
 		if (!empty($customStylesheets_array))
-		{
-		    foreach ($customStylesheets_array as $value)
-		    {
-		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-		    }
-		}
-		if (!empty($customStyles_css))
-		{
-		    echo "<style> $customStyles_css </style>".PHP_EOL;
-		}
+		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
+		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
 		?>
 	</head>
 
@@ -60,10 +52,7 @@
 			success: function(reply){
 				if (reply == 0)
 				{
-					var result = confirm("Update is successul! Press OK to return to lists.")
-					if (result)
-						insertList(role,'<?=$memTables_url?>');
-					return;
+					insertList(role,'<?=$memTables_url?>');
 				}
 				else
 				{

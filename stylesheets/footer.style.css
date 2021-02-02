@@ -1,11 +1,6 @@
-@media (min-width: 10px) {
-  .social-media-img{
-	width: 100%;
-  }
-}
 @media (min-width: 992px) {
   .social-media-img{
-	width: 50%;
+	width: 5vw;
   }
 }
 .social-media-img{

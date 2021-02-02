@@ -31,22 +31,22 @@ try {
 			throw new Exception('Characters limit is exceeded! Please check tabulations / newlines and try again. Length is: '.mb_strlen($_POST['summary']), 1);
 
 		// Check if any applicant or stuff member with same name and surname is recorded
-		$sql_check1 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (name = :name AND surname = :surname))";
+		$sql_check1 = 'SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (`name` = :name AND `surname` = :surname))';
 		$stmt = $pdo->prepare($sql_check1);
 		$stmt->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
 		// Throw an exception if the inquery yields any result
 		if ($stmt->fetchColumn())
-			throw new Exception("A person with such name and surname already applied!", 1);
+			throw new Exception('A person with such name and surname already applied!', 1);
 		// Check if any applicant or stuff member with same phone number or email is recorded
-		$sql_check2 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (email = :email OR phone_number = :phone_number))";
-		$sql_check3 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`teachers` WHERE (email = :email OR phone_number = :phone_number))";
+		$sql_check2 = 'SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (`email` = :email OR `phone_number` = :phone_number))';
+		$sql_check3 = 'SELECT EXISTS( SELECT id FROM `appletree_personnel`.`teachers` WHERE (`email` = :email OR `phone_number` = :phone_number))';
 		$stmt1 = $pdo->prepare($sql_check2);
 		$stmt1->execute([':email' => $_POST['email'], ':phone_number' => $_POST['phone_number']]);
 		$stmt2 = $pdo->prepare($sql_check3);
 		$stmt2->execute([':email' => $_POST['email'], ':phone_number' => $_POST['phone_number']]);
 		// Throw an exception if the inqueries yield any result
 		if ($stmt1->fetchColumn() || $stmt2->fetchColumn())
-			throw new Exception("Phone number or email is already occupied!", 1);
+			throw new Exception('Phone number or email is already occupied!', 1);
 
 		// Insert the data
 		$sql = 'INSERT INTO `appletree_personnel`.`app_teachers`
@@ -79,15 +79,15 @@ try {
 		if (mb_strlen($_POST['preferences'])>700)
 			throw new Exception('Characters limit is exceeded! Please check tabulations / newlines and try again. Length is: '.mb_strlen($_POST['preferences']), 1);
 		// Check if any applicant or student member with same name and surname is recorded
-		$sql_check1 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_students` WHERE (name = :name AND surname = :surname))";
-		$sql_check2 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`students` WHERE (name = :name AND surname = :surname))";
+		$sql_check1 = 'SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_students` WHERE (name = :name AND surname = :surname))';
+		$sql_check2 = 'SELECT EXISTS( SELECT id FROM `appletree_personnel`.`students` WHERE (name = :name AND surname = :surname))';
 		$stmt1 = $pdo->prepare($sql_check1);
 		$stmt1->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
 		$stmt2 = $pdo->prepare($sql_check2);
 		$stmt2->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
 		// Throw an exception if the inqueries yield any result
 		if ($stmt1->fetchColumn() || $stmt2->fetchColumn())
-			throw new Exception("A person with such name and surname already applied/enrolled!", 1);
+			throw new Exception('A person with such name and surname already applied/enrolled!', 1);
 
 		// Insert the data
 		$sql = 'INSERT INTO `appletree_personnel`.`app_students`
@@ -110,7 +110,7 @@ try {
 		exit(0);
 	}
 	else // If the application is neither teacher not student form
-		exit("False");
+		exit('False');
 } catch (Exception $e) {
 	exit($e->getMessage());
 }

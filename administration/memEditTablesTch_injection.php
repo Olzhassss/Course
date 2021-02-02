@@ -7,44 +7,44 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required argument is not passed
+	// Terminate if the required argument is not passed
 	if (!isset($_POST['id'])) {
-		exit("False");
+		exit('False');
 	}
 
 	// Fetch descriptions
-	$sql = "SELECT `column_comment`,`column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
+	$sql = 'SELECT `column_comment`,`column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "teachers" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt = $pdo->query($sql);
 	$columnsData_array = $stmt->fetchAll();
 
 	// Fetch particular record's data
-	$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
+	$stmt = $pdo->prepare('SELECT * FROM `appletree_personnel`.`teachers` WHERE `id` = :id');
 	$stmt->execute([':id' => $_POST['id']]);
 	$recordData_array = $stmt->fetch(PDO::FETCH_NUM);
 ?>
 
 <table class="table table-bordered">
 	<tr>
-    	<th scope='col' width="40%" ><?=$columnsData_array[0]["column_comment"]?></th>
+    	<th scope='col' width="40%" ><?=$columnsData_array[0]['column_comment']?></th>
     	<td>
     		<input type="text" disabled="true" class="form-control" value="<?=$recordData_array[0]?>">
-    		<input type="hidden" name="<?=$columnsData_array[0]["column_name"]?>" required="true" value="<?=$recordData_array[0]?>">
+    		<input type="hidden" name="<?=$columnsData_array[0]['column_name']?>" required="true" value="<?=$recordData_array[0]?>">
     	</td>
     </tr>
 	<?php
 	$i = 1;
 	while ( $i < 3):?>
 		<tr>
-			<th scope='col' width="40%" ><?=$columnsData_array[$i]["column_comment"]?></th>
+			<th scope='col' width="40%" ><?=$columnsData_array[$i]['column_comment']?></th>
 			<td>
-				<input type="text" class="form-control" name="<?=$columnsData_array[$i]["column_name"]?>" required="true" value="<?=$recordData_array[$i]?>">
+				<input type="text" class="form-control" name="<?=$columnsData_array[$i]['column_name']?>" required="true" value="<?=$recordData_array[$i]?>">
 			</td>
 		</tr>
 	<?php $i++; endwhile;?>
 	<tr>
-		<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
+		<th scope='col' width="40%" ><?=$columnsData_array[3]['column_comment']?></th>
 		<td>
-			<select class="form-control" name="<?=$columnsData_array[3]["column_name"]?>">
+			<select class="form-control" name="<?=$columnsData_array[3]['column_name']?>">
 				<option value="Male">Male</option>
 				<option value="Female">Female</option>
 				<option value="Other">Other</option>
@@ -55,18 +55,18 @@
 	$i = 4;
 	while ( $i < 8):?>
 		<tr>
-			<th scope='col' width="40%" ><?=$columnsData_array[$i]["column_comment"]?></th>
+			<th scope='col' width="40%" ><?=$columnsData_array[$i]['column_comment']?></th>
 			<td>
-				<input type="text" class="form-control" name="<?=$columnsData_array[$i]["column_name"]?>" required="true" value="<?=$recordData_array[$i]?>">
+				<input type="text" class="form-control" name="<?=$columnsData_array[$i]['column_name']?>" required="true" value="<?=$recordData_array[$i]?>">
 			</td>
 		</tr>
 	<?php $i++; endwhile;?>
 	<tr>
-		<th scope='col' width="40%" ><?=$columnsData_array[8]["column_comment"]?></th>
+		<th scope='col' width="40%" ><?=$columnsData_array[8]['column_comment']?></th>
 		<td>
-			<select class="form-control" name="<?=$columnsData_array[8]["column_name"]?>">
-				<option value="Undetermined">Undetermined</option>
+			<select class="form-control" name="<?=$columnsData_array[8]['column_name']?>">
 				<option value="Any">Any</option>
+				<option value="Beginner">Beginner</option>
 				<option value="Elementary">Elementary</option>
 				<option value="Pre-Intermediate">Pre-Intermediate</option>
 				<option value="Upper-intermediate">Upper-intermediate</option>
@@ -79,9 +79,9 @@
 	$i = 10;
 	while ( $i < 13):?>
 		<tr>
-			<th scope='col' width="40%" ><?=$columnsData_array[$i]["column_comment"]?></th>
+			<th scope='col' width="40%" ><?=$columnsData_array[$i]['column_comment']?></th>
 			<td>
-				<select class="form-control" name="<?=$columnsData_array[$i]["column_name"]?>" >
+				<select class="form-control" name="<?=$columnsData_array[$i]['column_name']?>" >
 					<option value="1">Yes</option>
 					<option value="0">No</option>
 				</select>
@@ -89,19 +89,19 @@
 		</tr>
 	<?php $i++; endwhile;?>
 	<tr>
-		<th scope='col' width="40%" ><?=$columnsData_array[9]["column_comment"]?></th>
+		<th scope='col' width="40%" ><?=$columnsData_array[9]['column_comment']?></th>
 		<td>
 			<input type="text" disabled="true" class="form-control" value="<?=$recordData_array[9]?>">
-			<input type="hidden" name="<?=$columnsData_array[9]["column_name"]?>" required="true" value="<?=$recordData_array[9]?>">
+			<input type="hidden" name="<?=$columnsData_array[9]['column_name']?>" required="true" value="<?=$recordData_array[9]?>">
 		</td>
 	</tr>
 
 	<?php /* foreach ($columnsData_array as $key => $value ):?>
 
 	    <tr>
-	    	<th scope='col' width="40%" ><?=$value["column_comment"]?></th>
+	    	<th scope='col' width="40%" ><?=$value['column_comment']?></th>
 	    	<td>
-	    		<input type="text" class="form-control" name="<?=$value["column_name"]?>" required="true" value="<?=$recordData_array[$key]?>">
+	    		<input type="text" class="form-control" name="<?=$value['column_name']?>" required="true" value="<?=$recordData_array[$key]?>">
 	    	</td>
 	    </tr>
 		
@@ -110,8 +110,8 @@
 <script>
 	// The script selects actual values for 'select' fields
 	$(document).ready(function(){
-		$('select[name=<?=$columnsData_array[3]["column_name"]?>]').val("<?=$recordData_array[3]?>");
-		$('select[name=<?=$columnsData_array[8]["column_name"]?>]').val("<?=$recordData_array[8]?>");
+		$('select[name=<?=$columnsData_array[3]['column_name']?>]').val("<?=$recordData_array[3]?>");
+		$('select[name=<?=$columnsData_array[8]['column_name']?>]').val("<?=$recordData_array[8]?>");
 		<?php 
 		for($i= 10; $i<13; $i++)
 			echo '$(\'select[name='.$columnsData_array[$i]['column_name'].']\').val("'.$recordData_array[$i].'");';

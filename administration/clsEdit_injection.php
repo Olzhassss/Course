@@ -7,50 +7,35 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required argument is not passed
+	// Terminate if the required argument is not passed
 	if (!isset($_POST['id'])) {
-		exit("False");
+		exit('False');
 	}
 
 	// Fetch columns' despcriptions and names
-	$sql = "SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'classes' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
+	$sql = 'SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt = $pdo->query($sql);
 	$columnsData_array = $stmt->fetchAll();
 
-	if ($_POST['id'] != "-1") {
+	if ($_POST['id'] != '') {
 		// Fetch particular record's data
-		$stmt = $pdo->prepare("SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id");
+		$stmt = $pdo->prepare('SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id');
 		$stmt->execute([':id' => $_POST['id']]);
 		$classData_array = $stmt->fetch(PDO::FETCH_BOTH);
 	}
-	
-
-	/*// Fetch the class's teacher's name and surname
-	$stmt = $pdo->prepare("SELECT `name`,`surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
-	$stmt->execute([':id' => $classData_array['id_teacher']]);
-	$teacherData_array = $stmt->fetch();
-	$teacher = $teacherData_array['name'] .' '. $teacherData_array['surname'];*/
 ?>
 	<head>
 		<?php
 		if (!empty($customStylesheets_array))
-		{
-		    foreach ($customStylesheets_array as $value)
-		    {
-		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-		    }
-		}
-		if (!empty($customStyles_css))
-		{
-		    echo "<style> $customStyles_css </style>".PHP_EOL;
-		}
+		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
+		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
 		?>
 	</head>
 
-	<h1 class="my-3"><?=$_POST['id']?></h1>
+	<h1 class="mb-3 mt-5"><?=$_POST['id']?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','update')">Save</button>
-		<button id="button-delete" class="btn btn-warning w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','delete')">Delete</button>
+		<button id="button-delete" class="btn btn-warning w-50 mx-4" onclick="clsDel('<?=$_POST['id']?>')">Delete</button>
 	</div>
 
 	<form class="mt-3" id="form">
@@ -61,7 +46,7 @@
 			    <td>
 			    	<input type="text" style="width: 48%;" class="d-inline-block form-control" value="<?=substr($_POST['id'],0,3)?>" disabled="true">
 			    	<span> - </span>
-			    	<input type="text" style="width: 48%;" class="d-inline-block form-control" name="class_number" required="true" value="<?=substr($_POST['id'],strpos($_POST['id'], '-')+1)?>">
+			    	<input type="text" maxlength="9" style="width: 48%;" class="d-inline-block form-control" name="class_number" required="true" value="<?=substr($_POST['id'],strpos($_POST['id'], '-')+1)?>">
 			    </td>
 			</tr>
 			<tr>
@@ -85,6 +70,7 @@
 				<td>
 					<select class="form-control" name="<?=$columnsData_array[4]["column_name"]?>">
 						<option value="Mixed">Mixed</option>
+						<option value="Beginner">Beginner</option>
 						<option value="Elementary">Elementary</option>
 						<option value="Pre-Intermediate">Pre-Intermediate</option>
 						<option value="Upper-intermediate">Upper-intermediate</option>
@@ -97,6 +83,7 @@
 				<th scope='col' width="40%" ><?=$columnsData_array[3]["column_comment"]?></th>
 				<td>
 					<select class="form-control" name="<?=$columnsData_array[3]['column_name']?>">
+						<option value="">None</option>
 			    		<?php
 			    			$stmt = $pdo->query("SELECT `id`, `name`, `surname` FROM `appletree_personnel`.`teachers`");
 			    			while ($select_options = $stmt->fetch()):
@@ -137,10 +124,14 @@
 	</form>
 <script>
 	$(document).ready(function(){
+	<?php // Select corresponding values for select if the class is given and disable delete if not
+	if ($_POST['id'] != ''): ?>
 		$('select[name=<?=$columnsData_array[4]["column_name"]?>]').val("<?=$classData_array[4]?>");
 		$('select[name=<?=$columnsData_array[3]["column_name"]?>]').val("<?=$classData_array[3]?>");
 		$('select[name=group_ls]').val("<?=substr($_POST['id'],0,2)?>");
-		if ('<?=$_POST['id']?>'=='') { $('#button-delete').attr('disabled',true);}
+	<?php else: ?>
+		$('#button-delete').attr('disabled',true);
+	<?php endif; ?>
 	})
 
 	function clsUpd(arg_id, action) {
@@ -163,10 +154,7 @@
 			success: function(reply){
 				if (reply == 0)
 				{
-					var result = confirm("Update is successul! Press OK to return to lists.")
-					if (result)
-						$("button[data-essence = 'classes']").trigger("click");
-					return;
+					$("button[data-essence = 'classes']").trigger("click");
 				}
 				else
 				{

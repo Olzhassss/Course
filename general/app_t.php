@@ -65,6 +65,7 @@
 		  					    <label for="lvl-of-ed-field">Desired level of education</label>
 		  					    <select class="form-control" id="lvl-of-ed-field">
 		  					    	<option value="Any">Any</option>
+		  					    	<option value="Beginner">Beginner</option>
 		  					        <option value="Elementary">Elementary</option>
 		  					        <option value="Pre-Intermediate">Pre-Intermediate</option>
 		  					        <option value="Upper-intermediate">Upper-intermediate</option>

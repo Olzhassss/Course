@@ -4,7 +4,7 @@ table.schedule-table {
 }
 
 table.schedule-table tr:hover {
-  background-color: rgba(0, 204, 255,0.2);  
+  background-color: rgba(0, 204, 255, 0.1);  
 }
 
 table.schedule-table tr{

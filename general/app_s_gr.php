@@ -57,14 +57,15 @@
 						    <small id="error_4" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
-	    				    <label for="lvl-of-ed-field">Your level of education</label>
+	    				    <label for="lvl-of-ed-field">Your level of English</label>
 	    				    <select class="form-control" id="lvl-of-ed-field">
-	    				    	<option data-surcharge = "0" value="Undetermined">Undetermined</option>
-	    				    	<option data-surcharge = "0" value="Elementary">Elementary</option>
-	    				    	<option data-surcharge = "0" value="Pre-Intermediate">Pre-Intermediate</option>
-	    				    	<option data-surcharge = "0" value="Upper-intermediate">Upper-intermediate</option>
-	    				    	<option data-surcharge = "0" value="Intermediate">Intermediate</option>
-	    				    	<option data-surcharge = "0" value="Advanced">Advanced</option>
+	    				    	<option value="Undetermined">Undetermined</option>
+	    				    	<option value="Beginner">Beginner</option>
+	    				    	<option value="Elementary">Elementary</option>
+	    				    	<option value="Pre-Intermediate">Pre-Intermediate</option>
+	    				    	<option value="Upper-intermediate">Upper-intermediate</option>
+	    				    	<option value="Intermediate">Intermediate</option>
+	    				    	<option value="Advanced">Advanced</option>
 	    				    </select>								
 						</div>	
 						<div class="col-xs-12 col-sm-8 col-md-4">
@@ -79,27 +80,32 @@
 					<hr>
 					<!-- third form sections row (information about classes schedule) -->
 					<div class="row py-3">
+						<!-- Timetable -->
 						<div class="col-12 col-lg-7">
 							<?php 
-							// Fetching data about time sessions of classes from the moday schedule table (for example)
-							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM appletree_schedule.monday WHERE `id` = 0";
+							// Fetching data about time sessions of classes from the monday schedule table (for example)
+							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`monday` WHERE `id` = 0";
 							$stmt = $pdo->query($sql);
-							$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
+							$sessionColumn1 = $stmt->fetch(PDO::FETCH_NUM);
+							$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`saturday` WHERE `id` = 0";
+							$stmt = $pdo->query($sql);
+							$sessionColumn2 = $stmt->fetch(PDO::FETCH_NUM);
 							 ?>
-							<!-- Timetable for Monday -->
 							<table class="my-5 table table-striped border text-center">
-								<caption><small> <i>Note:</i> This is a timetable for Monday as an example. Details may change for different days.</small></caption>
+								<caption><small> <i>Note:</i> This is a timetable for Monday and Saturday as an example. Details may change for different days.</small></caption>
 							  <thead>
 							    <tr>
-							      <th scope="col">Time session name</th>
-							      <th scope="col">Time</th>
+							      <th scope="col">Session</th>
+							      <th scope="col">Weekday time</th>
+							      <th scope="col">Weekend time</th>
 							    </tr>
 							  </thead>
 							  <tbody>
-							    <?php foreach ($sessionColumn as $key=>$value): ?>
+							    <?php foreach ($sessionColumn1 as $key=>$value): ?>
 							    	<tr class="tr tr-<?=$key?>">
-							    		<th class="font-weight-normal" scope="col"><?=$key>=3?"Evening- ".($key-2):"Morning-".($key+1)?></th>
-							    		<th class="font-weight-normal" scope="col"><?=$value?></th>
+							    		<td scope="col"><?=$key>=3?"Evening-".($key-2):"Morning-".($key+1)?></td>
+							    		<td scope="col"><?=$value?></td>
+							    		<td scope="col"><?=$sessionColumn2[$key]?></td>
 							        </tr>
 							    <?php endforeach; ?>
 							  </tbody>

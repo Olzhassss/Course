@@ -30,7 +30,7 @@ switch ($_POST['temp']) {
 		break;
 	default:
 		// If could not find corresponding file
-		exit("False");
+		exit('False');
 		break;
 }
 exit;

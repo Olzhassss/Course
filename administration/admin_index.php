@@ -9,10 +9,10 @@
 	}
 
 	$title = 'Administration page';
-	$spinner_src = $imgs . "spinner.gif";
+	$spinner_src = $imgs . 'spinner.gif';
 	// Store all necessary files in arrays for further import
-	$customScripts_array = array("loader.js");
-	$customStylesheets_array = array("headerAdmin.style.css", "loader.style.css", "tables.style.css");	
+	$customScripts_array = array('loader.js');
+	$customStylesheets_array = array('headerAdmin.style.css', 'loader.style.css', 'tables.style.css');	
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@
 		
 	</div>
 	<!-- Empty div to prevent instant page offset shifts -->
-	<div style="margin-bottom: 60vw;"></div>
+	<div style="margin-bottom: 45vw;"></div>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

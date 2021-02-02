@@ -9,28 +9,28 @@ if (!isset($_SESSION['user_login'])) {
 }
 // Terminate if the required arguments are not passed
 if (!isset($_POST['id']) || !isset($_POST['role'])) {
-	exit("False");
+	exit('False');
 }
 
 // Set the applicants table name
 if ($_POST['role'] == 'teachers'){
-	$tableName = 'appletree_personnel.teachers';
+	$tableName = '`appletree_personnel`.`teachers`';
 	$sql = 'UPDATE `appletree_personnel`.`classes` SET `id_teacher` = NULL WHERE `id_teacher` = :id';
 	$pdo->prepare($sql)->execute([':id' => $_POST['id']]);
 }
 elseif ($_POST['role'] == 'students')
 	$tableName = 'appletree_personnel.students';
 else
-	exit("False");
+	exit('False');
 
 // Deletion
 if ($_POST['action'] == 'delete') {
-	$sql = 'DELETE FROM '.$tableName.' WHERE id = :id';
+	$sql = 'DELETE FROM '.$tableName.' WHERE `id` = :id';
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([':id' => $_POST['id']]);
 	exit(0);
 }
 
 // Normally the system should not reach this
-exit("Unknown action initiated!");
+exit('Unknown action initiated!');
 ?>

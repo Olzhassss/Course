@@ -112,6 +112,7 @@ $cvDelProcessing_url = $processing_url . 'cvDelete_processing.php';
 $classProcessing_url = $processing_url . 'class_processing.php';
 $scheduleProcessing_url = $processing_url . 'schedule_processing.php';
 $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
+$txtUpdProcessing_url = $processing_url . 'texts_processing.php';
 
 // The LDPs
 $appTables_ldp = $administration_ldp . 'appTables_injection.php';

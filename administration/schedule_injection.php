@@ -13,21 +13,21 @@
 	$url = $_POST['url'];
 	
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("navbar_schedule.style.css");
-	$customScripts_array = array("smooth_scroll.js", "scroll_schedule_page.js");
+	$customStylesheets_array = array('navbar_schedule.style.css');
+	$customScripts_array = array('smooth_scroll.js', 'scroll_schedule_page.js');
 	//$customStyles_css = "";
 	//$spinner_src = $imgs . "spinner.gif";
-	$days_array = array("Monday","Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+	$days_array = array('Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 
 	// Getting information about class teachers from the database
-	$sql = "SELECT `classes`.`id`, `teachers`.`name`, `teachers`.`surname`, `classes`.`std_num` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`";
+	$sql = 'SELECT `classes`.`id`, `teachers`.`name`, `teachers`.`surname`, `classes`.`std_num` FROM `appletree_personnel`.`classes` INNER JOIN `appletree_personnel`.`teachers` ON `classes`.`id_teacher` = `teachers`.`id`';
 	$stmt= $pdo->query($sql);
 	
 	// Creating and filling an associative array (key = DB table's id column value, class code in other words)
 	// to have a two-dimensional array and alleviate further processing
 	$classesAssoc = array();
 	while ($classes = $stmt->fetch()) {
-		$classesAssoc[$classes["id"]] = array('name' => $classes["name"], 'surname' => $classes["surname"], 'std_num' => $classes["std_num"]);
+		$classesAssoc[$classes['id']] = array('name' => $classes['name'], 'surname' => $classes['surname'], 'std_num' => $classes['std_num']);
 	}
 	
 ?>
@@ -35,16 +35,8 @@
 		<head>
 			<?php
 			if (!empty($customStylesheets_array))
-			{
-			    foreach ($customStylesheets_array as $value)
-			    {
-			        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-			    }
-			}
-			if (!empty($customStyles_css))
-			{
-			    echo "<style> $customStyles_css </style>".PHP_EOL;
-			}
+			    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
+			if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
 			?>
 		</head>
 		<div id="overlay" class="overlay"></div>
@@ -72,28 +64,30 @@
 			</section>
 			<hr>
 				<div class="d-block px-3">
-					<button class="btn btn-light w-100" onclick="schEdt('<?=$schEditInject_url?>')">Edit</button>
+					<button class="btn btn-light w-100" onclick="schEdt()">Edit</button>
 				</div>
 			<hr>
 			<?php foreach ($days_array as $weekDay): // Display the schedule for each day
 				$tableName = strtolower($weekDay);
 	
 				// Taking the information about time sessions from the corresponding table in the database to fill schedule table on the webpage later
-				$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$tableName` WHERE `id` = 0";
+				$sql = "SELECT `session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`".$tableName."` WHERE `id` = 0";
 				$stmt = $pdo->query($sql);
 				// One day's (webpage) table's first row's records (id = 0)
 				$sessionColumn = $stmt->fetch(PDO::FETCH_NUM);
 	
-				$sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`$tableName` WHERE NOT `id` = 0";
+				$sql = "SELECT `room`,`session1`,`session2`,`session3`,`session4`,`session5`,`session6` FROM `appletree_schedule`.`".$tableName."` WHERE NOT `id` = 0";
 				$stmt = $pdo->query($sql);
 				// The day's (webpage) table's other row's records (with class code) as an array of arrays
 				$sessionRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 				
-				echo "<section id='section-$tableName'>
-				<p class='display-4 mb-4 pb-4'>$weekDay<button class='edit-button btn mx-3' data-day-name='$tableName'><small>Edit</small></button></p>";
 				?>
-	
+				<section id='section-<?=$tableName?>'>
+				<p class='display-4 mb-4 pb-4'>
+					<?=$weekDay?>
+					<button class='edit-button btn mx-3' onclick="schEdt('<?=$weekDay?>')"><small>Edit</small></button>
+				</p>
 				<div style="overflow-x: auto;">
 					<table class="table table-bordered schedule-table">
 						<!-- Table head -->
@@ -147,9 +141,8 @@
 <!-- Importing custom scripts -->
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 <script>
-	// Binding the 'displayOverlay' function to every schedule edit button
 	$(document).ready(function(){
-		$(".edit-button").click(displayOverlay);
+		//$(".edit-button").click(displayOverlay);
 	})
 	function displayOverlay(event){
 		let the_day = $(this).attr("data-day-name");
@@ -166,10 +159,11 @@
 		return;
 	}
 
-	function schEdt(url){
+	// Load schedule editing interface
+	function schEdt(day = 'Monday'){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
-		$("#content").load(url, function( responseText, textStatus, jqXHR ){
+		$("#content").load('<?=$schEditInject_url?>', { day: day}, function( responseText, textStatus, jqXHR ){
 			// Displaying error in console
 			if (textStatus == "error") {
 				let message = "'clsBrowse' function error occured: ";

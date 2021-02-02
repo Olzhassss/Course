@@ -7,102 +7,41 @@ if (!isset($_POST['tableName']) || !isset($_POST['tableData'])) {
 }
 
 try {
-	// Filtrate common input for both application types
-	var_dump($_POST);
-
-	if ($_POST['application_type']=='teacher') // If application is a teacher form
-	{
-		// Specific input from teacher application form
-		$_POST['exp'] = is_valid(filtrateString( $_POST['exp']),'^([0-9]|[1-9][0-9])$');
-		$_POST['opt_radio1'] = is_valid(filtrateString( $_POST['opt_radio1']),'(^1$|^0$)');
-		$_POST['opt_radio2'] = is_valid(filtrateString( $_POST['opt_radio2']),'(^1$|^0$)');
-		$_POST['opt_radio3'] = is_valid(filtrateString( $_POST['opt_radio3']),'(^1$|^0$)');
-		$_POST['summary'] = filtrateString( $_POST['summary']);
-		// If the length of the summary is longer than 2500 characters
-		if (mb_strlen($_POST['summary'])>2500)
-			throw new Exception('Characters limit is exceeded! Please check tabulations / newlines and try again. Length is: '.mb_strlen($_POST['summary']), 1);
-
-		// Check if any applicant or stuff member with same name and surname is recorded
-		$sql_check1 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (name = :name AND surname = :surname))";
-		$stmt = $pdo->prepare($sql_check1);
-		$stmt->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
-		// Throw an exception if the inquery yields any result
-		if ($stmt->fetchColumn())
-			throw new Exception("A person with such name and surname already applied!", 1);
-		// Check if any applicant or stuff member with same phone number or email is recorded
-		$sql_check2 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_teachers` WHERE (email = :email OR phone_number = :phone_number))";
-		$sql_check3 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`teachers` WHERE (email = :email OR phone_number = :phone_number))";
-		$stmt1 = $pdo->prepare($sql_check2);
-		$stmt1->execute([':email' => $_POST['email'], ':phone_number' => $_POST['phone_number']]);
-		$stmt2 = $pdo->prepare($sql_check3);
-		$stmt2->execute([':email' => $_POST['email'], ':phone_number' => $_POST['phone_number']]);
-		// Throw an exception if the inqueries yield any result
-		if ($stmt1->fetchColumn() || $stmt2->fetchColumn())
-			throw new Exception("Phone number or email is already occupied!", 1);
-
-		// Insert the data
-		$sql = 'INSERT INTO `appletree_personnel`.`app_teachers`
-			(name, surname, app_date, birth_year, phone_number, email, ed_lvl, exp, sex, summary, opt_radio1, opt_radio2, opt_radio3)
-			VALUES (:name, :surname, :app_date, :birth_year, :phone_number, :email, :ed_lvl, :exp, :sex, :summary, :opt_radio1, :opt_radio2, :opt_radio3)';
+	// Validate table name
+	$days_array = array('monday','tuesday','wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+	if (!in_array($_POST['tableName'], $days_array))
+		throw new Exception('Wrong table name!', 1);
+	// var_dump($_POST);
+	// exit;
+	foreach ($_POST['tableData'] as $rowKey => $rowData) {
+		foreach ($rowData as $fieldName => $value) {
+			if ($value == '') {
+				$rowData[$fieldName] = null;
+			} else {
+				$rowData[$fieldName] = is_valid($value,'^([GP]R|SP)[MBEPIUA]-[0-9]{1,9}$');
+			}
+		}
+		// Update the data
+		$sql = 'UPDATE `appletree_schedule`.`'.$_POST['tableName'].'` SET 
+			`session1` = :session1,
+			`session2` = :session2,
+			`session3` = :session3,
+			`session4` = :session4,
+			`session5` = :session5,
+			`session6` = :session6
+			WHERE `id` = :id';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
-			':name' => $_POST['name'],
-			':surname' => $_POST['surname'],
-			':app_date' => $_POST['app_date'],
-			':birth_year' => $_POST['birth_year'],
-			':phone_number' => $_POST['phone_number'],
-			':email' => $_POST['email'],
-			':ed_lvl' => $_POST['ed_lvl'],
-			':exp' => $_POST['exp'],
-			':sex' => $_POST['sex'],
-			':summary' => $_POST['summary'],
-			':opt_radio1' => $_POST['opt_radio1'],
-			':opt_radio2' => $_POST['opt_radio2'],
-			':opt_radio3' => $_POST['opt_radio3']]);
-		exit(0);
+			':session1' => $rowData['session1'],
+			':session2' => $rowData['session2'],
+			':session3' => $rowData['session3'],
+			':session4' => $rowData['session4'],
+			':session5' => $rowData['session5'],
+			':session6' => $rowData['session6'],
+			// Increment by one in order not to rewrite first record (which contains sessions data)
+			':id' => $rowKey+1]);
 	}
-	elseif($_POST['application_type']=='student') // If the application is a student form
-	{
-		// Specific input from student application form
-		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
-		$_POST['opt_checkbox2'] = is_valid(filtrateString( $_POST['opt_checkbox2']),'(^1$|^0$)');
-		$_POST['preferences'] = filtrateString( $_POST['preferences']);
-		// Check if the string is longer than 700 characters
-		if (mb_strlen($_POST['preferences'])>700)
-			throw new Exception('Characters limit is exceeded! Please check tabulations / newlines and try again. Length is: '.mb_strlen($_POST['preferences']), 1);
-		// Check if any applicant or student member with same name and surname is recorded
-		$sql_check1 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`app_students` WHERE (name = :name AND surname = :surname))";
-		$sql_check2 = "SELECT EXISTS( SELECT id FROM `appletree_personnel`.`students` WHERE (name = :name AND surname = :surname))";
-		$stmt1 = $pdo->prepare($sql_check1);
-		$stmt1->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
-		$stmt2 = $pdo->prepare($sql_check2);
-		$stmt2->execute([':name' => $_POST['name'], ':surname' => $_POST['surname']]);
-		// Throw an exception if the inqueries yield any result
-		if ($stmt1->fetchColumn() || $stmt2->fetchColumn())
-			throw new Exception("A person with such name and surname already applied/enrolled!", 1);
-
-		// Insert the data
-		$sql = 'INSERT INTO `appletree_personnel`.`app_students`
-			(name, surname, sex, birth_year, phone_number, email, group_ls, ed_lvl, app_date, opt_checkbox1, opt_checkbox2, preferences)
-			VALUES (:name, :surname, :sex, :birth_year, :phone_number, :email, :group_ls, :ed_lvl, :app_date, :opt_checkbox1, :opt_checkbox2, :preferences)';
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute([
-			':name' => $_POST['name'],
-			':surname' => $_POST['surname'],
-			':sex' => $_POST['sex'],
-			':birth_year' => $_POST['birth_year'],
-			':phone_number' => $_POST['phone_number'],
-			':email' => $_POST['email'],
-			':group_ls' => $_POST['group_ls'],
-			':ed_lvl' => $_POST['ed_lvl'],
-			':app_date' => $_POST['app_date'],
-			':opt_checkbox1' => $_POST['opt_checkbox1'],
-			':opt_checkbox2' => $_POST['opt_checkbox2'],
-			':preferences' => $_POST['preferences']]);
-		exit(0);
-	}
-	else // If the application is neither teacher not student form
-		exit("False");
+	exit(0);
 } catch (Exception $e) {
 	exit($e->getMessage());
 }
@@ -117,7 +56,7 @@ function filtrateString($a_string){
 }
 function is_valid($a_string, $reg_ex){
 	if (!preg_match('/'.$reg_ex.'/',$a_string))
-		throw new Exception('Please reload the page and fill the fields correctly.', 1);
+		throw new Exception('Please reload the page and fill the fields correctly. Incorrect value - '. $a_string, 1);
 	else
 		return $a_string;
 }	

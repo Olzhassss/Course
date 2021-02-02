@@ -9,20 +9,20 @@
 	}
 	// Terminate if required argument is not passed
 	if (!isset($_POST['role'])) {
-		exit("False");
+		exit('False');
 	}
 	// Variate sql queries depending on the role
-	if ($_POST['role'] == "teachers") {
-		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'app_teachers' AND `table_schema` = 'appletree_personnel' AND
-		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'sex' OR `column_name` = 'email' OR `column_name` = 'app_date') ORDER BY `ORDINAL_POSITION`";
-		$sql2 = "SELECT `id`, `name`, `surname`, `sex`, `email`, `app_date` FROM `appletree_personnel`.`app_teachers`";
-	} elseif ($_POST['role'] == "students") {
-		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'app_students' AND `table_schema` = 'appletree_personnel' AND
-		(`column_name` = 'name' OR `column_name` = 'surname' OR `column_name` = 'sex' OR `column_name` = 'email' OR `column_name` = 'app_date') ORDER BY `ORDINAL_POSITION`";
-		$sql2 = "SELECT `id`, `name`, `surname`, `sex`, `email`, `app_date` FROM `appletree_personnel`.`app_students`";
+	if ($_POST['role'] == 'teachers') {
+		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "app_teachers" AND `table_schema` = "appletree_personnel" AND
+		(`column_name` = "name" OR `column_name` = "surname" OR `column_name` = "sex" OR `column_name` = "email" OR `column_name` = "app_date") ORDER BY `ORDINAL_POSITION`';
+		$sql2 = 'SELECT `id`, `name`, `surname`, `sex`, `email`, `app_date` FROM `appletree_personnel`.`app_teachers`';
+	} elseif ($_POST['role'] == 'students') {
+		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "app_students" AND `table_schema` = "appletree_personnel" AND
+		(`column_name` = "name" OR `column_name` = "surname" OR `column_name` = "sex" OR `column_name` = "email" OR `column_name` = "app_date") ORDER BY `ORDINAL_POSITION`';
+		$sql2 = 'SELECT `id`, `name`, `surname`, `sex`, `email`, `app_date` FROM `appletree_personnel`.`app_students`';
 	}
 	// Terminate if the argument has an incorrect value
-	else { exit("False"); }
+	else { exit('False'); }
 	
 	// Field descriptions
 	$stmt1 = $pdo->query($sql1);
@@ -37,8 +37,8 @@
 		        <th scope="col">#</th>
 		        <?php
 		        //------------------- Filling the column names with the descriptions of the fields
-		        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_NUM)) {
-		        	echo "<th scope='col'>". $descriptions_array[0] . "</th>";	
+		        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
+		        	echo '<th scope="col">'. $descriptions_array . '</th>';	
 		        }
 		    	?>
 		    	<th scope="col">#</th>
@@ -55,7 +55,7 @@
 				<tr>
 					<?php
 						$id = $applicantData_array[0];
-						echo '<td class=\'p-0\'><button class=\'btn btn-secondary rounded-0\' onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$appCvInject_url.'")\'>'.$i.'</button></td>';
+						echo '<td class="p-0"><button class="btn btn-secondary rounded-0" onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$appCvInject_url.'")\'>'.$i.'</button></td>';
 						unset($applicantData_array[0]);
 						foreach ($applicantData_array as $value) {
 							echo '<td>'.$value.'</td>';

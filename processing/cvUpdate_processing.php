@@ -21,7 +21,7 @@ try {
 	$stmt->execute([':id' => $_POST['id']]);
 	// Throw an exception if query does not yield any result
 	if (!$stmt->fetchColumn())
-		throw new Exception("A record with such ID does not exist!", 1);
+		throw new Exception('A record with such ID does not exist!', 1);
 	// Filtrate common to both roles input
 	$_POST['name'] = is_valid(filtrateString( $_POST['name']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
@@ -30,7 +30,7 @@ try {
 	$_POST['phone_number'] = filtrateString( $_POST['phone_number']);
 	$_POST['email'] = is_valid(is_valid(filtrateString( $_POST['email']),
 			'^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$'),'^.{5,50}$');
-	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[a-z]{0,24}$');
+	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[A-Za-z-]{0,24}$');
 	$_POST['set_date'] = validateDate(filtrateString($_POST['set_date']));
 
 	if ($_POST['role']=='teachers') // For teachers
@@ -43,19 +43,19 @@ try {
 		
 		// Update the data
 		$sql = 'UPDATE '.$tableName.' SET 
-			name = :name,
-			surname = :surname,
-			sex = :sex,
-			birth_year = :birth_year,
-			phone_number = :phone_number,
-			email = :email,
-			ed_lvl = :ed_lvl,
-			exp = :exp,
-			set_date = :set_date,
-			opt_radio1 = :opt_radio1,
-			opt_radio2 = :opt_radio2,
-			opt_radio3 = :opt_radio3
-			WHERE id = :id';
+			`name` = :name,
+			`surname` = :surname,
+			`sex` = :sex,
+			`birth_year` = :birth_year,
+			`phone_number` = :phone_number,
+			`email` = :email,
+			`ed_lvl` = :ed_lvl,
+			`exp` = :exp,
+			`set_date` = :set_date,
+			`opt_radio1` = :opt_radio1,
+			`opt_radio2` = :opt_radio2,
+			`opt_radio3` = :opt_radio3
+			WHERE `id` = :id';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
 			':id' => $_POST['id'],
@@ -77,21 +77,44 @@ try {
 	{
 		// Specific input for a student record
 		$_POST['opt_checkbox1'] = is_valid(filtrateString( $_POST['opt_checkbox1']),'(^1$|^0$)');
-		$_POST['id_class'] = ($_POST['id_class']=="null")? null : $_POST['id_class'];
+		if ($_POST['id_class']=='null')
+			$_POST['id_class'] = null;
+		else {
+			// Set language education level as of the class's
+			$sql = 'SELECT `ed_lvl` FROM `appletree_personnel`.`classes` WHERE `id` = :id_class';
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute([':id_class' => $_POST['id_class']]);
+			$_POST['ed_lvl'] = $stmt->fetch(PDO::FETCH_COLUMN);
+			// Increment students number value by 1 in the new class
+			$sql = 'UPDATE `appletree_personnel`.`classes` SET `std_num` = `std_num` + 1 WHERE `id` = :id_class';
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute([':id_class' => $_POST['id_class']]);
+		}
+
+		// Decrement students number vlaue by 1 in the previous class
+		$sql = 'SELECT `id_class` FROM `appletree_personnel`.`students` WHERE `id` = :id';
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute([':id' => $_POST['id']]);
+		if (!empty($id_class = $stmt->fetch(PDO::FETCH_COLUMN))) {
+			$sql = 'UPDATE `appletree_personnel`.`classes` SET `std_num` = `std_num` - 1 WHERE `id` = :id_class';
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute([':id_class' => $id_class]);
+		}
+
 		// Update the data
 		$sql = 'UPDATE '.$tableName.' SET
-			id_class = :id_class,
-			name = :name,
-			surname = :surname,
-			sex = :sex,
-			birth_year = :birth_year,
-			phone_number = :phone_number,
-			email = :email,
-			group_ls = :group_ls,
-			ed_lvl = :ed_lvl,
-			set_date = :set_date,
-			opt_checkbox1 = :opt_checkbox1
-			WHERE id = :id';
+			`id_class` = :id_class,
+			`name` = :name,
+			`surname` = :surname,
+			`sex` = :sex,
+			`birth_year` = :birth_year,
+			`phone_number` = :phone_number,
+			`email` = :email,
+			`group_ls` = :group_ls,
+			`ed_lvl` = :ed_lvl,
+			`set_date` = :set_date,
+			`opt_checkbox1` = :opt_checkbox1
+			WHERE `id` = :id';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
 			':id' => $_POST['id'],
@@ -130,7 +153,7 @@ function validateDate($date, $format = 'Y-m-d')
 {
     $temp = DateTime::createFromFormat($format, $date);
     if (!$temp || $temp->format($format) !== $date)
-    	throw new Exception("Wrong data format", 1);
+    	throw new Exception('Wrong data format', 1);
     else
     	return $date;
     	

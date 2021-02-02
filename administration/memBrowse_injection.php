@@ -7,27 +7,28 @@
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required arguments are not passed
+	// Terminate if the required arguments are not passed
 	if (!isset($_POST['id']) || !isset($_POST['role'])) {
-		exit("False");
+		exit('False');
 	}
 
 	// Variate sql queries / PDO statements depending on the role
-	if ($_POST['role'] == "teachers") {
-		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'teachers' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-		$stmt2 = $pdo->prepare("SELECT * FROM `appletree_personnel`.`teachers` WHERE `id` = :id");
+	if ($_POST['role'] == 'teachers') {
+		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "teachers" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
+		$stmt2 = $pdo->prepare('SELECT * FROM `appletree_personnel`.`teachers` WHERE `id` = :id');
 		
 	}
-	elseif ($_POST['role'] == "students") {
-		$sql1 = "SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = 'students' AND `table_schema` = 'appletree_personnel' ORDER BY `ORDINAL_POSITION`";
-		$stmt2 = $pdo->prepare("SELECT * FROM `appletree_personnel`.`students` WHERE `id` = :id");
+	elseif ($_POST['role'] == 'students') {
+		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "students" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
+		$stmt2 = $pdo->prepare('SELECT * FROM `appletree_personnel`.`students` WHERE `id` = :id');
 	}
 	// Terminate if the argument has an incorrect value
-	else { exit("False"); }
+	else { exit('False'); }
 
 	// Fetch column descriptions into an array
 	$stmt1 = $pdo->query($sql1);
 	$descriptions_array = $stmt1->fetchAll(PDO::FETCH_COLUMN);
+	
 	// Fetch particular record's data
 	$stmt2->execute([':id' => $_POST['id']]);
 	$data_array = $stmt2->fetch(PDO::FETCH_BOTH);
@@ -35,16 +36,8 @@
 	<head>
 		<?php
 		if (!empty($customStylesheets_array))
-		{
-		    foreach ($customStylesheets_array as $value)
-		    {
-		        echo "<link rel='stylesheet' href=$css$value>".PHP_EOL;
-		    }
-		}
-		if (!empty($customStyles_css))
-		{
-		    echo "<style> $customStyles_css </style>".PHP_EOL;
-		}
+		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
+		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
 		?>
 	</head>
 
@@ -61,13 +54,64 @@
 
 			    <tr>
 			    	<th scope='col' width="40%" ><?=$value?></th>
-			    	<td><?=($data_array[$key]=='')?'N/A':$data_array[$key]?></td>
+			    	<td><?=($data_array[$key]=='')?'<i class="text-muted">None</i>':$data_array[$key]?></td>
 			    </tr>
 				
 			<?php endforeach;?>
 		</table>
+
+		<?php if ($_POST['role'] == 'teachers'): // Displaying information about teacher's classes
+			// Classes table's fields' descriptions
+			$sql = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
+			$stmt1 = $pdo->query($sql);
+
+			// The classes's data
+			$stmt2 = $pdo->prepare('SELECT * FROM `appletree_personnel`.`classes` WHERE `id_teacher` = :id');
+			$stmt2->execute([':id' => $_POST['id']]);?>
+
+		<h2 class="mb-3 mt-5">List of classes</h2>
+		<table class="table table-bordered">
+			<thead class="thead-light">
+				<tr>
+			        <th scope="col">#</th>
+			        <?php
+			        //------------------- Filling the column names with the descriptions of the fields
+			        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
+			        	echo '<th scope="col">'. $descriptions_array . '</th>';	
+			        }
+			    	?>
+			    </tr>
+			</thead>
+			<!-- Table rows -->
+			<tbody>
+				<?php 	//------------------- Filling the table
+				$i = 0;
+				while($classData_array = $stmt2->fetch(PDO::FETCH_NUM)):
+				$i++;
+				?>
+			
+					<tr>
+						<?php
+							echo '<td>'.$i.'</td>';
+							// Unset the useless teacher id from the data
+							unset($classData_array[3]);
+							foreach ($classData_array as $value) {
+								if (!is_null($value))
+									echo '<td>'.$value.'</td>';
+								else
+									echo '<td><i class="text-muted">None</i></td>';								
+							}
+						?>
+					</tr>
+			
+				<?php endwhile;
+				// If the loop exited immediately
+				if ($i == 0)
+					echo "<tr><td class='text-muted'>No classes</td></tr>".PHP_EOL;
+				?>
+			</tbody>
+		</table>
+
+		<?php endif; ?>
 	</div>
-<script>
-	
-</script>
 
