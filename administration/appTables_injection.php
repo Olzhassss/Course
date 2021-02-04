@@ -55,7 +55,7 @@
 				<tr>
 					<?php
 						$id = $applicantData_array[0];
-						echo '<td class="p-0"><button class="btn btn-secondary rounded-0" onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$appCvInject_url.'")\'>'.$i.'</button></td>';
+						echo '<td role="button" class="hover" onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$appCvInject_url.'")\'>'.$i.'</td>';
 						unset($applicantData_array[0]);
 						foreach ($applicantData_array as $value) {
 							echo '<td>'.$value.'</td>';

@@ -131,26 +131,16 @@
 							</div>
 						</div>
 					</div>
-					<hr>
-					<!-- div for buttons -->
-					<div class="row d-flex justify-content-center">
-						<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
-							Register!
-						</button>
-						<button type="Reset" class="btn btn-secondary">
-							Reset application form
-						</button>
-					</div>
-					<!-- div for additional info tabs -->
-					<div class="mt-5 mb-3 pt-4">
+					<!-- Additional info tabs -->
+					<div class="mb-5 pt-4">
 						<nav>
 							<div class="nav nav-tabs row" id="nav-tab" role="tablist">
 							<?php 
 							// Fetching tabs' titles into an array
-							$stmt = $pdo->query('SELECT `title` FROM appletree_general.form_tabs');
+							$stmt = $pdo->query('SELECT `title` FROM `appletree_general`.`form_tabs`');
 							$titles = $stmt->fetchAll(PDO::FETCH_COLUMN);
 							// Fetching tabs' contents into an array
-							$stmt = $pdo->query('SELECT `content` FROM appletree_general.form_tabs');
+							$stmt = $pdo->query('SELECT `content` FROM `appletree_general`.`form_tabs`');
 							$contents = $stmt->fetchAll(PDO::FETCH_COLUMN);
 							// Loading tabs
 							foreach ($titles as $key => $value):
@@ -170,6 +160,16 @@
 
 							<?php endforeach?>
 						</div>				
+					</div>
+					<hr>
+					<!-- div for buttons -->
+					<div class="row d-flex justify-content-center">
+						<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
+							Register!
+						</button>
+						<button type="Reset" class="btn btn-secondary">
+							Reset application form
+						</button>
 					</div>
 				</div>
 				<br></br>
