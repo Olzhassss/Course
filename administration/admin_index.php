@@ -12,7 +12,8 @@
 	$spinner_src = $imgs . 'spinner.gif';
 	// Store all necessary files in arrays for further import
 	$customScripts_array = array('loader.js');
-	$customStylesheets_array = array('headerAdmin.style.css', 'loader.style.css', 'tables.style.css');	
+	$customStylesheets_array = array('headerAdmin.style.css', 'loader.style.css', 'tables.style.css');
+	$customStyles_css = ".hover:hover{ background-color: #e2e6ea;} .hover{ transition: background-color .15s ease-in-out; background-color: #f8f9fa;}"
 ?>
 <!DOCTYPE html>
 <html>

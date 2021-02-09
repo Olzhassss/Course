@@ -1,5 +1,5 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once ($connection_config);
 	
 	session_start();
@@ -21,7 +21,7 @@
 </head>
 <div class="container">
 	<nav class="my-4 w-50">
-		<button class="btn btn-success w-50 py-3 m-4" onclick="txtUpd('<?=$txtUpdProcessing_url?>')">Save changes</button>
+		<button class="btn btn-success w-50 py-3 my-4" onclick="txtUpd('<?=$txtUpdProcessing_url?>')">Save changes</button>
 	</nav>
 	<hr>
 

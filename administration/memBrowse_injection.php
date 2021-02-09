@@ -1,6 +1,6 @@
-<?php 
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
+<?php
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
+require_once ($connection_config);
 	
 	session_start();
 	// Block access for unathorized users
@@ -76,8 +76,11 @@
 			        <th scope="col">#</th>
 			        <?php
 			        //------------------- Filling the column names with the descriptions of the fields
-			        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
-			        	echo '<th scope="col">'. $descriptions_array . '</th>';	
+			        $descriptions_array = $stmt1->fetchAll(PDO::FETCH_COLUMN);
+			        // Unset the useless teacher id from the descriptions
+			        unset($descriptions_array[3]);
+			        foreach ($descriptions_array as $value) {
+			        	echo '<th scope="col">'. $value . '</th>';	
 			        }
 			    	?>
 			    </tr>

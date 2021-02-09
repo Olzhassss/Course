@@ -35,7 +35,7 @@ try {
 
 		// Calcucating number of students in the class
 		$stmt = $pdo->prepare('SELECT COUNT(`id`) FROM `appletree_personnel`.`students` WHERE `id_class` = :id_class');
-		$stmt->execute([':id_class' => $id]);
+		$stmt->execute([':id_class' => $_POST['id']]);
 		$std_num = ($std_num = $stmt->fetchColumn())? $std_num : 0;
 		
 		// Check if the class already exists (by id)
@@ -44,8 +44,8 @@ try {
 		if ($stmt->fetchColumn()) // If the class exists
 		{	
 			// If it has to be a new record (new class)
-			if ($_POST['id']=='') {
-				exit('This class already exists! Please, choose other category or change its number.');
+			if ($_POST['id']=='' || $_POST['id']!=$id) {
+				exit('This class already exists! Please, choose other category or change class number.');
 			}
 			// Update the data
 			$sql = 'UPDATE `appletree_personnel`.`classes` SET 
@@ -77,6 +77,11 @@ try {
 			// Delete the previous record if it exists ('id' should not be an empty string otherwise)
 			// and the class ID (name) has changed
 			if ($_POST['id']!='' && $_POST['id']!= $id) {
+				// Updating class id for students in the class
+				$sql = 'UPDATE `appletree_personnel`.`students` SET `id_class`= :id_new WHERE `id_class` = :id_old';
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute([':id_old' => $_POST['id'], ':id_new' => $id]);
+				// Delete the class
 				$stmt = $pdo->prepare('DELETE FROM `appletree_personnel`.`classes` WHERE `id` = :id');
 				$stmt->execute([':id' => $_POST['id']]);
 			}

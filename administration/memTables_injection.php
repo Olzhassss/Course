@@ -56,7 +56,7 @@
 					<?php
 						// Display the data
 						$id = $memberData_array[0];
-						echo '<td class="p-0"><button class="btn btn-secondary rounded-0" onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$memCvInject_url.'")\'>'.$i.'</button></td>';
+						echo '<td role="button" class="hover" onclick=\'insertCV("'.$id.'","'.$_POST['role'].'", "'.$memCvInject_url.'")\'>'.$i.'</td>';
 						unset($memberData_array[0]);
 						foreach ($memberData_array as $value) {
 							if (!is_null($value))

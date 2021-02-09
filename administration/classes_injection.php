@@ -50,7 +50,7 @@
 			
 					<tr>
 						<?php
-							echo '<td class="p-0"><button class="btn btn-secondary rounded-0" onclick=\'clsBrw("'.$clsInfoInject_url.'", "'.$classData_array[0].'")\'>'.$i.'</button></td>';
+							echo '<td role="button" class="hover" onclick=\'insertCV("'.$clsInfoInject_url.'", "'.$classData_array[0].'")\'>'.$i.'</td>';
 							// Substituting teacher id with name
 							$sql = "SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id";
 							$stmt = $pdo->prepare($sql);
