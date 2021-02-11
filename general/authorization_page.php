@@ -81,7 +81,6 @@
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
-					console.log(data);	
 					if (data == 0)
 					{
 						window.location.replace("<?=$adminIndex_url?>");

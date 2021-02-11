@@ -43,15 +43,13 @@
 	function loadPage(event, role = null)
 	{
 		event.preventDefault();
+		$("#loader_div").removeClass("hidden");
 		let data = $(this).attr("data-essence");
 		$.ajax({
 			url: "<?=$router_url?>",
 			type: 'POST',
 			cache: false,
 			data: {'temp': data},
-			beforeSend: function() {
-				$("#loader_div").removeClass("hidden");
-			},
 			success: function(response){
 				if (response=="False"){
 					console.error("'loadPage' function: Unknown url submitted!");

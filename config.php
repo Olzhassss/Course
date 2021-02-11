@@ -76,7 +76,7 @@ $adminIndex_url = $administration_url .'admin_index.php';
 // (log out page)
 $logout_url = $processing_url . 'logout.php';
 
-// URLs to the injectable php files
+// URLs of the injectable php files
 $appInject_url = $administration_url .'applications_injection.php';
 $schInject_url = $administration_url .'schedule_injection.php';
 $clsInject_url = $administration_url .'classes_injection.php';
@@ -114,7 +114,7 @@ $scheduleProcessing_url = $processing_url . 'schedule_processing.php';
 $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
 $txtUpdProcessing_url = $processing_url . 'texts_processing.php';
 
-// The LDPs
+// The LDPs of the injectable php files
 $appTables_ldp = $administration_ldp . 'appTables_injection.php';
 $memTables_ldp = $administration_ldp . 'memTables_injection.php';
 $memCvInject_ldp = $administration_ldp .'memBrowse_injection.php';
@@ -129,6 +129,7 @@ $imgAdd = $imgs.'checkmark.png';
 $imgDel = $imgs.'xmark.png';
 $imgEdt = $imgs.'pencil.png';
 
+// Set the backLink_href according to current page url
 switch ($url) {
 	case $appMain_url:
 		$backLink_href = $index;

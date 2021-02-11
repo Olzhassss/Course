@@ -1,5 +1,5 @@
 <?php
-	if ($_SERVER['REQUEST_URI'] != "/index.php") {
+	if ($_SERVER['REQUEST_URI'] != '/index.php') {
 		header('LOCATION: index.php');
 	}
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
@@ -7,10 +7,10 @@
 
 	$title = 'AppleTree main page';
 	// Storing all necessary files in arrays for further import
-	$customStylesheets_array = array("header.style.css", "footer.style.css", "loader.style.css");
-	$customScripts_array = array("smooth_scroll.js", "scroll_logo_resize.js", "loader.js");
+	$customStylesheets_array = array('header.style.css', 'footer.style.css', 'loader.style.css');
+	$customScripts_array = array('smooth_scroll.js', 'scroll_logo_resize.js', 'loader.js');
 	// Storing little style adjustments for further amendment 
-	$customStyles_css = "#section-pricing { padding-bottom: 0px;}";
+	$customStyles_css = '#section-faq { padding-bottom: 0px;}';
 
 	// Get strings from the database table 'short_texts'
 	$result = $pdo->query("SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'index'");
@@ -67,76 +67,6 @@
 			  ?>
 			</blockquote>
 			<br>
-		</div>
-	</section>
-
-	<section id="section-articles">
-		<div class="container" >
-			<h3 class="my-4 py-3 display-4 text-center">Related articles</h3>
-			<div class="row">
-
-				<?php 	//------------------- Extracting card images and titles from the database table 'articles'
-		  		// Fetch results
-		  		$result = $pdo->query("SELECT `id`,`title`,`img_file_name` FROM appletree_general.articles");
-		  		// Display results by repeating the cycle for every fetched row in the table
-		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
-		 		?>
-
-		 		<form action="<?= $article_url ?>" method="GET" class="col-11 col-sm-6 col-md-4 mb-3">
-		 			<input type="hidden" name="id" value="<?= $data->id ?>" />
-		 			<a href="#" class="text-decoration-none" onclick="this.closest('form').submit(); return false;">
-		 				<div class="card shadow-sm">
-		 					<img src="<?= $imgs.$data->img_file_name ?>" class="card-img-top img-thumbnail" alt="card-logo">
-		 					<div class="card-body">
-		 						<h5 class="card-title"><?= $data->title ?></h5>
-		 					</div>
-		 				</div>
-		 			</a>
-		 		</form>
-		  			
-
-		  		<?php endwhile; ?>
-
-			</div>
-		</div>
-	</section>
-
-	<section id="section-faq">
-		<div class="container">
-			<h3 class="my-4 py-3 display-4 text-center">Frequently asked questions</h3>
-			<div class="accordion my-5" id="accordion-item">
-
-				<?php 	//------------------- Extracting questions and answers from the database table 'faqs'
-		  		// Fetch results
-		  		$result = $pdo->query("SELECT `question`,`answer` FROM appletree_general.faqs");
-		  		// Display results
-		  		// Temporary variable used to assign non-repeating 'id's for some elements
-		  		$temp = 1;
-		  		// Repeat for every fetched row in the table
-		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
-		 		?>
-
-		  			<div class="card">
-		  			  <div class="card-header" id="heading<?= $temp ?>">
-		  			    <p class="mb-0">
-		  			      <button class="btn btn-link btn-block text-left collapsed text-success"  type="button" data-toggle="collapse" data-target="#collapse<?= $temp ?>" aria-expanded="false" aria-controls="collapse<?= $temp ?>">
-		  			        <?= $data->question.PHP_EOL ?>
-		  			      </button>
-		  			    </p>
-		  			  </div>
-		  			  <div id="collapse<?= $temp ?>" class="collapse" aria-labelledby="heading<?= $temp ?>" data-parent="#accordion-item">
-		  			    <div class="card-body">
-		  			    	<?= $data->answer.PHP_EOL ?>
-		  			    </div>
-		  			  </div>
-		  			</div>
-
-		  		<?php
-		  		$temp++;
-		  		endwhile;
-		  		?>
-
-			</div>
 		</div>
 	</section>
 
@@ -226,6 +156,46 @@
 			</div>
 		</div>
 	</section>
+
+	<section id="section-faq">
+		<div class="container">
+			<h3 class="my-4 py-3 display-4 text-center">Frequently asked questions</h3>
+			<div class="accordion my-5" id="accordion-item">
+
+				<?php 	//------------------- Extracting questions and answers from the database table 'faqs'
+		  		// Fetch results
+		  		$result = $pdo->query("SELECT `question`,`answer` FROM appletree_general.faqs");
+		  		// Display results
+		  		// Temporary variable used to assign non-repeating 'id's for some elements
+		  		$temp = 1;
+		  		// Repeat for every fetched row in the table
+		  		while($data = $result->fetch(PDO::FETCH_OBJ)):
+		 		?>
+
+		  			<div class="card">
+		  			  <div class="card-header" id="heading<?= $temp ?>">
+		  			    <p class="mb-0">
+		  			      <button class="btn btn-link btn-block text-left collapsed text-success"  type="button" data-toggle="collapse" data-target="#collapse<?= $temp ?>" aria-expanded="false" aria-controls="collapse<?= $temp ?>">
+		  			        <?= $data->question.PHP_EOL ?>
+		  			      </button>
+		  			    </p>
+		  			  </div>
+		  			  <div id="collapse<?= $temp ?>" class="collapse" aria-labelledby="heading<?= $temp ?>" data-parent="#accordion-item">
+		  			    <div class="card-body">
+		  			    	<?= $data->answer.PHP_EOL ?>
+		  			    </div>
+		  			  </div>
+		  			</div>
+
+		  		<?php
+		  		$temp++;
+		  		endwhile;
+		  		?>
+
+			</div>
+		</div>
+	</section>
+
 	<!-- Importing the footer -->
 	<?php require_once($footer_ldp); ?>
 </body>
