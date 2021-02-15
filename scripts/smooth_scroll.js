@@ -44,7 +44,7 @@ function smooth_scroll(event)
 	  }
 	  else
 	  {
-	  	console.log("'smooth_scroll' function: Empty link hash.");
+	  	console.error("'smooth_scroll' function: Empty link hash.");
 	  }
 	  // -------------------- End of 'if'
 	}

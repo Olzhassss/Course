@@ -74,7 +74,7 @@
 								$fullData .= ', ' . $classesAssoc[$recordData[$sessionNumber]]['name'] . ' ' . $classesAssoc[$recordData[$sessionNumber]]['surname'] . ', ' . $classesAssoc[$recordData[$sessionNumber]]['std_num'] . ' student(s)';
 							}
 						} else
-							$fullData = 'Empty';
+							$fullData = '<i class="text-muted"> Empty </i>';
 							?>
 							<td role="button" tabindex="0" class="table-button">
 								<span><?= $fullData ?></span>

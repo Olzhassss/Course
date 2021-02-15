@@ -25,9 +25,15 @@
 	// Substituting teacher id with name
 	$stmt = $pdo->prepare('SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id');
 	$stmt->execute([':id' => $classData_array['id_teacher']]);
-	$data = $stmt->fetch();
-	$classData_array['id_teacher'] = $data['name'] . ' ' . $data['surname'];
-	$classData_array[3] = $data['name'] . ' ' . $data['surname'] . ' (ID: ' . $classData_array[3] . ')';
+	$title = $classData_array['id'];
+	if($data = $stmt->fetch()){
+		$classData_array['id_teacher'] = $data['name'] . ' ' . $data['surname'];
+		$classData_array[3] = $data['name'] . ' ' . $data['surname'] . ' (ID: ' . $classData_array[3] . ')';
+		$title.=', ' . $classData_array['id_teacher'];
+	} else {
+		$classData_array['id_teacher'] = 
+		$classData_array[3] = '<i class="text-muted">None</i>';
+	}
 ?>
 	<head>
 		<?php
@@ -37,7 +43,7 @@
 		?>
 	</head>
 
-	<h1 class="mb-3 mt-5"><?=$classData_array['id'].', '.$classData_array['id_teacher'] ?></h1>
+	<h1 class="mb-3 mt-5"><?= $title ?></h1>
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsBrw('<?=$clsEditInject_url?>', '<?=$_POST['id']?>')">Edit</button>
 		<button class="btn btn-warning w-50 mx-4" onclick="clsDel('<?=$id?>')">Delete</button>

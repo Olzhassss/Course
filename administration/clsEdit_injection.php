@@ -104,23 +104,6 @@
 				<td><input type="text" class="form-control" disabled="true" value="<?=$std_num?>"></td>
 			</tr>
 		</table>
-		<table>
-			<?php?>
-
-				<tr>
-					<?php
-							echo "<td class='p-0'><a class='btn btn-secondary rounded-0' data-ref-id=\"$value\" href=\"$index_url\">$i</a></td>";
-							// echo name, surname + other.
-						?>		
-			
-						<td>
-							<button class="btn btn-primary btn-browse" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$memCvInject_url?>')"><img src="" alt="Brw"></button>
-							<button class="btn btn-primary btn-browse" onclick="memEdt(<?=$std_array['id']?>, 'students')"><img src="" alt="Edt"></button>
-							<button class="btn btn-primary btn-browse" onclick="memDel(<?=$std_array['id']?>, 'students')"><img src="" alt="Del"></button>
-						</td>
-				</tr>
-			<?php?>			
-		</table>
 	</form>
 <script>
 	$(document).ready(function(){

@@ -132,7 +132,8 @@
 	function bindButtons(btn_class){
 		$('.'+btn_class).click(function(){
 			if (selectorFlag) {
-				$(this).children("span").text(classSelectorValue);
+				// Change td text (muted if 'Empty')
+				$(this).children("span").html((classSelectorValue == 'Empty')? '<i class="text-muted">'+classSelectorValue+'</i>' : classSelectorValue);
 				// Set input value but as empty string if 'Empty' was selected
 				$(this).children("input").val((classSelectorValue == 'Empty')? '' : classSelectorValue);
 				if (!checkFlag){checkFlag = true;}

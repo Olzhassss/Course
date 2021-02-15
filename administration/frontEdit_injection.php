@@ -69,13 +69,20 @@
 
 	<label class="mt-3 mb-2 pl-3" for="form-2"><h2 class="font-weight-light">Working terms and FAQ information table</h2></label>
 	<table id="form-2" class="table table-bordered">
+		<thead>
+					<tr class="bg-light">
+						<th scope='row'>Day of week</th>
+						<th scope='row'>Working time</th>
+						<th scope='row'>Application reviewing time</th>
+					</tr>
+		</thead>
 		<tbody>
 				<?php // Fetch short texts
 				$stmt = $pdo->query("SELECT * FROM `appletree_general`.`work_schedule`");
 				while ($record = $stmt->fetch()):?>
 					<tr class="borderless" data-record-id="<?=$record['id']?>" data-table-name="work_schedule">
-						<th scope='col' width="10%" ><?=$record['day_of_week']?></th>
-						<td width="30%">
+						<th scope='col' width="15%" ><?=$record['day_of_week']?></th>
+						<td>
 							<input maxlength="50" type="text" name="working_time" data-table="work_schedule" data-record-id="<?=$record['id']?>" class="form-control" value="<?=$record['working_time']?>">
 						</td>
 						<td>
@@ -127,17 +134,17 @@
 					<tr class="borderless" data-record-id="<?=$record['id']?>" data-table-name="price_list">
 						<th scope='col' width="10%">Offer #</th>
 						<td width="20%">
-							<textarea rows="2" maxlength="50" type="text" name="card_header" data-table="price_list" class="form-control"><?=$record['card_header']?></textarea>
+							<textarea rows="2" maxlength="50" type="text" name="card_header" data-table="price_list" class="form-control" placeholder="Card header"><?=$record['card_header']?></textarea>
 						</td>
 						<td width="7%">
-							<textarea rows="2" maxlength="8" type="text" name="price" data-table="price_list" class="form-control"><?=$record['price']?></textarea>
+							<textarea rows="2" maxlength="8" type="text" name="price" data-table="price_list" class="form-control" placeholder="Price"><?=$record['price']?></textarea>
 						</td>
 						<th scope="col" width="10%">Tenge/lesson</td>
-						<td width="10%">
-							<textarea rows="2" maxlength="50" type="text" name="condition" data-table="price_list" class="form-control"><?=$record['condition']?></textarea>
+						<td width="18%">
+							<textarea rows="2" maxlength="50" type="text" name="condition" data-table="price_list" class="form-control" placeholder="Conditions"><?=$record['condition']?></textarea>
 						</td>
 						<td>
-							<textarea rows="2" maxlength="255" type="text" name="note" data-table="price_list" class="form-control"><?=$record['note']?></textarea>
+							<textarea rows="2" maxlength="255" type="text" name="note" data-table="price_list" class="form-control" placeholder="Note"><?=$record['note']?></textarea>
 						</td>
 					</tr>
 				<?php endwhile; ?>
