@@ -141,25 +141,7 @@
 <!-- Importing custom scripts -->
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 <script>
-	$(document).ready(function(){
-		//$(".edit-button").click(displayOverlay);
-	})
-	function displayOverlay(event){
-		let the_day = $(this).attr("data-day-name");
-		$("#overlay").load('<?=$schEditOver_url?>', { tableName: the_day}, function( responseText, textStatus, jqXHR ){
-			// Displaying error in console
-			if (textStatus == "error") {
-				let message = "'clsBrowse' function error occured: ";
-				console.error( message + jqXHR.status + " " + jqXHR.statusText );
-			} else{
-				$("#overlay").removeClass("hidden");
-				$("#overlay").addClass("hidden");
-			}
-		});
-		return;
-	}
-
-	// Load schedule editing interface
+	// The function loads schedule editing interface depending on the input parameter
 	function schEdt(day = 'Monday'){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();

@@ -57,7 +57,7 @@
 			<!-- Table rows -->
 			<tbody>
 			<?php
-			// Filling first record of every row with lesson time
+			// Filling first record of each row with lesson time
 			foreach ($sessionColumn as $key=>$lessonTime): ?>
 				<tr class="tr tr-<?=$key?>">
 					<th scope="col"><?=$lessonTime?></th>

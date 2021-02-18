@@ -84,7 +84,7 @@
 	var classSelectorValue = null;
 
 	// The function loads the selected day's schedule table editing interface
-	// It also requires confirmation if some changes were made and not saved (the 'checkFlag' is set to 'true')
+	// It also requires confirmation if some changes were made and not saved (= the 'checkFlag' is set to 'true')
 	function insertInterface(forcebly = false){
 		if(checkFlag && !forcebly){
 			let confirmation = confirm('It seems like you have made some changes! If you proceed, changes will not be saved!');
@@ -95,7 +95,7 @@
 		$("#loader_div").removeClass("hidden");
 		$("#table-div").empty();
 		$("#table-div").load('<?=$schStdEdtTbInject_url?>', { 'day': tableName }, function( responseText, textStatus, jqXHR ){
-			// Displaying error in console
+			// Displaying an error in console
 			if (textStatus == "error") {
 				let message = "'insertInterface' function error occured: ";
 				console.error( message + jqXHR.status + " " + jqXHR.statusText );
@@ -107,7 +107,7 @@
 		checkFlag = false;
 		return;
 	}
-	// The function toggles selector flag and changes selector button attributes
+	// The function toggles selector flag and changes selector button attributes (including text value)
 	function toggleSelector(){
 		let obj = $("button#btn-selector");
 		if (obj.attr('data-toggle') == 'on') {
@@ -122,13 +122,13 @@
 		}
 		return;
 	}
-	// The function assigns value for the 'classSelectorValue' if selector flag is set to 'true'
+	// The function assigns value for the 'classSelectorValue' if selector is activated (= 'selectorFlag' is set to 'true')
 	function applySelector(){
 		if (selectorFlag) { classSelectorValue = $("#class-select").val(); }
 		return;
 	}
 	// The function binds each table button to apply new text value if selector is activated
-	// (the 'selectorFlag' is set to 'true'). It also toggles 'checkFlag'
+	// (= the 'selectorFlag' is set to 'true'). It also toggles 'checkFlag'
 	function bindButtons(btn_class){
 		$('.'+btn_class).click(function(){
 			if (selectorFlag) {
@@ -144,6 +144,8 @@
 	}
 	// The functions sends ajax request to process changed table
 	function schUpd(url){
+		if(!checkFlag)
+			return alert('No changes were made.');
 		// Get the number of columns with related data and the day name from table attributes
 		let limit = $("form#form").attr('data-col-number');
 		let day = $("form#form").attr('data-day');
@@ -165,14 +167,14 @@
 				$("#loader_div").removeClass("hidden");
 			},
 			success: function(reply){
-				if (reply == 0)
+				if (reply == 0){
 					alert("Update is successul!");
-				else
+					checkFlag = false;
+				} else
 					alert(reply);
 				return;
 			}
 		})
-		checkFlag = false;
 		$("#loader_div").addClass("hidden");
 		return;
 	}

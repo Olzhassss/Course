@@ -9,11 +9,13 @@ if (!isset($_POST['tableName']) || !isset($_POST['tableData'])) {
 try {
 	// Validate table name
 	$days_array = array('monday','tuesday','wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+	// Check if the passed table name does not correspond to actual possible table name
 	if (!in_array($_POST['tableName'], $days_array))
 		throw new Exception('Wrong table name!', 1);
-	// var_dump($_POST);
-	// exit;
+	
+	// Execute the cycle for each row of the table
 	foreach ($_POST['tableData'] as $rowKey => $rowData) {
+		// Validate class id value to insert into the table
 		foreach ($rowData as $fieldName => $value) {
 			if ($value == '') {
 				$rowData[$fieldName] = null;
@@ -38,7 +40,7 @@ try {
 			':session4' => $rowData['session4'],
 			':session5' => $rowData['session5'],
 			':session6' => $rowData['session6'],
-			// Increment by one in order not to rewrite first record (which contains sessions data)
+			// Increment id value by one in order not to compensate the first unused record (which contains sessions data)
 			':id' => $rowKey+1]);
 	}
 	exit(0);
