@@ -33,17 +33,17 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
-							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
+						    <input type="text" maxlength="20" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+							<small id="error_1" class="form-text text-danger d-none">Please write your name correctly, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
-						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
+						    <input type="text" maxlength="20" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <small id="error_2" class="form-text text-danger d-none">Please write your surname correctly, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" maxlength="50" class="form-control" required="true" data-error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
+						    <input type="text" maxlength="30" maxlength="50" class="form-control" required="true" data-error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
 						    <small id="email_help" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_4" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
@@ -114,15 +114,16 @@
 						<div class="col py-4 flex-lg-column">
 							<div class="col-xs-12 col-md-6 col-lg mb-5">
 								<label for="birthyear-field">Birth year</label>
-						    	<input type="text" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0,1][0-9])\d{1}$" required="true" data-error-field="error_year">
+						    	<input type="text" maxlength="5" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0-2][0-9])\d{1}$" required="true" data-error-field="error_year">
 						    	<small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
 							</div>
 						    <div class="col">
 						    	<label for="preferences-field">Please explain your desired timetable so we can decide to add you to one of the existing classes</label>
-								<textarea required="true" class="form-control" id="preferences-field" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5"></textarea>
+								<textarea class="form-control" id="preferences-field"  required="true" data-error-field="error_preferences" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5"></textarea>
 								<small id="infoHelp" class="form-text text-muted">
 									You can enter the most convenient days of week and time for your classes, we will later contact you to inform regarding available seats.
 								</small>
+								<small id="error_preferences" class="form-text text-danger d-none">Please do not leave this space empty</small>
 						    </div>
 						</div>
 					</div>
@@ -189,7 +190,7 @@
 							Register!
 						</button>
 						<button type="reset" class="btn btn-secondary my-2 px-4">
-							Clear input fields
+							Reset application form
 						</button>
 					</div>
 				</div>
@@ -210,7 +211,7 @@
 	function submit()
 	{	
 		// Form is submitted if every field passes validation (through imported function)
-		if(validate_text($("input[type='text']")))
+		if(validate_text($("input[type='text'], textarea")))
 		{	
 			// An array to keep the values of optional checkbox/radio input fields
 			let opt_check = new Array(2);

@@ -4,7 +4,7 @@
 	
 	session_start();
 	// Block access for unathorized users
-	if (!isset($_SESSION['user_login'])) {
+	if (!isset($_SESSION['user_login']) || !isset($_POST['url'])) {
 		header("Location:$authorizationPage_url");
 	}
 

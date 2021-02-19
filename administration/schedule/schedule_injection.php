@@ -145,7 +145,7 @@
 	function schEdt(day = 'Monday'){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
-		$("#content").load('<?=$schEditInject_url?>', { day: day}, function( responseText, textStatus, jqXHR ){
+		$("#content").load('<?=$schEditInject_url?>', { day: day, url:'<?=$url?>'}, function( responseText, textStatus, jqXHR ){
 			// Displaying error in console
 			if (textStatus == "error") {
 				let message = "'clsBrowse' function error occured: ";

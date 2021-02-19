@@ -4,10 +4,14 @@
 	
 	session_start();
 	// Block access for unathorized users
-	if (!isset($_SESSION['user_login'])) {
+	if (!isset($_SESSION['user_login']) || !isset($_POST['url'])) {
 		header("Location:$authorizationPage_url");
 	}
-	
+	// Terminate if the required argument is not passed
+	if (!isset($_POST['day'])) {
+		exit('False');
+	}
+
 	// Storing all necessary files' names in arrays for further import
 	$customStylesheets_array = array('navbar_schedule.style.css');
 

@@ -42,7 +42,7 @@
 	?>
 
 	<h1 class='font-weight-light mx-2 pt-4'><?=$_POST['day']?></h1>
-	<form id='form' data-day="<?=$tableName?>" data-col-number="<?=count($records_array)-1?>" style="overflow-x: auto;">
+	<form id='form-classes' data-day="<?=$tableName?>" data-col-number="<?=count($records_array)-1?>" style="overflow-x: auto;">
 		<table class="table table-bordered schedule-table">
 			<!-- Table head -->
 			<thead class="thead-light">
@@ -74,7 +74,7 @@
 								$fullData .= ', ' . $classesAssoc[$recordData[$sessionNumber]]['name'] . ' ' . $classesAssoc[$recordData[$sessionNumber]]['surname'] . ', ' . $classesAssoc[$recordData[$sessionNumber]]['std_num'] . ' student(s)';
 							}
 						} else
-							$fullData = '<i class="text-muted"> Empty </i>';
+							$fullData = '<i class="text-muted">Empty</i>';
 							?>
 							<td role="button" tabindex="0" class="table-button">
 								<span><?= $fullData ?></span>

@@ -11,7 +11,7 @@ try {
 	$_POST['name'] = is_valid(filtrateString( $_POST['name']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['sex'] = is_valid(filtrateString( $_POST['sex']),'^[A-Z]{1}[a-z]{3,6}$');
-	$_POST['birth_year'] = is_valid(filtrateString( $_POST['birth_year']),'^([1][9][2-9]|[2][0,1][0-9])\d{1}$');
+	$_POST['birth_year'] = is_valid(filtrateString( $_POST['birth_year']),'^([1][9][2-9]|[2][0-2][0-9])\d{1}$');
 	$_POST['phone_number'] = filtrateString( $_POST['phone_number']);
 	$_POST['email'] = is_valid(is_valid(filtrateString( $_POST['email']),
 			'^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$'),'^.{5,50}$');
@@ -46,7 +46,7 @@ try {
 		$stmt2->execute([':email' => $_POST['email'], ':phone_number' => $_POST['phone_number']]);
 		// Throw an exception if the inqueries yield any result
 		if ($stmt1->fetchColumn() || $stmt2->fetchColumn())
-			throw new Exception('Phone number or email is already occupied!', 1);
+			throw new Exception('The given phone number or email is already occupied!', 1);
 
 		// Insert the data
 		$sql = 'INSERT INTO `appletree_personnel`.`app_teachers`

@@ -133,7 +133,8 @@ $authorizationProcessing_url = $processing_url . 'authorization_processing.php';
 $txtUpdProcessing_url = $processing_url . 'texts_processing.php';
 
 // Miscellaneous
-$spinner_src = $imgs . "spinner.gif";
+$spinner_src = $imgs . "spinner.gif"; // Loader spinner gif image source
+// Table image-button images' sources
 $imgBrw = $imgs.'loupe.png';
 $imgAdd = $imgs.'checkmark.png';
 $imgDel = $imgs.'xmark.png';
@@ -161,12 +162,14 @@ switch ($url) {
 		break;
 }
 
+// Define default exception handler function
 function exception_handler($exception){
 	echo "<b> Exception occured: </b>" . $exception->getMessage();
 }
-
+// Set the default exception handler function
 set_exception_handler('exception_handler');
 
+// Session options
 ini_set('session.cookie_httponly',1);
 ini_set('session.use_strict_mode',1);
 ?>

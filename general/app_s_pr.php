@@ -33,17 +33,17 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
-							<small id="error_1" class="form-text text-danger d-none">Please write your name, without spaces</small>
+						    <input type="text" maxlength="20" class="form-control" required="true" data-error-field="error_1" id="name-field" pattern="[A-Z]{1}[a-z]{0,20}">
+							<small id="error_1" class="form-text text-danger d-none">Please write your name correctly, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="surname-field">Surname</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
-						    <small id="error_2" class="form-text text-danger d-none">Please write your surname, without spaces</small>
+						    <input type="text" maxlength="20" class="form-control" required="true" data-error-field="error_2" id="surname-field"  pattern="[A-Z]{1}[a-z]{0,20}" >
+						    <small id="error_2" class="form-text text-danger d-none">Please write your surname correctly, without spaces</small>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
-						    <input type="text" maxlength="50" class="form-control" required="true" data-error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
+						    <input type="text" maxlength="30" class="form-control" required="true" data-error-field="error_4"  id="email-field" aria-describedby="email_help" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$">
 						    <small id="email_help" class="form-text text-muted">We'll use your email to inform you.</small>
 						    <small id="error_4" class="form-text text-danger d-none">Please write correct email</small>
 						</div>
@@ -125,7 +125,7 @@
 						<div class="col-xs-12 col-md-6 col-lg py-4">
 							<div class="mb-3">
 								<label for="birthyear-field">Birth year</label>
-								<input type="text" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0,1][0-9])\d{1}$" required="true" data-error-field="error_year">
+								<input type="text" maxlength="5" class="form-control" id="birthyear-field"  pattern="^([1][9][2-9]|[2][0-2][0-9])\d{1}$" required="true" data-error-field="error_year">
 								<small id="error_year" class="form-text text-danger d-none">Please write valid year</small>
 							</div>
 							<div class="mb-3">
@@ -249,7 +249,7 @@
 							Register!
 						</button>
 						<button type="reset" class="btn btn-secondary my-2 px-4">
-							Clear input fields
+							Reset application form
 						</button>
 					</div>
 				</div>

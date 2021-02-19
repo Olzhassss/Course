@@ -36,6 +36,8 @@ function validate_text(fields)
 			}
 			errors.push($("#"+$(this).attr('data-error-field')));
 		})
+		// If number of input fields does not match number of error fields,
+		// the function returns 'false'
 		if (fields.length !== errors.length) { return false; }
 		// Local variable used to prevent multiple 'animate()' scenarios
 		var foo = true;
