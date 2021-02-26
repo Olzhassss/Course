@@ -43,7 +43,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="^[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}$">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -286,65 +286,61 @@
 
 	function submit()
 	{
-		// Form is submitted if every field passes validation (through imported functions)
-		if (validate_list($(".li_time"), 1) && validate_list($(".li_weekday"), 2))
+		// Local variable used to allow or prohibit further execution (validation var)
+		let valid = validate_list($(".li_time"), 1) * validate_list($(".li_weekday"), 2) * validate_text($("input[type='text']"));
+		// Form is submitted if every field passes validation (=> 'valid' is equal to 1, otherwise 'valid' would be equal to 0)
+		if(valid)
 		{
-			if(validate_text($("input[type='text']")))
-			{
-				// An array to keep the values of optional checkbox/radio input fields
-				let opt_check = new Array(2);
-				// Assign values for each of the checkbox/radio fields. Values are either 1 or 0,
-				// since the input can only be True or False
-				opt_check[0] = $("checkbox#checkbox-1").prop("checked")? 1:0;
-				opt_check[1] = ($("#lvl-of-ed-field").val()=="Undetermined")? 1 : ($("#checkbox-2").prop("checked")? 1:0);
-				// Define a new variable for a concatenated string from the 'convertLists' function
-				// and actual provided preferences in the 'textarea' element
-				let preferences = $("#preferences-field").val()==''? convertLists() : convertLists()
-					.concat(" Additionally provided info:\n")
-					.concat($("#preferences-field").val());
-
-				// Sends data and either redirects the user or displays an alert according to the outcome
-				$.ajax({
-					url: "<?= $appProcessing_url ?>",
-					type: 'POST',
-					cache: false,
-					data: {
-						'name':$("#name-field").val(),
-						'surname':$("#surname-field").val(),
-						'phone_number':$("#phone-number-field").val(),
-						'email':$("#email-field").val(),
-						'ed_lvl':$("#lvl-of-ed-field").val(),
-						'sex':$("#sex-field").val(),
-						'birth_year':$("#birthyear-field").val(),
-						'preferences':preferences,
-						'opt_checkbox1':opt_check[0],
-						'opt_checkbox2':opt_check[1],
-						'application_type':'student',
-						'group_ls':0
-					},
-					beforeSend: function() {
-						$("#loader_div").removeClass("hidden");
-					},
-					success: function(data){
-						if (data == 0)
-						{
-							var result = confirm("Your registration is successul! Press OK to return to main page.")
-							if (result)
-								window.location.replace("<?=$index_url?>");
-							return;
-						}
-						else
-						{
-							alert(data);
-							return;
-						}
+			// An array to keep the values of optional checkbox/radio input fields
+			let opt_check = new Array(2);
+			// Assign values for each of the checkbox/radio fields. Values are either 1 or 0,
+			// since the input can only be True or False
+			opt_check[0] = $("checkbox#checkbox-1").prop("checked")? 1:0;
+			opt_check[1] = ($("#lvl-of-ed-field").val()=="Undetermined")? 1 : ($("#checkbox-2").prop("checked")? 1:0);
+			// Define a new variable for a concatenated string from the 'convertLists' function
+			// and actual provided preferences in the 'textarea' element
+			let preferences = $("#preferences-field").val()==''? convertLists() : convertLists()
+				.concat(" Additionally provided info:\n")
+				.concat($("#preferences-field").val());
+			// Sends data and either redirects the user or displays an alert according to the outcome
+			$.ajax({
+				url: "<?= $appProcessing_url ?>",
+				type: 'POST',
+				cache: false,
+				data: {
+					'name':$("#name-field").val(),
+					'surname':$("#surname-field").val(),
+					'phone_number':$("#phone-number-field").val(),
+					'email':$("#email-field").val(),
+					'ed_lvl':$("#lvl-of-ed-field").val(),
+					'sex':$("#sex-field").val(),
+					'birth_year':$("#birthyear-field").val(),
+					'preferences':preferences,
+					'opt_checkbox1':opt_check[0],
+					'opt_checkbox2':opt_check[1],
+					'application_type':'student',
+					'group_ls':0
+				},
+				beforeSend: function() {
+					$("#loader_div").removeClass("hidden");
+				},
+				success: function(data){
+					if (data == 0)
+					{
+						var result = confirm("Your registration is successul! Press OK to return to main page.")
+						if (result)
+							window.location.replace("<?=$index_url?>");
+						return;
 					}
-				})
-
-				$("#loader_div").addClass("hidden");
-			}
+					else
+					{
+						alert(data);
+						return;
+					}
+				}
+			})
+			$("#loader_div").addClass("hidden");
 		}
-		
 	}
 </script>
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>

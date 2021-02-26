@@ -35,14 +35,14 @@
 		<!-- Table head -->
 		<thead class="thead-light">
 			<tr>
-		        <th scope="col">#</th>
+		        <th scope="row" width="4%">#</th>
 		        <?php
 		        //------------------- Filling the column names with the descriptions of the fields
 		        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
-		        	echo '<th scope="col">'. $descriptions_array . '</th>';	
+		        	echo '<th scope="row">'. $descriptions_array . '</th>';	
 		        }
 		    	?>
-		    	<th scope="col">#</th>
+		    	<th scope="row" width="14%">#</th>
 		    </tr>
 		</thead>
 		<!-- Table rows -->

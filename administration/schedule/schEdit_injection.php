@@ -86,15 +86,19 @@
 	var selectorFlag = false;
 	// This is used to apply activated selector value to table cells
 	var classSelectorValue = null;
-
+	// This is used to keep the value of selected option of day selector
+	var lastSelected = $("#day-select option:selected");
 	// The function loads the selected day's schedule table editing interface
 	// It also requires confirmation if some changes were made and not saved (= the 'checkFlag' is set to 'true')
 	function insertInterface(forcebly = false){
 		if(checkFlag && !forcebly){
 			let confirmation = confirm('It seems like you have made some changes! If you proceed, changes will not be saved!');
 			if (!confirmation)
+				// If confirmation failes, select value is reset
+				lastSelected.prop("selected", true);
 				return;
 		}
+		lastSelected = $("#day-select option:selected");
 		let tableName = $("#day-select").val();
 		$("#loader_div").removeClass("hidden");
 		$("#table-div").empty();
@@ -151,8 +155,8 @@
 		if(!checkFlag)
 			return alert('No changes were made.');
 		// Get the number of columns with related data and the day name from table attributes
-		let limit = $("form#form").attr('data-col-number');
-		let day = $("form#form").attr('data-day');
+		let limit = $("form#form-classes").attr('data-col-number');
+		let day = $("form#form-classes").attr('data-day');
 		// Fill an object of objects with properties equal to values of every record's data
 		// (analogue of two-dimensional array)
 		var data = new Object();

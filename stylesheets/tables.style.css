@@ -1,6 +1,10 @@
 table.schedule-table {
   overflow: hidden;
-  table-layout: auto;
+  table-layout: auto!important;
+}
+
+table.table {
+  word-wrap: break-word;
 }
 
 table.schedule-table tr:hover {
@@ -33,6 +37,11 @@ table.schedule-table tr{
 table.schedule-table td,
 table.schedule-table th {
   position: relative;
+}
+
+table i{
+  color: rgb(168, 168, 168);
+  pointer-events: none;
 }
 
 table.schedule-table td:hover::after,

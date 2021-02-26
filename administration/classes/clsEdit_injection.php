@@ -46,13 +46,13 @@
 			    <td>
 			    	<input type="text" style="width: 48%;" class="d-inline-block form-control" value="<?=substr($_POST['id'],0,3)?>" disabled="true">
 			    	<span> - </span>
-			    	<input type="text" maxlength="9" style="width: 48%;" class="d-inline-block form-control" name="class_number" required="true" value="<?=substr($_POST['id'],strpos($_POST['id'], '-')+1)?>">
+			    	<input type="text" maxlength="9" style="width: 48%;" class="d-inline-block form-control" name="class_number" required="true" pattern="^[0-9]{1,9}$" value="<?=substr($_POST['id'],strpos($_POST['id'], '-')+1)?>">
 			    </td>
 			</tr>
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[1]["column_comment"]?></th>
 			    <td>
-			    	<input type="text" class="form-control" maxlength="100" name="<?=$columnsData_array[1]["column_name"]?>" required="true" value="<?=$classData_array[$columnsData_array[1]["column_name"]]?>">
+			    	<input type="text" class="form-control" maxlength="100" name="<?=$columnsData_array[1]["column_name"]?>" value="<?=$classData_array[$columnsData_array[1]["column_name"]]?>">
 			    </td>
 			</tr>
 			<tr>

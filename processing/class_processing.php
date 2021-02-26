@@ -7,14 +7,14 @@ session_start();
 if (!isset($_SESSION['user_login'])) {
 	header("Location:$authorizationPage_url");
 }
-// Terminate if the required arguments are not passed
+// Terminate if the required argument is not passed
 if (!isset($_POST['id'])) {
 	exit('False');
 }
 
 try {
 	// Input validation
-	if (mb_strlen($_POST['name'])>2500)
+	if (mb_strlen($_POST['name'])>100)
 		throw new Exception('Characters limit for the class name is exceeded! Length is: '.mb_strlen($_POST['name']), 1);
 
 	if ($_POST['action']=='delete') { // Deletion

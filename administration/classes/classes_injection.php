@@ -8,6 +8,8 @@
 		header("Location:$authorizationPage_url");
 	}
 
+	$customStylesheets_array = array('tables.style.css');
+
 	// Field descriptions
 	$sql = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt1 = $pdo->query($sql);
@@ -30,14 +32,14 @@
 			<!-- Table head -->
 			<thead class="thead-light">
 				<tr>
-			        <th scope="col">#</th>
+			        <th scope="row" width="4%">#</th>
 			        <?php
 			        //------------------- Filling the column names with the descriptions of the fields
 			        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
-			        	echo '<th scope="col">'. $descriptions_array . '</th>';	
+			        	echo '<th scope="row">'. $descriptions_array . '</th>';	
 			        }
 			    	?>
-			    	<th scope="col">#</th>
+			    	<th scope="row" width="14%">#</th>
 			    </tr>
 			</thead>
 			<!-- Table rows -->
@@ -63,9 +65,9 @@
 								if ($key == 0)
 									$id = $value;
 								if (!is_null($value))
-									echo '<td>'.$value.'</td>';
+									echo '<td style="max-width:14em;">'.$value.'</td>';
 								else
-									echo '<td><i class="text-muted">None</i></td>';								
+									echo '<td><i  class="text-muted">None</i></td>';								
 							}
 						?>		
 			

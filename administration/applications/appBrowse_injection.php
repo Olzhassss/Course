@@ -32,23 +32,16 @@
 	$stmt2->execute([':id' => $_POST['id']]);
 	$data_array = $stmt2->fetch(PDO::FETCH_BOTH);
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
-		?>
-	</head>
 	<hr>
 	<h1 class="my-3"><?=$data_array['name'].' '.$data_array['surname'].' ('.$data_array['id'].')'?></h1>
 	<div class="mt-3">
-		<table class="table table-bordered">
+		<table class="table table-bordered" style="table-layout:fixed;">
 			<!-- Table rows -->
 			<?php foreach ($descriptions_array as $key => $value ):?>
 
 			    <tr>
 			    	<th scope='col' width="40%" ><?=$value?></th>
-			    	<td data-key='<?=$key?>'><?=$data_array[$key]?>
+			    	<td style="word-wrap: break-word;" data-key='<?=$key?>'><?=$data_array[$key]?>
 			    	</td>
 			    </tr>
 				
@@ -61,7 +54,7 @@
 	</div>
 <script>
 	$(document).ready(function(){
-		<?php // Turn '0' and '1' to 'No' and 'Yes' in boolean fields
+		<?php // Convert '0' and '1' to 'No' and 'Yes' in boolean fields
 		if ($_POST['role'] == 'teachers'): ?>
 			const keys_array = [10,11,12];
 		<?php elseif ($_POST['role'] == 'students'): ?>

@@ -10,6 +10,7 @@
 
 	// Storing all necessary files in arrays for further import
 	$customScripts_array = array('insert.js');
+	$customStylesheets_array = array('tables.style.css');
 ?>
 	<head>
 		<?php

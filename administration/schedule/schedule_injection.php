@@ -93,7 +93,7 @@
 						<!-- Table head -->
 						<thead class="thead-light">
 							<tr>
-								<th scope="col">Session\Room</th>
+								<th scope="col" width="12%">Session\Room</th>
 								<?php
 								// Filling the first row with auditory numbers
 								foreach ($sessionRows as $val):
@@ -119,11 +119,11 @@
 										if (isset($classesAssoc[$val[$session]])) {
 											$val[$session]= $val[$session] . ', ' . $classesAssoc[$val[$session]]['name'] . ' ' . $classesAssoc[$val[$session]]['surname'] . ', ' . $classesAssoc[$val[$session]]['std_num'] . ' student(s)';
 										}
-										echo "<td>$val[$session]</td>";
+										echo "<td style='min-width: 12em;'>$val[$session]</td>";
 									}
 									else
 									{
-										echo '<td><i style="color: rgb(168, 168, 168); pointer-events: none;">EMPTY</i></td>';
+										echo '<td><i>EMPTY</i></td>';
 									}
 								endforeach;?>
 								

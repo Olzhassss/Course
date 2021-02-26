@@ -53,8 +53,8 @@ require_once ($connection_config);
 			<?php foreach ($descriptions_array as $key => $value ):?>
 
 			    <tr>
-			    	<th scope='col' width="40%" ><?=$value?></th>
-			    	<td><?=($data_array[$key]=='')?'<i class="text-muted">None</i>':$data_array[$key]?></td>
+			    	<th scope="col" width="40%" ><?=$value?></th>
+			    	<td id="row-<?=$key?>"><?=($data_array[$key]=='')?'<i class="text-muted">None</i>':$data_array[$key]?></td>
 			    </tr>
 				
 			<?php endforeach;?>
@@ -96,7 +96,7 @@ require_once ($connection_config);
 					<tr>
 						<?php
 							echo '<td>'.$i.'</td>';
-							// Unset the useless teacher id from the data
+							// Unset the unused teacher id from the data
 							unset($classData_array[3]);
 							foreach ($classData_array as $value) {
 								if (!is_null($value))
@@ -117,4 +117,15 @@ require_once ($connection_config);
 
 		<?php endif; ?>
 	</div>
-
+<script>
+	$(document).ready(function(){
+		<?php // Convert '0' and '1' to 'No' and 'Yes' in boolean fields
+		if ($_POST['role'] == 'teachers'): ?>
+			const keys_array = [10,11,12];
+		<?php elseif ($_POST['role'] == 'students'): ?>
+			const keys_array = [8,11];
+		<?php endif; ?>
+		for(let el of keys_array)
+			$('td#row-'+el+'').html(($('td#row-'+el+'').html() == 1 )? 'Yes' : 'No');
+	});
+</script>

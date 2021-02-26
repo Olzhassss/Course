@@ -1,5 +1,5 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 require_once ($connection_config);
 
 if (!isset($_POST['tableName']) || !isset($_POST['tableData'])) {

@@ -27,7 +27,7 @@ try {
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['sex'] = is_valid(filtrateString( $_POST['sex']),'^[A-Z]{1}[a-z]{3,6}$');
 	$_POST['birth_year'] = is_valid(filtrateString( $_POST['birth_year']),'^([1][9][2-9]|[2][0,1][0-9])\d{1}$');
-	$_POST['phone_number'] = filtrateString( $_POST['phone_number']);
+	$_POST['phone_number'] = is_valid(filtrateString( $_POST['phone_number']), '^[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}$');
 	$_POST['email'] = is_valid(is_valid(filtrateString( $_POST['email']),
 			'^[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,}$'),'^.{5,50}$');
 	$_POST['ed_lvl'] = is_valid(filtrateString( $_POST['ed_lvl']),'^[A-Z]{1}[A-Za-z-]{0,24}$');

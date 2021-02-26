@@ -53,7 +53,7 @@
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_4" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_4" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="^[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}$">
 						    <small id="error_4" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">

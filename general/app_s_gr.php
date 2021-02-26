@@ -43,7 +43,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
-						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}">
+						    <input type="text" maxlength="19" class="form-control" required="true" data-error-field="error_3" id="phone-number-field" placeholder="+7 (___) ___-__-__" data-slots="_" pattern="^[+]7 [(]\d{3}[)] \d{3}-\d{2}-\d{2}$">
 						    <small id="error_3" class="form-text text-danger d-none">Please write valid phone number</small>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 							</div>
 						    <div class="col">
 						    	<label for="preferences-field">Please explain your desired timetable so we can decide to add you to one of the existing classes</label>
-								<textarea class="form-control" id="preferences-field"  required="true" data-error-field="error_preferences" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5"></textarea>
+								<textarea class="form-control" id="preferences-field" required="true" data-error-field="error_preferences" aria-describedby="infoHelp" placeholder="Maximum - 700 characters" maxlength="700" style="resize: none;" rows="5"></textarea>
 								<small id="infoHelp" class="form-text text-muted">
 									You can enter the most convenient days of week and time for your classes, we will later contact you to inform regarding available seats.
 								</small>
