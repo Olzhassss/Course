@@ -1,9 +1,9 @@
 <?php 
-require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-require_once ($connection_config);
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+require_once($connection_config);
+// Terminate if required arguments are not passed
 if (!isset($_POST['tableName']) || !isset($_POST['tableData'])) {
-	header("Location:$adminIndex_url");
+	exit('False');
 }
 
 try {

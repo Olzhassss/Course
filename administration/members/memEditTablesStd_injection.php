@@ -1,7 +1,6 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -16,16 +15,13 @@
 	$sql = 'SELECT `column_comment`,`column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "students" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt = $pdo->query($sql);
 	$columnsData_array = $stmt->fetchAll();
-
 	// Fetch particular record's data
 	$stmt = $pdo->prepare('SELECT * FROM `appletree_personnel`.`students` WHERE `id` = :id');
 	$stmt->execute([':id' => $_POST['id']]);
 	$recordData_array = $stmt->fetch(PDO::FETCH_NUM);
-
 	// Get and set the id of the current class
 	$recordData_array[0] = ($recordData_array[0] == '')? 'null':$recordData_array[0];	
 ?>
-
 <table class="table table-bordered">
 	<tr>
 		<th scope='col' width="40%" ><?=$columnsData_array[0]['column_comment']?></th>
@@ -120,7 +116,7 @@
 	</tr>
 </table>
 <script>
-	// The scripts select actual values for 'select' fields
+	// The scripts select actual values for '<select>' tags
 	$(document).ready(function(){
 		$('select[name=<?=$columnsData_array[0]['column_name']?>]').val("<?=$recordData_array[0]?>");
 		$('select[name=<?=$columnsData_array[8]['column_name']?>]').val("<?=$recordData_array[8]?>");

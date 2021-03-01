@@ -1,19 +1,14 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-
 	$title = 'Administration page';
-	$spinner_src = $imgs . 'spinner.gif';
-	// Store all necessary files in arrays for further import
 	$customScripts_array = array('loader.js');
 	$customStylesheets_array = array('headerAdmin.style.css', 'loader.style.css', 'tables.style.css');
-	$customStyles_css = ".hover:hover{ background-color: #e2e6ea;} .hover{ transition: background-color .15s ease-in-out; background-color: #f8f9fa;}"
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,11 +18,11 @@
 	<div id="loader_div" class="loader">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
-
+	<!-- The div in which modules are loaded -->
 	<div id="body">
 		
 	</div>
-	<!-- Empty div to prevent instant page offset shifts -->
+	<!-- Empty div to prevent instant scrolls due to page offset shifts -->
 	<div style="margin-bottom: 45vw;"></div>
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
@@ -39,12 +34,16 @@
 		fix_loader("loader_div");
 	})
 
-	// Executes Ajax and manages error text
+	// Executes Ajax and manages error displaying
 	function loadPage(event, role = null)
 	{
 		event.preventDefault();
 		$("#loader_div").removeClass("hidden");
+		// Get the module id from the button's attrubite
 		let data = $(this).attr("data-essence");
+		// The function sends the id to the router file and loads a module
+		// (+ passes the additional argument, URL of this page) according to the response.
+		// Console displays error if 'False' was returned
 		$.ajax({
 			url: "<?=$router_url?>",
 			type: 'POST',
@@ -63,7 +62,6 @@
 				{
 					console.error("'loadPage' function: "+error);
 				}
-				
 			}
 		})
 		$("#loader_div").addClass("hidden");

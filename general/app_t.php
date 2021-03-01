@@ -1,13 +1,10 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once($connection_config);
-
 	$title = 'Application form for teachers!';
-	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("back-link.style.css", "loader.style.css");
 	$customScripts_array = array("validate_text.js", "input_masking.js", "loader.js");
 ?>
-
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,14 +19,13 @@
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
-			<!-- Creating and filling teacher application form -->
 			<form>
 				<div class="container">
-					<!-- a row for h2 -->
+					<!-- A row for h2 -->
 					<div class="row">
 						<h2 class="alert">Please fill necessary fields and press 'Register'!</h2>
 					</div>
-					<!-- first form sections row (name, surname, email) -->
+					<!-- First row (name, surname, phone number) -->
 					<div class="row">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
@@ -49,7 +45,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- second form sections row (phone number, working experience, max level of education) -->
+					<!-- Second row (phone number, working experience, max level of education) -->
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-8 col-md-4">
 						    <label for="phone-number-field">Contact phone number</label>
@@ -75,7 +71,7 @@
 						</div>	
 					</div>
 					<hr>
-					<!-- third form sections row (sex and additional question) -->
+					<!-- Third row (sex and additional information) -->
 					<div class="row d-flex justify-content-around">
 						<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
 							<label for="sex-field">Your sex</label>
@@ -92,7 +88,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- fourth form sections row (short text field, supplementary info) -->
+					<!-- Fourth row (short text field, supplementary info) -->
 					<div class="row">
 						<div class="form-group col-12 col-md-5">
 						    <label for="additional-info"><h5>Tell us about youself (not neccessary)</h5></label>
@@ -131,7 +127,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- Additional info tabs -->
+					<!-- Information tabs -->
 					<div class="mb-5 pt-4">
 						<nav>
 							<div class="nav nav-tabs row" id="nav-tab" role="tablist">
@@ -162,7 +158,7 @@
 						</div>				
 					</div>
 					<hr>
-					<!-- div for buttons -->
+					<!-- Control buttons -->
 					<div class="row d-flex justify-content-center">
 						<button type="button" id="submit" class="btn btn-primary" style="margin-right: 5%; min-width: 150px;">
 							Register!

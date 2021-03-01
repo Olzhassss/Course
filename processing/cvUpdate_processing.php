@@ -1,9 +1,9 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-require_once ($connection_config);
-
+require_once($connection_config);
+// Terminate if the required argument is not passed
 if (!isset($_POST['role'])) {
-	header("Location:$adminIndex_url");
+	exit('False');
 }
 
 // Set the applicants table name
@@ -156,6 +156,5 @@ function validateDate($date, $format = 'Y-m-d')
     	throw new Exception('Wrong data format', 1);
     else
     	return $date;
-    	
 }
 ?>

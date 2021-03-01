@@ -1,29 +1,19 @@
 <?php 
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-
-	$customStylesheets_array = array('tables.style.css');
-
-	// Field descriptions
+	// Prepare field descriptions to be fetched to fill the table's head row
 	$sql = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt1 = $pdo->query($sql);
-	// The class's data
+	// The classes data
 	$stmt2 = $pdo->query('SELECT * FROM `appletree_personnel`.`classes`');
 ?>
+	<!-- The div in which submodules are loaded -->
 	<div id="content" class="container">
-		<head>
-			<?php
-			if (!empty($customStylesheets_array))
-			    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-			if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
-			?>
-		</head>
 		<nav class="my-4 w-50">
 			<button class="py-3 my-4 btn w-50 btn-success" onclick="clsBrw('<?=$clsEditInject_url?>')">Create a new class</button>
 		</nav>
@@ -34,7 +24,7 @@
 				<tr>
 			        <th scope="row" width="4%">#</th>
 			        <?php
-			        //------------------- Filling the column names with the descriptions of the fields
+			        //------------------- Filling the column heads with the descriptions of the fields
 			        while ($descriptions_array = $stmt1->fetch(PDO::FETCH_COLUMN)) {
 			        	echo '<th scope="row">'. $descriptions_array . '</th>';	
 			        }
@@ -52,14 +42,15 @@
 			
 					<tr>
 						<?php
+							// The button works just as the control button opening the class reviewing submodule
 							echo '<td role="button" class="hover" onclick=\'insertCV("'.$clsInfoInject_url.'", "'.$classData_array[0].'")\'>'.$i.'</td>';
-							// Substituting teacher id with name
+							// Substituting teacher id with the full name
 							$sql = "SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id";
 							$stmt = $pdo->prepare($sql);
 							$stmt->execute([':id' => $classData_array[3]]);
 							if ($data = $stmt->fetch())
 								$classData_array[3] = $data['name'] . ' ' . $data['surname'];
-									
+
 							foreach ($classData_array as $key => $value) {
 								// For the first column
 								if ($key == 0)
@@ -70,7 +61,7 @@
 									echo '<td><i  class="text-muted">None</i></td>';								
 							}
 						?>		
-			
+						<!-- Control buttons -->
 						<td>
 							<button class="btn btn-control" onclick="clsBrw('<?=$clsInfoInject_url?>', '<?=$id?>')"><img src="<?=$imgBrw?>" alt="Brw"></button>
 							<button class="btn btn-control" onclick="clsBrw('<?=$clsEditInject_url?>', '<?=$id?>')"><img src="<?=$imgEdt?>" alt="Edt"></button>
@@ -116,6 +107,7 @@
 		return;
 	}
 	// The funtion loads full information about classes / editing interface (depending on the URL) into the '#content' div
+	// The 'arg_id' is the clicked class's id
 	function clsBrw(url, arg_id = ''){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();

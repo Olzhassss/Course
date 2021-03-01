@@ -1,6 +1,6 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
+	require_once($connection_config);
 	
 	session_start();
 	// Block access for unathorized users
@@ -24,7 +24,7 @@
 			<button class="btn btn-secondary my-4 py-3" onclick="insertList('teachers','<?=$appTables_url?>')">Teachers</button>
 			<button class="btn btn-secondary my-4 py-3" onclick="insertList('students','<?=$appTables_url?>')">Students</button>
 		</nav>
-
+		<!-- The div in which submodules are loaded -->
 		<div id="content">
 				<?php
 					if($_POST['role'] == '')
@@ -42,7 +42,6 @@
 			type: 'POST',
 			cache: false,
 			data: {
-				'action':'add',
 				'id':arg_id,
 				'role':role
 			},
@@ -72,7 +71,7 @@
 
 
 	// The function sends POST form to the other file to delete the record of the given ID and role
-	// from corresponding applications table
+	// from the corresponding applications table
 	function appDel(arg_id, role) {
 		var confirmation = confirm("Do you want to delete this application from the database?");
 		if (confirmation)
@@ -82,7 +81,6 @@
 				type: 'POST',
 				cache: false,
 				data: {
-					'action':'delete',
 					'id':arg_id,
 					'role':role
 				},
@@ -105,6 +103,4 @@
 		return;
 	}
 </script>
-<!-- Importing custom scripts -->
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
-

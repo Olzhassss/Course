@@ -1,13 +1,13 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-require_once ($connection_config);
-
+require_once($connection_config);
+// Redirect if the required argument is not passed
 if (!isset($_POST['application_type'])) {
 	header("Location:$adminIndex_url");
 }
 
 try {
-	// Filtrate common input for both application types
+	// Filtrate common for both application types input
 	$_POST['name'] = is_valid(filtrateString( $_POST['name']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['surname'] = is_valid(filtrateString( $_POST['surname']),'^[A-Z]{1}[a-z]{0,19}$');
 	$_POST['sex'] = is_valid(filtrateString( $_POST['sex']),'^[A-Z]{1}[a-z]{3,6}$');

@@ -1,5 +1,9 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
+
+	// The URLs to the application webpages
+	$appStdPrivate_url = $general_url .'app_s_pr.php';
+	$appStdGroup_url = $general_url .'app_s_gr.php';
 
 	$customStylesheets_array = array("back-link.style.css");
 	$customStyles_css = ".choice_button{ width: 100%; font-size: 2rem;}";

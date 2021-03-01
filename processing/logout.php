@@ -1,7 +1,6 @@
 <?php 
-require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 	
-require_once ($connection_config);
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 	
+require_once($connection_config);
 session_start();
 // Unset session variables
 $_SESSION = array();
@@ -11,6 +10,6 @@ if (isset($_COOKIE[session_name()])) {
 }
 // Destroy the session
 session_destroy();
-
+// Redirect to authorization page
 header("Location:$authorizationPage_url");
- ?>
+?>

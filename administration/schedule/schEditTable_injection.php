@@ -1,7 +1,6 @@
 <?php
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -13,7 +12,7 @@
 	}
 
 	$customStyles_css = '.table-button{ transition: 0.15s ease-in-out;} .table-button:focus{ outline: 0; box-shadow: inset 0 0 0 .2rem rgba(38,143,255,.5);} ';
-	// Set table name
+	// Set the table name
 	$tableName = strtolower($_POST['day']);
 	try {
 		// Taking the information about time sessions from the corresponding table in the database to fill schedule table on the webpage later

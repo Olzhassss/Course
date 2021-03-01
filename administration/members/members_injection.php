@@ -1,31 +1,22 @@
 <?php 
 	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once ($connection_config);
-	
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-
-	// Storing all necessary files' names in arrays for further import
 	$customScripts_array = array('insert.js');
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
-		?>
-	</head>
 	<div class="container">
 		<nav class="btn-group my-4 d-flex w-50">
 			<button class="btn btn-secondary my-4 py-3" onclick="insertList('teachers','<?=$memTables_url?>')">Teachers</button>
 			<button class="btn btn-secondary my-4 py-3" onclick="insertList('students','<?=$memTables_url?>')">Students</button>
 		</nav>
-
+		<!-- The div in which submodules are loaded -->
 		<div id="content">
 				<?php
+					// The variable used to determine which table to load (teachers vs students)
 					if($_POST['role']=='')
 						$_POST['role'] = 'teachers';
 					include_once($memTables_ldp);
@@ -33,12 +24,14 @@
 		</div>
 	</div>
 <script>
-	// The function sends POST form to the other file to delete the record of the given ID and role
-	// from corresponding members table
+	// The function sends POST form to the other file to delete the record
+	// of the given ID and role from corresponding members table
 	function memDel(arg_id, role) {
 		var confirmation = confirm("Do you want to delete this member from the database?");
+		// Proceed only if the action was confirmed
 		if (confirmation)
 		{
+			// If '0' is returned, the table will be reloaded (updated)
 			$.ajax({
 				url: "<?=$cvDelProcessing_url?>",
 				type: 'POST',

@@ -1,7 +1,6 @@
 <?php 
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -12,11 +11,10 @@
 		exit('False');
 	}
 
-	// Fetch data according to the role
+	// Prepare data for fetching according to the role
 	if ($_POST['role'] == 'teachers') {
 		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "app_teachers" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 		$stmt2 = $pdo->prepare('SELECT * FROM `appletree_personnel`.`app_teachers` WHERE `id` = :id');
-		
 	}
 	elseif ($_POST['role'] == 'students') {
 		$sql1 = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "app_students" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
@@ -38,23 +36,23 @@
 		<table class="table table-bordered" style="table-layout:fixed;">
 			<!-- Table rows -->
 			<?php foreach ($descriptions_array as $key => $value ):?>
-
 			    <tr>
 			    	<th scope='col' width="40%" ><?=$value?></th>
 			    	<td style="word-wrap: break-word;" data-key='<?=$key?>'><?=$data_array[$key]?>
 			    	</td>
 			    </tr>
-				
 			<?php endforeach;?>
 		</table>
 	</div>
+	<!-- Control buttons -->
 	<div class="w-50 mt-3 d-flex">
 		<button class="btn btn-success w-50 rounded-pill py-2 mx-2" onclick="appAdd(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Accept</button>
 		<button class="btn btn-warning w-50 rounded-pill py-2 mx-2" onclick="appDel(<?=$_POST['id']?>, '<?=$_POST['role']?>')">Reject</button>
 	</div>
 <script>
 	$(document).ready(function(){
-		<?php // Convert '0' and '1' to 'No' and 'Yes' in boolean fields
+		<?php // Converting '0' and '1' to 'No' and 'Yes' in boolean fields.
+		// The fields' id depends on the application type
 		if ($_POST['role'] == 'teachers'): ?>
 			const keys_array = [10,11,12];
 		<?php elseif ($_POST['role'] == 'students'): ?>
@@ -64,4 +62,3 @@
 			$('td[data-key="'+el+'"]').html(($('td[data-key="'+el+'"]').html() == 1 )? 'Yes' : 'No');
 	});
 </script>
-

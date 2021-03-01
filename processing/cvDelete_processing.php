@@ -1,7 +1,6 @@
 <?php
-require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-require_once ($connection_config);
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+require_once($connection_config);
 session_start();
 // Block access for unathorized users
 if (!isset($_SESSION['user_login'])) {
@@ -24,13 +23,8 @@ else
 	exit('False');
 
 // Deletion
-if ($_POST['action'] == 'delete') {
-	$sql = 'DELETE FROM '.$tableName.' WHERE `id` = :id';
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([':id' => $_POST['id']]);
-	exit(0);
-}
-
-// Normally the system should not reach this
-exit('Unknown action initiated!');
+$sql = 'DELETE FROM '.$tableName.' WHERE `id` = :id';
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':id' => $_POST['id']]);
+exit(0);
 ?>

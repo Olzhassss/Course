@@ -2,6 +2,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
 
+	// The group or private lesson choice (student pre-application) webpage URL
+	$appStd_url = $general_url . 'app_s0.php';
+	$appTch_url = $general_url .'app_t.php';
+
 	$title = 'Apply now!';
 	$customStylesheets_array = array("header.style.css", "footer.style.css");
 	$customStyles_css = ".choice_button{ width: 100%; padding-top: 20px; padding-bottom: 20px;	font-size: 2rem; } #section-main{ padding-bottom: 0px; }";

@@ -1,13 +1,10 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once($connection_config);
-
 	$title = 'Application form for students!';
-	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("back-link.style.css", "application_private.css", "loader.style.css");
 	$customScripts_array = array("custom_validation.js", "validate_text.js", "input_masking.js", "loader.js");
 ?>
-
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,14 +19,13 @@
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
-			<!-- Creating and filling teacher application form -->
 			<form>
 				<div class="container">
-					<!-- a row for h2 -->
+					<!-- A row for h2 -->
 					<div class="row my-4 py-2">
 						<h2>Please fill all necessary fields and press 'Register'!</h2>
 					</div>
-					<!-- first form sections row (name, surname, phone number) -->
+					<!-- First row (name, surname, phone number) -->
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
@@ -48,7 +44,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- second form sections row (additional phone number, level of education, sex) -->
+					<!-- Second row (additional phone number, level of education, sex) -->
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
@@ -78,7 +74,7 @@
 						</div>	
 					</div>
 					<hr>
-					<!-- third form sections row (information about classes schedule) -->
+					<!-- Third row (timetable, timetable explanation, birth year) -->
 					<div class="row py-3">
 						<!-- Timetable -->
 						<div class="col-12 col-lg-7">
@@ -127,18 +123,13 @@
 						    </div>
 						</div>
 					</div>
-					<div class="row">
-						
-						
-					</div>
 					<hr>
-					<!-- fourth form sections row (supplementary info) -->
+					<!-- Fourth row (pricing offers, supplementary info) -->
 					<div class="row py-3">
 						<div class="col-12 col-lg py-4">
 							<!-- The price list table -->
 							<table class="table table-striped text-center border">
 								<tbody>
-
 								<?php 
 								// Fetching data about prices for lessons from the 'price_list' table
 								$sql = "SELECT `card_header`,`price`,`condition`,`note` FROM appletree_general.price_list";
@@ -155,9 +146,7 @@
 							       			<small><em><?= $row->note ?></small></em>
 							       		</td>
 							        </tr>
-
 								<?php endwhile; ?>
-								
 								</tbody>
 							</table>
 						</div>
@@ -184,7 +173,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- div for buttons -->
+					<!-- Control buttons -->
 					<div class="row d-flex justify-content-center py-3">
 						<button type="button" id="submit" class="btn btn-primary my-2" style="margin-right: 5%; min-width: 150px;">
 							Register!
@@ -202,7 +191,7 @@
 <!-- Importing jQuery and custom outsource scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-	// Attaching 'click' function to the 'Register!' button via id and enabling clickable lists
+	// Attaching 'click' function to the 'Register!' button via id
 	$(document).ready(function(){
 		fix_loader("loader_div");
 		$("#submit").click(submit);
@@ -259,7 +248,6 @@
 					}
 				}
 			})
-
 			$("#loader_div").addClass("hidden");
 		}
 	}

@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-require_once ($connection_config);
+require_once($connection_config);
 
 // The function filtrates input string via encoded fuctions
 function filtrateString($a_string)

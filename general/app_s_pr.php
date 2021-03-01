@@ -1,13 +1,10 @@
 <?php 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once($connection_config);
-
 	$title = 'Application form for students!';
-	// Storing all necessary files in arrays for further import
 	$customStylesheets_array = array("back-link.style.css", "application_private.css", "loader.style.css");
 	$customScripts_array = array("clickable_lists.js", "validate_list.js", "validate_text.js", "input_masking.js", "loader.js");
 ?>
-
 <!-- BEGINNING OF HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,14 +19,13 @@
 	<br></br>
 	<section id="section-form">
 		<div class="mt-5">
-			<!-- Creating and filling teacher application form -->
 			<form>
 				<div class="container">
-					<!-- a row for h2 -->
+					<!-- A row for h2 -->
 					<div class="row my-4 py-2">
 						<h2>Please fill all necessary fields and press 'Register'!</h2>
 					</div>
-					<!-- first form sections row (name, surname, phone number) -->
+					<!-- First row (name, surname, phone number) -->
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="name-field">Name</label>
@@ -48,7 +44,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- second form sections row (additional phone number, level of education, sex) -->
+					<!-- Second row (additional phone number, level of education, sex) -->
 					<div class="row py-3">
 						<div class="col-xs-12 col-sm-8 col-md-4">
 						    <label for="email-field">Email address</label>
@@ -78,7 +74,7 @@
 						</div>	
 					</div>
 					<hr>
-					<!-- third form sections row (information about classes schedule) -->
+					<!-- Third row (selectable schedule, information about classes schedule, birth year) -->
 					<div class="row py-3">
 						<div class="my-auto col-12 col-lg-7">
 							<h5 class="my-3">Please select the days of week (at least 2) you would like to have lessons</h5>
@@ -138,6 +134,7 @@
 						</div>
 					</div>
 					<hr>
+					<!-- Fourth row (clickable list of time sessions, timetable) -->
 					<div class="row">
 						<!-- Timetable -->
 						<div class="col-12 col-lg-7">
@@ -192,7 +189,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- fourth form sections row (supplementary info) -->
+					<!-- Fifth row (pricing offers, supplementary information) -->
 					<div class="row py-3">
 						<div class="col-12 col-lg py-4	">
 							<table class="table table-striped text-center border">
@@ -243,7 +240,7 @@
 						</div>
 					</div>
 					<hr>
-					<!-- div for buttons -->
+					<!-- Control buttons -->
 					<div class="row d-flex justify-content-center py-3">
 						<button type="button" id="submit" class="btn btn-primary my-2" style="margin-right: 5%; min-width: 150px;">
 							Register!
@@ -325,9 +322,11 @@
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
+					// If the processing finished correctly
 					if (data == 0)
 					{
 						var result = confirm("Your registration is successul! Press OK to return to main page.")
+						// Redirect user if 'OK' was pressed
 						if (result)
 							window.location.replace("<?=$index_url?>");
 						return;

@@ -1,7 +1,6 @@
 <?php 
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -12,17 +11,16 @@
 		exit('False');
 	}
 
-	// Fetch descriptions
+	// Fetching descriptions
 	$sql = 'SELECT `column_comment` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt = $pdo->query($sql);
 	$descriptions_array = $stmt->fetchAll(PDO::FETCH_COLUMN);
-	
-	// Fetch particular record's data
+	// Fetching particular record's data
 	$stmt = $pdo->prepare('SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id');
 	$stmt->execute([':id' => $_POST['id']]);
 	$classData_array = $stmt->fetch(PDO::FETCH_BOTH);
-
-	// Substituting teacher id with name
+	// Substituting teacher id with full name, id
+	// and setting the title as class id and its teacher's full name if there is one
 	$stmt = $pdo->prepare('SELECT `name`, `surname` FROM `appletree_personnel`.`teachers` WHERE `id` = :id');
 	$stmt->execute([':id' => $classData_array['id_teacher']]);
 	$title = $classData_array['id'];
@@ -31,24 +29,15 @@
 		$classData_array[3] = $data['name'] . ' ' . $data['surname'] . ' (ID: ' . $classData_array[3] . ')';
 		$title.=', ' . $classData_array['id_teacher'];
 	} else {
-		$classData_array['id_teacher'] = 
 		$classData_array[3] = '<i class="text-muted">None</i>';
 	}
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
-		?>
-	</head>
-
 	<h1 class="mb-3 mt-5"><?= $title ?></h1>
+	<!-- Control buttons -->
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsBrw('<?=$clsEditInject_url?>', '<?=$_POST['id']?>')">Edit</button>
 		<button class="btn btn-warning w-50 mx-4" onclick="clsDel('<?=$id?>')">Delete</button>
 	</div>
-	
 	<div class="my-3">
 		<table class="table table-bordered">
 			<?php foreach ($descriptions_array as $key => $value):?>
@@ -114,7 +103,3 @@
 			</tbody>
 		</table>
 	</div>
-<script>
-	
-</script>
-

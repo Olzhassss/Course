@@ -1,5 +1,7 @@
-<!-- BEGINNING OF THE HEADER -->
 <?php
+	// The URLs of the 'src's and 'href's used in the header
+	$appMain_url = $general_url . 'app_main.php';
+	$authorizationPage_url = $general_url . 'authorization_page.php';
 	$logo_src = $imgs . "logo.png";
 	$header_href = $index_url . "#section-header";
 	$contacts_href = $index_url . "#section-footer";
@@ -26,8 +28,7 @@
 			    <a class="p-2 text-light text-decoration-none" href="<?=$faq_href?>">FAQ</a>
 			    <a class="p-2 text-light text-decoration-none" href="<?=$authorizationPage_url?>">Administration</a>
 			</nav>
-			<!-- End of navigation -->
+			<!-- End of navigation row -->
 			<a class="btn application_link mr-md-2 my-2 my-md-0 ml-md-5" href="<?=$appMain_url?>">Application</a>
 		</div>
 </section>
-<!-- END OF HEADER -->

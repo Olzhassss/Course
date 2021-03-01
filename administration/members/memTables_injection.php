@@ -1,7 +1,6 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -30,7 +29,6 @@
 	// The person's data
 	$stmt2 = $pdo->query($sql2);
 ?>
-
 	<table class="table table-bordered">
 		<!-- Table head -->
 		<thead class="thead-light">
@@ -65,7 +63,7 @@
 									echo '<td><i class="text-muted">None</i></td>';
 						}
 					?>
-
+					<!-- Control buttons -->
 					<td>
 						<button class="btn btn-control" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$memCvInject_url?>')"><img src="<?=$imgBrw?>" alt="Brw"></button>
 						<button class="btn btn-control" onclick="memEdt('<?=$id?>', '<?=$_POST['role']?>')"><img src="<?=$imgEdt?>" alt="Edt"></button>

@@ -95,7 +95,7 @@
 							<tr>
 								<th scope="col" width="12%">Session\Room</th>
 								<?php
-								// Filling the first row with auditory numbers
+								// Filling the table head row with classroom names
 								foreach ($sessionRows as $val):
 									echo "<th scope='col'>Room ". $val['room']. "</th>";
 								endforeach;?>
@@ -104,15 +104,14 @@
 						<!-- Table rows -->
 						<tbody>
 						<?php
-						// Filling first record of every row with session time
+						// Filling the first cell of every row with session time
 						foreach ($sessionColumn as $key=>$value): ?>
 							<tr class="tr tr-<?=$key?>">
 								<th scope="col"><?=$value?></th>
-		
 								<?php
-								// Filling next records of the current rows with class codes
+								// Filling the next cells of the current row with class codes
 								foreach ($sessionRows as $val):
-									// The variable used to access the field (in DB) corresponting to the row of the webpage table
+									// The variable used to access the field (in DB) corresponding to the row of the webpage table
 									$session = "session". ($key+1);
 									
 									if (isset($val[$session])) {
@@ -126,14 +125,12 @@
 										echo '<td><i>EMPTY</i></td>';
 									}
 								endforeach;?>
-								
 						    </tr>
 						<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
 			</section>
-	
 			<?php endforeach;?>
 		</div>
 	</div>
@@ -141,12 +138,12 @@
 <!-- Importing custom scripts -->
 <?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 <script>
-	// The function loads schedule editing interface depending on the input parameter
+	// The function loads schedule editing interface depending on the input argument
 	function schEdt(day = 'Monday'){
 		$("#loader_div").removeClass("hidden");
 		$("#content").empty();
 		$("#content").load('<?=$schEditInject_url?>', { day: day, url:'<?=$url?>'}, function( responseText, textStatus, jqXHR ){
-			// Displaying error in console
+			// Displaying the error in console
 			if (textStatus == "error") {
 				let message = "'clsBrowse' function error occured: ";
 				console.error( message + jqXHR.status + " " + jqXHR.statusText );

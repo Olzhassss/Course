@@ -55,3 +55,11 @@ table.schedule-table th:hover::after {
   width: 100%;
   z-index: -1;
 }
+
+.hover:hover{
+  background-color: #e2e6ea;
+}
+.hover{
+  transition: background-color .15s ease-in-out;
+  background-color: #f8f9fa;
+}

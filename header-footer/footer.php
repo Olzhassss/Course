@@ -1,16 +1,14 @@
-<!-- BEGINNING OF THE FOOTER -->
 <?php 
 	$sql = "SELECT `name`,`text` FROM `appletree_general`.`short_texts` WHERE `used_for` = 'footer'";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
 	$short_texts = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
 
-	// Assign values to corresponding variables used in footer
+	// Assign values to the corresponding variables used in footer
 	$slogan_text = $short_texts['slogan_text'][0];
 	$email_text = $short_texts['email_text'][0];
 	$phone_text = $short_texts['phone_text'][0];
  ?>
-
 <section id="section-footer">
 	<footer>
 	  <br></br>
@@ -63,7 +61,7 @@
 	  		</div>
 	  	</div>
 	  	<div class="pb-3 mb-4 mx-5 color-bcbec0">
-	  		<small class="">
+	  		<small>
 	  			<b>Non-commercial project, inspired by school. Work, learn, help others to learn.</b>
 	  		</small>
 	  	</div>
@@ -71,4 +69,3 @@
 	  </div>
 	</footer>
 </section>
-<!-- END OF FILE --> 	 

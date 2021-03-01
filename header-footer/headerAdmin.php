@@ -1,7 +1,6 @@
-<!-- BEGINNING OF THE HEADER -->
 <?php
 	$logo_src = $imgs . "logo.png";
-
+	// Counting the number of applications and saving the value to display as a badge
 	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_teachers`");
 	$numberOfApplications = $stmt->fetch(PDO::FETCH_NUM)[0];
 	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_students`");
@@ -36,6 +35,5 @@
 			<!-- End of navigation -->
 			<a class="btn logout_link mx-md-2 my-2 my-md-0 py-2 py-lg-3 px-3" href="<?=$logout_url?>">Log out</a>
 		</div>
-		
 	</div>
 </section>

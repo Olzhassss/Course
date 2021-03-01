@@ -1,12 +1,9 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
 	require_once($connection_config);
-
-	$title = 'Authorization';
-	// Storing all necessary files in arrays for further import
+	$title = 'Authorization page';
 	$customStylesheets_array = array("loader.style.css", "back-link.style.css");
 	$customScripts_array = array("loader.js", "validate_single.js");
-	//$custom_styles = "";
 	$spinner_src = $imgs . "spinner.gif";
 
 	// Redirect signed user from the page
@@ -19,13 +16,12 @@
 <html>
 <?php require_once($head_ldp); ?>
 <body>
-	<?php require_once($backLink_ldp); ?>
-
 	<!-- The loader -->
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
-	
+	<?php require_once($backLink_ldp); ?>
+
 	<section id="section-form">
 		<form>
 			<div class="container">
@@ -60,13 +56,13 @@
 		fix_loader("loader_div");
 	})
 	
-	// Executes Ajax and manages error text
+	// The funtion executes Ajax and manages error displaying
 	function sign_in(event)
 	{
 		event.preventDefault();
-
+		// Get the error field
 		var error_field = $("#error_0");
-
+		// Empty the error text
 		error_field.text("");
 		if(validate_single('login-field') && validate_single('password-field'))
 		{

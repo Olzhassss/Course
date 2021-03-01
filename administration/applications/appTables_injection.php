@@ -1,13 +1,12 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
 		header("Location:$authorizationPage_url");
 	}
-	// Terminate if required argument is not passed
+	// Terminate if the required argument is not passed
 	if (!isset($_POST['role'])) {
 		exit('False');
 	}
@@ -23,13 +22,11 @@
 	}
 	// Terminate if the argument has an incorrect value
 	else { exit('False'); }
-	
 	// Field descriptions
 	$stmt1 = $pdo->query($sql1);
 	// The person's data
 	$stmt2 = $pdo->query($sql2);
 ?>
-
 	<table class="table table-bordered">
 		<!-- Table head -->
 		<thead class="thead-light">
@@ -61,7 +58,7 @@
 							echo '<td>'.$value.'</td>';
 						}
 					?>		
-		
+					<!-- Control buttons -->
 					<td>
 						<button class="btn btn-control" onclick="insertCV('<?=$id?>','<?=$_POST['role']?>', '<?=$appCvInject_url?>')"><img src="<?=$imgBrw?>" alt="Brw"></button>
 						<button class="btn btn-control" onclick="appAdd('<?=$id?>', '<?=$_POST['role']?>')"><img src="<?=$imgAdd?>" alt="Add"></button>

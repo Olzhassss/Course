@@ -1,7 +1,6 @@
 <?php 
-	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-	require_once ($connection_config);
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
+	require_once($connection_config);
 	session_start();
 	// Block access for unathorized users
 	if (!isset($_SESSION['user_login'])) {
@@ -11,12 +10,11 @@
 	if (!isset($_POST['id'])) {
 		exit('False');
 	}
-
 	// Fetch columns' despcriptions and names
 	$sql = 'SELECT `column_comment`, `column_name` FROM `information_schema`.`COLUMNS` WHERE `table_name` = "classes" AND `table_schema` = "appletree_personnel" ORDER BY `ORDINAL_POSITION`';
 	$stmt = $pdo->query($sql);
 	$columnsData_array = $stmt->fetchAll();
-
+	// If the class id has been passed, i.e. 'Create new class' was not clicked
 	if ($_POST['id'] != '') {
 		// Fetch particular record's data
 		$stmt = $pdo->prepare('SELECT * FROM `appletree_personnel`.`classes` WHERE `id` = :id');
@@ -24,23 +22,15 @@
 		$classData_array = $stmt->fetch(PDO::FETCH_BOTH);
 	}
 ?>
-	<head>
-		<?php
-		if (!empty($customStylesheets_array))
-		    foreach ($customStylesheets_array as $value) { echo "<link rel='stylesheet' href=$css$value>".PHP_EOL; }
-		if (!empty($customStyles_css)) { echo "<style> $customStyles_css </style>".PHP_EOL; }
-		?>
-	</head>
-
 	<h1 class="mb-3 mt-5"><?=$_POST['id']?></h1>
+	<!-- Control buttons -->
 	<div class="w-75 d-flex justify-content-between">
 		<button class="btn btn-success w-50 mx-4" onclick="clsUpd('<?=$_POST['id']?>','update')">Save</button>
 		<button id="button-delete" class="btn btn-warning w-50 mx-4" onclick="clsDel('<?=$_POST['id']?>')">Delete</button>
 	</div>
-
+	<!-- The form -->
 	<form class="mt-3" id="form">
 		<table class="table table-bordered">
-			<!-- Table rows -->
 			<tr>
 				<th scope='col' width="40%" ><?=$columnsData_array[0]["column_comment"]?></th>
 			    <td>
@@ -85,6 +75,7 @@
 					<select class="form-control" name="<?=$columnsData_array[3]['column_name']?>">
 						<option value="">None</option>
 			    		<?php
+							// Fetching registered teachers data, including the number of classes each teacher has
 			    			$stmt = $pdo->query("SELECT `id`, `name`, `surname` FROM `appletree_personnel`.`teachers`");
 			    			while ($select_options = $stmt->fetch()):
 			    				$sql = "SELECT COUNT(id) FROM `appletree_personnel`.`classes` WHERE `id_teacher` = :id";
@@ -95,7 +86,6 @@
 			    			<option value="<?=$select_options['id']?>"><?=$select_options['name'] .' '. $select_options['surname'] .' ('.$numberOfClasses.' class[es])'?></option>
 			    		<?php endwhile; ?>
 			   		</select>
-					
 				</td>
 			</tr>
 			<tr>
@@ -107,7 +97,8 @@
 	</form>
 <script>
 	$(document).ready(function(){
-	<?php // Select corresponding values for select if the class is given and disable delete if not
+	<?php // Select corresponding values for '<select>' tags if the class is given
+	// and disable 'Delete' button if not
 	if ($_POST['id'] != ''): ?>
 		$('select[name=<?=$columnsData_array[4]["column_name"]?>]').val("<?=$classData_array[4]?>");
 		$('select[name=<?=$columnsData_array[3]["column_name"]?>]').val("<?=$classData_array[3]?>");
@@ -116,7 +107,8 @@
 		$('#button-delete').attr('disabled',true);
 	<?php endif; ?>
 	})
-
+	// The funtion sends all data to the processing file along with the action type
+	// (update vs delete) and the class id
 	function clsUpd(arg_id, action) {
 		let data = new Object();
 		// Fill an object properties with values of every field if a record should be updated
