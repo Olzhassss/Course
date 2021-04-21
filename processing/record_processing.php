@@ -75,6 +75,4 @@ try{
 	$stmt->execute([':id' => $_POST['id']]);
 	exit(0);
 } catch(Exception $e) { exit ($e->getMessage()); }
-// Normally the system should not reach this
-exit('Unknown action initiated!');
 ?>

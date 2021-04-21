@@ -43,7 +43,8 @@
 			cache: false,
 			data: {
 				'id':arg_id,
-				'role':role
+				'role':role,
+				'action':'add'
 			},
 			beforeSend: function() {
 				$("#loader_div").removeClass("hidden");
@@ -82,7 +83,8 @@
 				cache: false,
 				data: {
 					'id':arg_id,
-					'role':role
+					'role':role,
+					'action':'delete'
 				},
 				beforeSend: function() {
 					$("#loader_div").removeClass("hidden");
