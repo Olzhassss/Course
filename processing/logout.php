@@ -11,5 +11,5 @@ if (isset($_COOKIE[session_name()])) {
 // Destroy the session
 session_destroy();
 // Redirect to authorization page
-header("Location:$authorizationPage_url");
+header("Location:$general_url . 'authorization_page.php'");
 ?>

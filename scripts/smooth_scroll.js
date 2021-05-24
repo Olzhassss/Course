@@ -23,7 +23,6 @@ function smooth_scroll(event)
 	    // Store the html link and its hash
 	    let hash = this.hash;
 	    let link = $(this);
-	    let href = link.attr('href');
 	    // Setting the duration time for the animation in milliseconds
 	    let var_duration = 1500;
 	    // Assigning animation

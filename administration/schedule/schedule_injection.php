@@ -47,8 +47,6 @@
 					<?php foreach ($days_array as $a_day): // Display a link-button for each day of week ?>
 						<li class="col-4 col-sm mb-3 mb-xl-0"><a class="text-truncate w-100 btn btn-light" href="<?=$url?>#section-<?=strtolower($a_day)?>"><?=$a_day?></a></li>
 					<?php endforeach ?>
-					
-					
 				</ul>
 			</nav>
 		</div>
