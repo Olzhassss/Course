@@ -1,29 +1,27 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config.php'); 
-
 	require_once($connection_config);
-	//session_start();
-	//$username = "";
-	$title = 'Authorization';
+	$title = 'Authorization page';
 	$customStylesheets_array = array("loader.style.css", "back-link.style.css");
 	$customScripts_array = array("loader.js", "validate_single.js");
-	//$custom_styles = "";
 	$spinner_src = $imgs . "spinner.gif";
 
 	// Redirect signed user from the page
 	session_start();
 	if (isset($_SESSION['user_login'])) {
-		header('Location:admin_main.php');
+		header("Location:$adminIndex_url");
 	}
 ?>
 <!DOCTYPE html>
 <html>
-<?php require_once($head_pathname); ?>
+<?php require_once($head_ldp); ?>
 <body>
-	<?php require_once($backLink_pathname); ?>
+	<!-- The loader -->
 	<div id="loader_div" class="loader hidden">
 		<img src="<?=$spinner_src?>" alt="spinner">
 	</div>
+	<?php require_once($backLink_ldp); ?>
+
 	<section id="section-form">
 		<form>
 			<div class="container">
@@ -48,9 +46,6 @@
 			</div>
 		</form>
 	</section>
-	
-	
-
 </body>
 <!-- Importing jQuery, BootStrap's and custom scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -61,20 +56,20 @@
 		fix_loader("loader_div");
 	})
 	
-	// Executes Ajax and manages error text
+	// The funtion executes Ajax and manages error displaying
 	function sign_in(event)
 	{
 		event.preventDefault();
-
+		// Get the error field
 		var error_field = $("#error_0");
-
+		// Empty the error text
 		error_field.text("");
 		if(validate_single('login-field') && validate_single('password-field'))
 		{
-			// Sends password and login values to 'authorization.php' and
+			// Sends password and login values to the corresponding processing .php and
 			// either redirects the user or displays an error according to the outcome
 			$.ajax({
-				url: 'authorization.php',
+				url: '<?=$authorizationProcessing_url?>',
 				type: 'POST',
 				cache: false,
 				data: { 'login':$("#login-field").val(), 'password':$("#password-field").val() },
@@ -82,10 +77,9 @@
 					$("#loader_div").removeClass("hidden");
 				},
 				success: function(data){
-					console.log(data);
 					if (data == 0)
 					{
-						window.location.replace("http://course/administration/admin_main.php");
+						window.location.replace("<?=$adminIndex_url?>");
 						return;
 					}
 					else
@@ -96,17 +90,10 @@
 				}
 			})
 		}
-
+		// Clears password field and removes the loader
 		$("input[name='password'").val("");
 		$("#loader_div").addClass("hidden");
 	}
-
 </script>
-<?php
-foreach ($customScripts_array as $value)
-    {
-   		echo "<script src='$js$value'></script>".PHP_EOL;
-    }
-?>
-
+<?php foreach ($customScripts_array as $value){	echo "<script src='$js$value'></script>".PHP_EOL; } ?>
 </html>

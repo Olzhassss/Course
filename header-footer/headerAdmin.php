@@ -1,35 +1,39 @@
 <?php
 	$logo_src = $imgs . "logo.png";
-	$header_href = $index;
-	$applications_href = $root . "/administration/admin_main.php";
-	$schedule_href = $root . "/administration/admin_main.php";
-	$teachersList_href = $root . "/administration/admin_main.php";
-	$studentsList_href = $root . "/administration/admin_main.php";
-	$logout_href = $root . "/administration/logout.php";
+	// Counting the number of applications and saving the value to display as a badge
+	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_teachers`");
+	$numberOfApplications = $stmt->fetch(PDO::FETCH_NUM)[0];
+	$stmt = $pdo->query("SELECT COUNT(id) FROM `appletree_personnel`.`app_students`");
+	$numberOfApplications += $stmt->fetch(PDO::FETCH_NUM)[0];
+	if ($numberOfApplications == 0)
+		unset($numberOfApplications);
 ?>
 <section id="section-header" style="padding: 0px;">
 	<!-- Header content wrapper div -->
-	<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 shadow" >
+	<div id="headerdiv" class="d-flex flex-column flex-md-row align-items-center p-3 shadow mb-2" >
 		<!-- Logo and title referencing to the main webpage -->
-		<a href="<?=$header_href?>" class="text-decoration-none">
+		<a href="<?=$index_url?>" class="text-decoration-none">
 			<img src="<?=$logo_src?>" id="header-logo" hspace="0" alt="logo">
 		</a>
-		<a class="py-2 px-3 btn mx-md-2 py-lg-3 main_text btn-secondary text-decoration-none" href="<?=$header_href?>">
-			To main page
-		</a>
-		<!-- End of Logo and title -->
-		<!-- Navigation row -->
-		<div class="my-3 my-md-0 mx-md-2 w-50">
-			<div class="container-fluid">
-				<nav class="row d-flex justify-content-around">
-					<a href="<?=$applications_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Applications <span id="app_badge"class="badge badge-warning"></span></a>
-					<a href="<?=$schedule_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Schedule</a>
-					<a href="<?=$teachersList_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Teachers list</a>
-					<a href="<?=$studentsList_href?>" class="col-xs-10 col-sm-5 col-lg m-1 py-2 py-lg-4 font-weight-bold btn btn-info text-decoration-none">Students list</a>
-				</nav>
+		<div class="d-flex flex-column flex-md-row align-items-center justify-content-between w-100">	
+			<a class="py-2 px-3 btn mx-md-2 py-lg-3 main_text btn-secondary text-decoration-none" href="<?=$index_url?>">
+				To main page
+			</a>
+			<!-- End of Logo and title -->
+			<!-- Navigation row -->
+			<div class="my-3 my-md-0 mx-md-2 col">
+				<div class="container-fluid">
+					<nav class="row d-flex justify-content-around">
+						<button data-essence ="schedule" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Schedule</button>
+						<button data-essence ="applications" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Applications <span class="badge badge-warning"><?=$numberOfApplications?></span></button>						
+						<button data-essence ="members" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Members</button>
+						<button data-essence ="classes" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Classes</button>
+						<button data-essence ="frontEdit" class="header-button col-xs-10 col-sm-5 col-lg-4 col-xl m-1 py-2 py-xl-4 font-weight-bold btn btn-info text-decoration-none">Text edit</button>
+					</nav>
+				</div>
 			</div>
+			<!-- End of navigation -->
+			<a class="btn logout_link mx-md-2 my-2 my-md-0 py-2 py-lg-3 px-3" href="<?=$logout_url?>">Log out</a>
 		</div>
-		<!-- End of navigation -->
-		<a class="btn logout_link mx-md-2 my-2 my-md-0 py-2 py-lg-3 px-3" href="<?=$logout_href?>">Log out</a>
 	</div>
 </section>

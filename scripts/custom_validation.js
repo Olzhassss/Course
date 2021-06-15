@@ -23,16 +23,6 @@ function validate_birthYear(id)
 		return false;
 	}
 	// End of access check
-	/*if (!birthyear.checkValidity())
-	{
-		console.log(error_field.offset().top);
-		$([document.documentElement, document.body]).animate(
-		{
-		scrollTop: error_field.offset().top - 250
-		}, 1000);
-		return false;
-	}
-	else*/
 	// ----------------------- Main 'if'. Executes logic described above.
 	if (parseInt(birthyear.value) > new Date().getFullYear()|| parseInt(birthyear.value) < 1920)
 	{

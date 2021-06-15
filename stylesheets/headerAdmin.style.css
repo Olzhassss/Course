@@ -4,10 +4,6 @@
 .main_text{
 	font-family: Segoe UI;
 }
-a.disabled{
-	pointer-events: none;
-  	cursor: default;
-}
 #header-logo{
 	width: 170px; height: 150px;
 }
@@ -20,6 +16,7 @@ a.disabled{
  	color: lightblue;
 	border-color: lightblue;
 }
-section {
+section{
 	padding-bottom:3rem;
+	padding-top: 3rem;
 }

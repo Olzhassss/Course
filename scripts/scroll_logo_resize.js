@@ -1,7 +1,6 @@
 // This script resizes the logo size when user scrolls down 400px from the top of the document and
 // attaches/detaches header to the screen ('display: fixed' property value)
 window.onscroll = function() {scroll_screen()};
-
 var logo = document.getElementById("header-logo");
 
 function scroll_screen() {
